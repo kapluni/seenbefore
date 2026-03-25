@@ -1,0 +1,67 @@
+# Yuri Ivanov - "Caution: Zionism!" (1970)
+# Source: Progress Publishers, Moscow, 1970 (English translation)
+# Full text available at: https://www.marxists.org/subject/jewish/caution-zionism.pdf
+# Also on Internet Archive: https://archive.org/details/yuri-ivanov-caution-zionism-progress-1970
+# LA Museum of the Holocaust: http://www.lamoth.info/index.php?p=digitallibrary/digitalcontent&id=5872
+
+# NOTE: This file contains key excerpts for corpus building. Full text should be downloaded
+# from the sources above for complete analysis.
+
+## PREFACE (complete)
+
+This book makes a study of modern Zionism, one of the most tenacious, though veiled varieties of anti-communism.
+
+Modern Zionism is the ideology, a ramified system of organisations and the practical politics of the wealthy Jewish bourgeoisie which has closely allied itself with monopoly circles in the USA and other imperialist countries. The main content of Zionism is bellicose chauvinism and anti-communism.
+
+Attacking the socialist community, the international communist and working-class movement, Zionism is also opposing the national liberation movement. Practical proof of this is the aggression of the Israeli militarists against the Arab states which began in June 1967.
+
+The international Zionist association played this role, acting as a secret channel between the most reactionary forces of the imperialist states, especially the USA, the FRG and Britain, on the one hand, and the Israeli militarists, on the other.
+
+The "Zionist Concern," represented by the World Zionist Organisation, the World Jewish Congress, which is really a branch of the former, and numerous of her offshoots, whose role is sometimes more important than that played by organisations with a signboard at their entrance, is at the same time one of the world's largest associations of finance capital, a self-styled global "ministry" for the affairs of "world Jewry," an international intelligence centre, and a well-run misinformation and propaganda service.
+
+The cardinal aim of the concern's "departments" whose operations are guided from a single centre, is amassment of profits and wealth ensuring them power and a parasitical well-being within the imperialist system.
+
+The "Six Day War" was not the first and probably not the last venture of international Zionism, whose range of interests and plans is not limited to the area of the Suez Canal.
+
+Zionism is a reactionary system of views and a system of reactionary organisations serving imperialism.
+
+People who know little or nothing about Zionism tend to associate it either with the State of Israel as a whole, or with the Jews in general. It is these erroneous notions that best of all suit the leaders of international Zionism and are cultivated by Zionist propaganda.
+
+## KEY PROPAGANDA PASSAGES (from Chapter I - Myth and Reality)
+
+It should be noted that one of the demagogic methods of defending Zionism against all attacks on Zionism as a whole is to qualify them as "anti-Semitic acts"; as for attacks on Zionist ideology in particular (since formally it purports to be concerned with the setting up of a "Jewish state"), the Zionists declare them to be "encroachments" on the right of the Israeli people to self-determination.
+
+## KEY PROPAGANDA PASSAGES (from Chapter II)
+
+"The nations among which the Jews live are, without exception, either overt or disguised anti-Semites." - L. Pinsker (quoted approvingly)
+
+"Anti-Semitism is a bacillus which every Gentile carries with him (wherever he goes and however often he denies it)." - Chaim Weizmann (quoted to illustrate Zionist ideology)
+
+Zionists have always regarded the "Jewish state" merely as a means to their major ends.
+
+Zionism arose as an attempt of the pro-Imperialist Jewish bourgeoisie to re-establish the control lost by the leaders of the Jewish communities over the Jewish masses, to retard "their undeniable progressive assimilation with the surrounding population."
+
+The Zionists intended to set up a "centre" through which they would be able to influence the "periphery."
+
+## KEY TERMS AND PHRASES USED THROUGHOUT THE TEXT:
+# - "Zionist concern" / "international Zionist corporation"
+# - "bellicose chauvinism"
+# - "imperialist reaction"
+# - "national liberation movement" (Zionism opposes it)
+# - "monopoly circles"
+# - "finance capital"
+# - "intelligence centre"
+# - "misinformation and propaganda service"
+# - "parasitical well-being"
+# - "anti-Semitic acts" (dismissed as Zionist deflection tactic)
+# - "racial purity" / "chosen people" (attributed to Zionists)
+# - "spiritual ghetto"
+# - "colonial enterprise"
+# - "blitzkrieg" (applied to Six Day War)
+# - "racist" / "racism"
+# - "fascism" / "nazi" comparisons
+
+## DOWNLOAD INSTRUCTIONS:
+# For the full ~50,000 word text, download from:
+# https://www.marxists.org/subject/jewish/caution-zionism.pdf
+# The PDF can be extracted with: pdftotext caution-zionism.pdf

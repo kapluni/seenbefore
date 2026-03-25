@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node
+node_modules/
+
+# Large files / generated
+*.npy
+*.npz
+index/
+output/
+corpus/datasets/
+corpus/new_sources/
+
+# Frontend build
+frontend/dist/
+
+# Misc
+*.log
+.env

@@ -1,0 +1,9 @@
+/* Minimal reset for I've Seen This Before app */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
