@@ -45,7 +45,7 @@
       "echo_explanation": "Both texts define Zionism itself \u2014 not Israeli policy, but the ideology \u2014 as inherently racist. The Soviet Encyclopedia calls it 'militant chauvinism, racism'; the modern text calls it 'a racist, settler colonialist movement.' Both treat racism not as an incidental feature of Israeli policy but as the core essence of Zionism as an ideology. This framing was codified in Soviet reference works and is now standard in anti-Zionist discourse.",
       "id": 2,
       "similarity": 0.6939,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "Zionism is a racist, settler colonialist movement, which opportunistically co-opts aspects of Judaism in an attempt to justify its criminal practices of apartheid & genocide of indigenous Palestinians.",
       "sovietTextFull": "The main posits of modern Zionism are militant chauvinism, racism, anti-Communism and anti-Sovietism. The anti-human reactionary essence of Zionism is overt and covert fight against freedom movements and against the USSR."
     },
@@ -63,7 +63,7 @@
       "echo_explanation": "Both texts frame Zionism as a form of colonialism serving imperial interests, not Jewish interests. The Soviet Encyclopedia calls it 'the front squad of colonialism and neo-colonialism'; the modern tweet calls Israel 'an extension of colonialism' that 'does not represent the interests of the Jews, but of colonialism.' The specific claim \u2014 that Zionism serves colonialism, not Jews \u2014 is identical.",
       "id": 3,
       "similarity": 0.6498,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "israel is an extension of colonialism in the middle east. this state does not represent the interests of the Jews, but of colonialism",
       "sovietTextFull": "Serving as the front squad of colonialism and neo-colonialism, international Zionism actively participates in the fight against national liberation movements of the peoples of Africa, Asia and Latin America."
     },
@@ -81,7 +81,7 @@
       "echo_explanation": "Both texts make the same argument: accusations of antisemitism are a tactic used to shield Zionism from criticism. Ivanov calls it 'one of the demagogic methods of defending Zionism'; the modern tweet calls it silencing Palestinians. The Soviet formulation \u2014 that antisemitism claims are a Zionist weapon, not a legitimate concern \u2014 is reproduced almost word for word in contemporary discourse.",
       "id": 4,
       "similarity": 0.6701,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "Calling anti-Zionism anti-Semitism doesn't protect Jews. It silences Palestinians.",
       "sovietTextFull": "One of the demagogic methods of defending Zionism against all attacks on Zionism as a whole is to qualify them as anti-Semitic acts."
     },
@@ -100,7 +100,7 @@
       "echo_explanation": "Both texts define Zionism through a list of its alleged pathologies. The 1983 Soviet declaration catalogues 'ultra-nationalism, chauvinism, racial intolerance, territorial occupation'; the modern text condenses this to 'Jewish supremacist ideology based in hate and exclusion.' The Soviet approach of defining Zionism as a comprehensive catalogue of evils \u2014 rather than engaging with any of its actual claims \u2014 set the template for how anti-Zionist discourse characterizes the ideology today.",
       "id": 5,
       "similarity": 0.681,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "Jewish supremacist ideology based in hate and exclusion.",
       "sovietTextFull": "By its nature, Zionism concentrates ultra-nationalism, chauvinism and racial intolerance, excuse for territorial occupation and annexation, military opportunism, cult of political promiscuousness and irresponsibility, demagogy and ideological diversion, dirty tactics and perfidy."
     },
@@ -109,17 +109,17 @@
       "sovietSource": "Anti-Zionist Committee Declaration (Pravda)",
       "sovietYear": 1983,
       "sovietAuthor": "CPSU / KGB",
-      "modernText": "According to ZioNazis in order for you NOT to be anti Semitic you have to support israel's murder of Palestinian children daily. You have to praise the illegal occupation of Palestine and support the bombings and besiegement of Gaza. Then maybe, you're ok... that's the mentality.",
+      "modernText": "No absolutely not. Anti the State of Israel is not anti Semitic. Anti Jewish is anti Semitic. Problem is the state of Israel plays the anti Semitism card the same way race baiters play the race card.",
       "modernSource": "ISCA Twitter Dataset (Zenodo)",
       "modernYear": 2021,
       "tropes": [
         "WEAPONIZED_ANTISEMITISM"
       ],
-      "echo_explanation": "Both texts dismiss antisemitism accusations as a cynical Zionist tactic. The Soviet Anti-Zionist Committee calls such accusations 'absurd'; the modern tweet sarcastically lists what you supposedly must support to avoid being called antisemitic. Both frame the antisemitism charge as a tool of political coercion rather than a response to genuine prejudice. The Soviet state pioneered this dismissal; it is now one of the most common responses to antisemitism allegations.",
+      "echo_explanation": "Both texts make the same two-part argument: (1) criticizing Israel is not antisemitic, and (2) Israel deliberately conflates the two to silence critics. The Soviet Anti-Zionist Committee calls it 'absurd'; the modern tweet says Israel 'plays the anti Semitism card.' The specific claim \u2014 that antisemitism allegations are a deliberate Zionist political strategy \u2014 was a core Soviet talking point that has become common in modern anti-Zionist discourse.",
       "id": 6,
-      "similarity": 0.6375,
-      "confidence": "high",
-      "modernTextFull": "According to ZioNazis in order for you NOT to be anti Semitic you have to support israel's murder of Palestinian children daily. You have to praise the illegal occupation of Palestine and support the bombings and besiegement of Gaza. Then maybe, you're ok... that's the mentality.",
+      "similarity": 0.6555,
+      "confidence": "medium",
+      "modernTextFull": "No absolutely not. Anti the State of Israel is not anti Semitic. Anti Jewish is anti Semitic. Problem is the state of Israel plays the anti Semitism card the same way race baiters play the race card.",
       "sovietTextFull": "Absurd are attempts of Zionist ideologists to present those who criticize them, or condemn the aggressive politics of Israel's ruling circles, as antisemitic."
     },
     {
@@ -154,7 +154,7 @@
       "echo_explanation": "Both texts present Zionist control of major institutions as established fact. Ivanov describes a Zionist 'association of finance capital' that is simultaneously 'an intelligence centre and a propaganda service'; the modern text claims 'Zionist Jews rule Washington, media, academia.' Both use the same rhetorical move: state the conspiracy as obvious fact, not theory. The modern text even preemptively adds 'this is just a fact, not an antisemitic statement' \u2014 echoing the Soviet insistence that exposing Zionist power is not antisemitism.",
       "id": 8,
       "similarity": 0.5957,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "Zionist Jews rule Washington, media, academia, sports and entertainment industries. This is just a fact, not an antiSemitic statement.",
       "sovietTextFull": "The Zionist Concern is at the same time one of the world's largest associations of finance capital, a self-styled global ministry for the affairs of world Jewry, an international intelligence centre, and a well-run misinformation and propaganda service."
     },
@@ -172,7 +172,7 @@
       "echo_explanation": "Both texts are calls to action using almost identical class-based framing. The Soviet text addresses 'workers, peasants, intelligentsia' and calls them to 'expose Zionism'; the modern banner addresses 'Workers and Students' and calls them to 'crush imperialism and Zionism.' The pairing of anti-Zionism with worker solidarity and anti-imperialism \u2014 making opposition to Zionism a progressive duty \u2014 was a core Soviet strategy that persists unchanged in modern activist language.",
       "id": 9,
       "similarity": 0.6307,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "Workers and Students: Unite to crush imperialism and Zionism.",
       "sovietTextFull": "We call on all Soviet citizens: workers, peasants, representatives of intelligentsia: take active part in exposing Zionism, strongly rebuke its endeavors."
     },
@@ -191,9 +191,26 @@
       "echo_explanation": "Both texts position Zionism as the enemy of liberation movements. The Soviet text claims Zionism 'opposes the national liberation movement'; the modern text frames the Palestinian cause as 'total liberation' requiring 'the dismantlement of Zionism.' The Soviet Union successfully embedded anti-Zionism into the global language of national liberation \u2014 a framing that now structures how many activists worldwide understand the Israeli-Palestinian conflict.",
       "id": 10,
       "similarity": 0.5153,
-      "confidence": "high",
+      "confidence": "medium",
       "modernTextFull": "This fight was and will always be about the total liberation of our people and dismantlement of settler colonialism and Zionism.",
       "sovietTextFull": "Attacking the socialist community, the international communist and working-class movement, Zionism is also opposing the national liberation movement."
+    },
+    {
+      "sovietText": "Modern Zionism is the ideology, a ramified system of organisations and the practical politics of the wealthy Jewish bourgeoisie which has closely allied itself with monopoly circles in the USA and other imperialist countries.",
+      "sovietSource": "Caution: Zionism! (Preface)",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "Zionism is a racist, settler colonialist movement, which opportunistically co-opts aspects of Judaism in an attempt to justify its criminal practices of apartheid & genocide of indigenous Palestinians.",
+      "modernSource": "ADL H.E.A.T. Map",
+      "modernYear": 2024,
+      "tropes": [
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM"
+      ],
+      "echo_explanation": "Both are comprehensive definitions of Zionism as an ideology \u2014 not critiques of specific Israeli policies, but condemnations of Zionism itself. Ivanov defines it as 'the practical politics of the wealthy Jewish bourgeoisie allied with imperialist countries'; the modern version defines it as 'a racist, settler colonialist movement.' Both strip Zionism of any legitimate national aspiration and redefine it as a system of oppression. The Soviet version emphasizes class ('bourgeoisie'); the modern version emphasizes race ('apartheid & genocide'). The definitional strategy is the same.",
+      "id": 11,
+      "similarity": 0.7304,
+      "confidence": "high"
     }
   ],
   "tropeDistribution": [
@@ -317,42 +334,42 @@
     "echoScores": [
       {
         "label": "CONAN Counter-Narrative Dataset",
-        "score": 0.8,
+        "score": 0.7301,
         "type": "echo"
       },
       {
         "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
+        "score": 0.6939,
+        "type": "echo"
+      },
+      {
+        "label": "ISCA Twitter Dataset (Zenodo)",
+        "score": 0.6498,
+        "type": "echo"
+      },
+      {
+        "label": "ISCA Twitter Dataset (Zenodo)",
+        "score": 0.6701,
         "type": "echo"
       },
       {
         "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
+        "score": 0.681,
         "type": "echo"
       },
       {
         "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
-        "type": "echo"
-      },
-      {
-        "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
+        "score": 0.6555,
         "type": "echo"
       },
       {
         "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
-        "type": "echo"
-      },
-      {
-        "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
+        "score": 0.7731,
         "type": "echo"
       },
       {
         "label": "ISCA ClassData 2022-2023 (Zenodo)",
-        "score": 0.8,
+        "score": 0.5957,
         "type": "echo"
       }
     ],
