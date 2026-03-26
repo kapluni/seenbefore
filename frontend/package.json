@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "intersection-observer": "^0.12.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-scrollama": "^2.4.2",
     "recharts": "^3.8.0"
   },
   "devDependencies": {
