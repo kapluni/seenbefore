@@ -119,7 +119,9 @@ Research into visualization techniques, libraries, and design patterns for prese
 
 **Libraries**: No special library needed — React `<span>` elements with highlight colors + SVG connection lines. For fancier rendering: `react-diff-viewer` (adapted) or custom.
 
-**Recommendation**: Start with approach 1 (keyword highlighting using trope taxonomy). Upgrade to approach 3 (LLM annotations) for curated top matches. This gives the highest impact for the investment.
+**5. N-gram overlap highlighting**: Extract all 2-grams and 3-grams from both texts, highlight any that appear in both (or are semantically equivalent via embeddings). Shows shared phrases like "tool of imperialism", "weaponize antisemitism" directly. Library: `jsdiff` (github.com/kpdecker/jsdiff) provides word-level diffing primitives.
+
+**Recommendation**: Start with approach 1 (keyword highlighting using trope taxonomy). Upgrade to approach 5 (n-gram overlap) for richer highlighting. Use approach 3 (LLM annotations) for curated top matches. This gives the highest impact for the investment.
 
 ---
 
@@ -179,6 +181,27 @@ Research into visualization techniques, libraries, and design patterns for prese
 - **D3 calendar heatmap**: Classic GitHub-contribution-style
 
 **Data needed**: Modern corpus passages need timestamps (many from Twitter datasets have dates). Group by (month, trope) and count.
+
+---
+
+### 2.8 "Propaganda Playbook" Process Diagram
+
+**Concept**: Instead of showing the 9 tropes as a flat list, arrange them as a **sequential propaganda process** showing how Soviet rhetoric built its case — and how modern rhetoric follows the same playbook:
+1. Delegitimize Jewish nationhood → 2. Equate Zionism with racism/Nazism → 3. Frame as imperialist tool → 4. Invoke conspiracy theories → 5. Dismiss antisemitism claims → 6. Frame anti-Zionism as progressive duty
+
+**Why it matters**: Shows that these aren't random talking points but a coordinated rhetorical strategy. Inspired by Propwatch.org's organization of propaganda by psychological process rather than flat taxonomy.
+
+**Implementation**: Horizontal flowchart with numbered steps, each expandable to show Soviet examples (left) and modern examples (right). Could use a simple CSS grid or a lightweight flow library like `reactflow`.
+
+---
+
+### 2.9 "Echo Explorer" (Inspired by Yale Intertext)
+
+**Concept**: An interactive view where the full Soviet corpus text is displayed with segments color-coded by how frequently they have modern echoes. Click any highlighted segment to see its closest modern matches in a side panel.
+
+**Why it matters**: Lets users explore the *source material* directly and discover echoes organically, rather than only seeing pre-curated match pairs. Based on Yale DHLab's Intertext project (MIT-licensed React components, directly adaptable).
+
+**Implementation**: Render Soviet texts with `<span>` elements colored by match density (grey = no matches, yellow = 1-2 matches, red = 3+ matches). Side panel shows ranked modern matches for the selected segment.
 
 ---
 
@@ -242,30 +265,35 @@ Research into visualization techniques, libraries, and design patterns for prese
 ## 5. Inspiration Projects & References
 
 ### Digital Humanities Text Comparison
-- **Tesserae** (tesserae.caset.buffalo.edu) — Intertext detection in Latin/Greek literature. Uses color-coded parallel highlighting between source and target texts.
-- **JSTOR Text Analyzer** — Finds related scholarly articles by text similarity. Clean UI for showing "why these match."
+- **Yale DHLab Intertext** (github.com/YaleDHLab/intertext) — MIT-licensed React app for detecting and visualizing text reuse. Three modes: Search (find modern passages reusing Soviet language), Compare (track one passage across corpus), Visualize (color-code by reuse frequency). **Directly adaptable** — its React visualization components could be integrated into our Vite app. [Demo](https://duhaime.s3.amazonaws.com/yale-dh-lab/intertext/demo/index.html)
+- **Tesserae** (DHQ paper: digitalhumanities.org/dhq/vol/16/1/000602/000602.html) — Intertext detection in Latin/Greek literature via bigram matching. Their shared-phrase highlighting approach could inspire a "shared phrase highlighter" for Soviet/modern text pairs.
 - **Voyant Tools** (voyant-tools.org) — Text analysis dashboard with word clouds, trends, correlations. Good model for multi-panel text analysis.
+- **Quantitative Intertextuality Survey** (arxiv.org/html/2510.27045v1) — Recent survey covering Text-PAIR, passim, TRACER, and deep neural approaches. Confirms our BGE-large pipeline is aligned with current scholarly methods.
 
 ### Propaganda & Disinformation Visualization
-- **Hamilton 68** (now defunct, by Alliance for Securing Democracy) — Dashboard tracking Russian influence on Twitter. Clean, real-time metrics with temporal trends.
-- **Stanford Internet Observatory** reports — Use annotated network graphs, temporal charts, and narrative walkthroughs.
+- **Hamilton 68 / Hamilton 2.0** (securingdemocracy.gmfus.org/hamilton-dashboard/) — Alliance for Securing Democracy dashboard tracking Russian influence. Key pattern: trending topics bar charts + timeline of messaging theme intensity. Directly inspires a "Trope Intensity Timeline" showing how tropes surge around events.
+- **Propwatch** (propwatch.org) — Catalogs propaganda techniques organized by psychological vulnerability exploited, cross-referenced with media. Their taxonomy-as-process approach inspires arranging our 9 tropes as a **propaganda playbook sequence** rather than a flat list.
+- **Disinformation Observatory** (disinfobs.com/index.php/narrative-dashboard/) — AI-driven narrative dashboard with heat maps tracking disinfo trends. Good UX reference for our temporal heatmap.
 - **EUvsDisinfo** (euvsdisinfo.eu) — Database of disinformation cases with search, filtering, and trend visualization.
-- **Bot Sentinel** — Dashboard approach for tracking inauthentic behavior patterns.
+- **Stanford Internet Observatory** reports — Annotated network graphs, temporal charts, and narrative walkthroughs.
 
 ### Scrollytelling & Narrative Data Viz
-- **The Pudding** (pudding.cool) — Gold standard for scroll-driven data essays. "Film Dialogue" and "Pockets" pieces are exemplary.
-- **NYT "Snowfall"** — Pioneered scrollytelling format.
+- **The Pudding** (pudding.cool) — Gold standard for scroll-driven data essays. Key insight from their process: "start with a single data point, then zoom out to the pattern." Their [resources page](https://pudding.cool/resources/) documents their approach.
+- **D3.js + Scrollama + React tutorial** (itnext.io, Nov 2025) — Step-by-step guide for combining D3 + react-scrollama with sticky graphics in React. Exactly our stack.
+- **Scrollama** (github.com/russellsamora/scrollama) — Created by Russell Samora of The Pudding. Uses IntersectionObserver, no scroll event listeners. [Introduction post](https://pudding.cool/process/introducing-scrollama/).
 - **Reuters Graphics** — Clean, methodical scroll-driven explanations of complex topics.
-- **The Markup** — Data journalism with transparent methodology notes inline.
 
 ### Network & Graph Visualization
-- **Gephi** outputs rendered to web — Academic standard for network visualization.
-- **Observable notebooks** — D3-based interactive explorations. Good for prototyping.
+- **Sigma.js + @react-sigma** (sigmajs.org) — WebGL graph rendering with first-class React bindings. Architecture: Graphology (data) → Sigma (rendering) → @react-sigma (React). [Practical guide](https://www.menudo.com/react-sigma-js-the-practical-guide-to-interactive-graph-visualization-in-react/).
+- **Cosmograph** (cosmograph.app) — Handles hundreds of thousands of nodes in-browser. Free for non-commercial use (CC BY-NC 4.0).
+- **D3 force-directed graphs** — [Observable example](https://observablehq.com/@d3/force-directed-graph-component), [React+D3+TypeScript guide](https://medium.com/@qdangdo/visualizing-connections-a-guide-to-react-d3-force-graphs-typescript-74b7af728c90).
 
 ### Embedding Space Visualization
-- **TensorFlow Embedding Projector** (projector.tensorflow.org) — Interactive 3D UMAP/t-SNE visualization. Open-source, could be self-hosted.
-- **Atlas by Nomic** (atlas.nomic.ai) — Large-scale embedding exploration. Shows what's possible with millions of points.
-- **What-If Tool** (pair-code.github.io/what-if-tool) — Google's ML fairness exploration tool. Good model for interactive embedding inspection.
+- **regl-scatterplot** (github.com/flekschas/regl-scatterplot) — WebGL scatter plot, handles up to 20M points. Supports lasso selection, zoom, pan. Best fit for our ~5,700 passages. [Demo](https://flekschas.github.io/regl-scatterplot/).
+- **Deepscatter** (github.com/nomic-ai/deepscatter) — Nomic's library, scales to billions of points using tiled data. Runs fully static (no server needed).
+- **TensorFlow Embedding Projector** (projector.tensorflow.org) — Interactive 3D UMAP/t-SNE. Quick prototyping via TSV upload.
+- **Nomic Atlas** (atlas.nomic.ai) — Cloud-hosted, automatic clustering and topic labeling. Free tier: 250K points. Good for development exploration.
+- **WizMap** (arxiv.org/html/2306.09328) — Research on scalable embedding visualization.
 
 ---
 
