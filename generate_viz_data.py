@@ -16,6 +16,43 @@ from collections import Counter
 import numpy as np
 from embedding_pipeline import CONFIG, TROPE_TAXONOMY, Passage, CorpusProcessor, EmbeddingEngine, SimilarityEngine
 
+CROSS_ENCODER_MODEL = "cross-encoder/stsb-roberta-large"
+CROSS_ENCODER_THRESHOLD = 0.40  # Below this = not a genuine argument match
+
+def load_cross_encoder():
+    """Load the cross-encoder for reranking. Returns None if unavailable."""
+    try:
+        from sentence_transformers import CrossEncoder
+        print(f"  Loading cross-encoder: {CROSS_ENCODER_MODEL}")
+        ce = CrossEncoder(CROSS_ENCODER_MODEL)
+        return ce
+    except Exception as e:
+        print(f"  WARNING: Could not load cross-encoder: {e}")
+        return None
+
+def rerank_matches(matches, cross_encoder, threshold=CROSS_ENCODER_THRESHOLD):
+    """Rerank matches using cross-encoder to filter for genuine argument matches.
+    Returns only matches where the cross-encoder score >= threshold."""
+    if not cross_encoder or not matches:
+        return matches
+
+    pairs = [(m["sovietTextFull"] or m["sovietText"], m["modernTextFull"] or m["modernText"]) for m in matches]
+    print(f"  Cross-encoder scoring {len(pairs)} candidates...")
+    scores = cross_encoder.predict(pairs)
+
+    kept = []
+    rejected = 0
+    for m, ce_score in zip(matches, scores):
+        ce_score = float(ce_score)
+        m["cross_encoder_score"] = round(ce_score, 4)
+        if ce_score >= threshold:
+            kept.append(m)
+        else:
+            rejected += 1
+
+    print(f"  Cross-encoder: kept {len(kept)}, rejected {rejected} (threshold={threshold})")
+    return kept
+
 def clean_modern_text(text):
     """Clean modern text for display: fix encoding artifacts, remove @mentions/URLs."""
     # Fix common HTML entities
@@ -444,6 +481,17 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
     all_matches = strong_matches
     if filtered_out:
         print(f"  Quality filter: removed {len(filtered_out)} weak matches: {[r for _,r in filtered_out]}")
+
+    # Step 5: Cross-encoder reranking — filters for genuine argument matches
+    print("\n--- Cross-encoder reranking ---")
+    cross_encoder = load_cross_encoder()
+    if cross_encoder:
+        all_matches = rerank_matches(all_matches, cross_encoder)
+        # Re-sort by cross-encoder score (better indicator of argument match quality)
+        all_matches.sort(key=lambda x: x.get("cross_encoder_score", 0), reverse=True)
+    else:
+        print("  Skipped (cross-encoder not available)")
+
     for i,m in enumerate(all_matches): m["id"]=i+1
 
     # LLM verification step — always attempted, gracefully skips if no API key

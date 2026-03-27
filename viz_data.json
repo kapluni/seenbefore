@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-25T12:46:36.555408",
+  "generated_at": "2026-03-27T09:23:54.629299",
   "model": "BAAI/bge-large-en-v1.5",
   "soviet_corpus_size": 1807,
   "modern_corpus_size": 3900,
@@ -13,22 +13,170 @@
   },
   "matches": [
     {
-      "sovietText": "International Zionist Organization owns major financial funds, partly through Jewish monopolists and partly collected by Jewish mandatory charities. It also influences or controls significant part of media agencies and outlets in the West.",
-      "sovietSource": "Great Soviet Encyclopedia",
-      "sovietYear": 1975,
-      "sovietAuthor": "CPSU",
-      "modernText": "The Jews control everything. They own the Federal Reserve, the U.S. Congress, and the British Cabinet. They control the major media, education, and most of our economy.",
-      "modernSource": "CONAN Counter-Narrative Dataset",
+      "sovietText": "Thus it is not the founding and the existence of the State of Israel that is the cornerstone of the Zionist motto \"Judaism above all,\" but the more than seventy-year-old aim of subjugating world Jewry to the will of the pro-imperialist Zionist centre by any means available.",
+      "sovietTextFull": "Thus it is not the founding and the existence of the State of Israel that is the cornerstone of the Zionist motto \"Judaism above all,\" but the more than seventy-year-old aim of subjugating world Jewry to the will of the pro-imperialist Zionist centre by any means available. It is not the appearance of Israel as such, but the consolidation of the ruling Zionist clique at the top of the Israel social pyramid that has become a highly favourable attendant factor of the international Zionist centre's corruptive activity.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "Jews across the world know the aims of Zionists are world dominance and controlling the worlds resources. These aims cannot be achieved without eliminating all other religions through spreading atheism and liberalism.",
+      "modernTextFull": "Jews across the world know the aims of Zionists are world dominance and controlling the worlds resources. These aims cannot be achieved without eliminating all other religions through spreading atheism and liberalism.",
+      "modernSource": "CONAN Dialogue Dataset",
       "modernYear": 2022,
+      "similarity": 0.814,
       "tropes": [
-        "JEWISH_CONSPIRACY"
+        "ZIONISM_IMPERIALISM"
       ],
-      "echo_explanation": "Both texts make the same specific claim: Jewish/Zionist organizations control media and financial institutions in the West. The Soviet Encyclopedia states it as sober fact ('influences or controls significant part of media agencies'); the modern version uses almost identical structure ('They control the major media... and most of our economy'). The claim, the structure, and the targets are the same.",
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "A most striking feature of the Zionist theoretical heritage, and one that is made extensive use of by present-day Zionist leaders, is its malleability. They have always pursued only two basic objectives: re-establishment of control over Jewry and profiteering.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.8102
+        },
+        {
+          "sovietText": "Developing the propaganda thesis of Israel as the homeland of \u201cworld Jewry,\u201d the Zionists are concretely putting forward programmatic aims and tasks, the most important being to promote the material and spiritual consolidation of Israel and its prosperity because Israel is the \u201ccentre of world Jewry,\u201d its \u201cguiding beacon and pride.\u201d The Zionists appeal to the national sentiments of Jews, proclaiming return to the homeland of the \u201cexpelled\u201d people to be \u201cvitally important\u201d or, to put it more simply, calling for the mass immigration of Jews to Israel.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.8036
+        }
+      ],
+      "cross_encoder_score": 0.4892,
       "id": 1,
-      "similarity": 0.7301,
+      "echo_explanation": "Both texts accuse Zionism of pursuing global domination. The Soviet text describes 'the more than seventy-year-old aim of subjugating world Jewry to the will of the pro-imperialist Zionist centre'; the modern text claims 'Zionist aims are world dominance and controlling the worlds resources.' The conspiracy framework \u2014 Zionism as a secret project of world control \u2014 is structurally identical across five decades."
+    },
+    {
+      "sovietText": "Bearing in mind who it was who first advanced the idea of colonising one or other area of the world by using Jews as a \"manpower,\" we should also recall that organisationally Zionism took shape as the World Zionist Organisation and the Jewish Colonial Trust, in other words, as a capitalist enterprise.",
+      "sovietTextFull": "Did they suggest the establishment of a \"Jewish state,\" the State of Israel? No, they did not. Bearing in mind who it was who first advanced the idea of colonising one or other area of the world by using Jews as a \"manpower,\" we should also recall that organisationally Zionism took shape as the World Zionist Organisation and the Jewish Colonial Trust, in other words, as a capitalist enterprise.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "israel is an extension of colonialism in the middle east. this state does not represent the interests of the Jews, but of colonialism",
+      "modernTextFull": "israel is an extension of colonialism in the middle east. this state does not represent the interests of the Jews, but of colonialism",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.8006,
+      "tropes": [
+        "ZIONISM_IMPERIALISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "Considering that Israel has a population of 2,600,000, that the country's territory within the illegal 1 frontiers is slightly over 20,0 square kilometres, and that there are 1 relatively large business concerns, the above data clearly indicates that Israel's economy is in effect controlled by the international Zionist corporation, and through it by US, West German and other (non-Zionist) monopolies.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7969
+        },
+        {
+          "sovietText": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7878
+        }
+      ],
+      "cross_encoder_score": 0.4504,
+      "id": 2,
+      "echo_explanation": "Both texts frame Zionism as colonialism, not Jewish self-determination. The Soviet text traces Zionism to 'the Jewish Colonial Trust \u2014 a capitalist enterprise' that used Jews as 'manpower' for colonization; the modern tweet calls Israel 'an extension of colonialism that does not represent the interests of the Jews.' The specific claim \u2014 that Zionism exploits Jews for colonial purposes \u2014 is the same."
+    },
+    {
+      "sovietText": "They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis).",
+      "sovietTextFull": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose. They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis). (* Gentile.) The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+      "modernTextFull": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.8232,
+      "tropes": [
+        "ZIONISM_RACISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7881
+        },
+        {
+          "sovietText": "The Zionist concept of a \u201chistorical homeland\u201d and, con sequently, of a Palestine \u201cfree of Arabs\u201d led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \u201cconquerors.\u201d The analogous concept of a \u201cGermany free of Jews\u201d took a toll of millions of lives.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.782
+        }
+      ],
+      "cross_encoder_score": 0.4347,
+      "id": 3,
+      "echo_explanation": "Both texts describe an organized system of racial discrimination against Palestinians. The Soviet text describes a 'Zionist elite' building a 'centre of influence'; the modern text describes Israel operating 'a regime of systematic racial discrimination' facilitating 'ethnic cleansing.' Both characterize Israeli policy not as individual acts but as a deliberate system \u2014 a framing the Soviet Union actively promoted at the UN."
+    },
+    {
+      "sovietText": "For example, a 9 December 1 memorandum of the British General Staff stressed: \u201cThe creation of a buffer Jewish state in Palestine, though this State will be weak in itself, 1s strategically desirable for Great Britain.\u201d?\u00b0 After the British Cabinet\u2019s Balfour Declaration\u2019!",
+      "sovietTextFull": "For example, a 9 December 1 memorandum of the British General Staff stressed: \u201cThe creation of a buffer Jewish state in Palestine, though this State will be weak in itself, 1s strategically desirable for Great Britain.\u201d?\u00b0 After the British Cabinet\u2019s Balfour Declaration\u2019! (2 November 1917) and the League of Nation\u2019s mandate to Britain to govern Palestine (24 July 1922) the Zion- \u2018st colonization of the country entered a new stage. Proclaiming the Jews\u2019 \u201chistorical\u201d and even \u201cdivine\u201d right to Palestine and posing as \u201cfighters against anti-Semitism\u201d and \u201csaviours of the Jewish people\u201d, Zionists proceeded to lay a chauvinist-racist foundation of their state in \u201cthe Holy Land\u201d.",
+      "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+      "sovietYear": 1985,
+      "sovietAuthor": "Progress Publishers",
+      "modernText": "One hundred years from the day Balfour, a British colonial official, sent a letter to Rothschild declaring that a state for the Jews would be established on the land of Palestine, called Israel. At the mercy of oppression #RightsOfKashmir_Palestine",
+      "modernTextFull": "One hundred years from the day Balfour, a British colonial official, sent a letter to Rothschild declaring that a state for the Jews would be established on the land of Palestine, called Israel. At the mercy of oppression #RightsOfKashmir_Palestine",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.806,
+      "tropes": [
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "Herzl\u2019s closest associate, stressed in his speech at the 7th Zionist Congress in 1 that Zionism could assume the 9 task of the struggle against the Arabs\u2019 national-liberation movement.\u00b0 It must be noted that such offers made by Zionist leaders fully corresponded with the British ruling quarters\u2019 imperial interests.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.8014
+        },
+        {
+          "sovietText": "The declaration was a manoeuvre of British imperialism which wanted to divest itself of its commitment before the Arabs to make Palestine a part of an Arab state.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.798
+        }
+      ],
+      "cross_encoder_score": 0.433,
+      "id": 4,
+      "echo_explanation": "Both texts trace Israel's founding to the Balfour Declaration as a British colonial project. The Soviet text quotes a British General Staff memorandum calling for 'a buffer Jewish state' that was 'strategically desirable for Great Britain'; the modern tweet describes Balfour as 'a British colonial official' who declared a state for Jews 'on the land of Palestine.' Both present Israel's creation as a colonial imposition, not an act of Jewish self-determination."
+    },
+    {
+      "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+      "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
+      "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+      "sovietYear": 1983,
+      "sovietAuthor": "CPSU / KGB",
+      "modernText": "The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews. #NAZIONISM",
+      "modernTextFull": "The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews. #NAZIONISM",
+      "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+      "modernYear": 2023,
+      "similarity": 0.8605,
+      "tropes": [
+        "ZIONISM_NAZISM"
+      ],
       "confidence": "high",
-      "modernTextFull": "The Jews control everything. They own the Federal Reserve, the U.S. Congress, and the British Cabinet. They control the major media, education, and most of our economy.",
-      "sovietTextFull": "International Zionist Organization owns major financial funds, partly through Jewish monopolists and partly collected by Jewish mandatory charities. It also influences or controls significant part of media agencies and outlets in the West."
+      "alternateMatches": [
+        {
+          "sovietText": "In Israel, as a mat. ter of fact, it is possible. Most Israelis believe that Nazism means only gas chambers. Those horrible ones that smoked in Maida. nek, Treblinka and other Nazi death camps.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.827
+        },
+        {
+          "sovietText": "The Israeli policy of steady escalation of tensions in the Middle East, the piratical operations of the Israeli Air Force and land units, the atrocities perpetrated by the Israeli military on occupied Arab lands are reminiscent of the nazi crimes.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.8189
+        }
+      ],
+      "cross_encoder_score": 0.4199,
+      "id": 5,
+      "echo_explanation": "Both texts make the same explosive claim: Israel's government uses Nazi methods. The Soviet text states it directly \u2014 'the Israeli government is employing methods used by the nazis.' The modern tweet goes further: Israeli policies 'are analogous to Nazism' and 'aim at the systematic extermination of the Palestinian people.' The Israel-Nazi equation, first systematized by Soviet propaganda, is now one of the most common tropes in anti-Zionist discourse."
     },
     {
       "sovietText": "The main posits of modern Zionism are militant chauvinism, racism, anti-Communism and anti-Sovietism. The anti-human reactionary essence of Zionism is overt and covert fight against freedom movements and against the USSR.",
@@ -43,29 +191,11 @@
         "ZIONISM_IMPERIALISM"
       ],
       "echo_explanation": "Both texts define Zionism itself \u2014 not Israeli policy, but the ideology \u2014 as inherently racist. The Soviet Encyclopedia calls it 'militant chauvinism, racism'; the modern text calls it 'a racist, settler colonialist movement.' Both treat racism not as an incidental feature of Israeli policy but as the core essence of Zionism as an ideology. This framing was codified in Soviet reference works and is now standard in anti-Zionist discourse.",
-      "id": 2,
+      "id": 6,
       "similarity": 0.6939,
       "confidence": "high",
       "modernTextFull": "Zionism is a racist, settler colonialist movement, which opportunistically co-opts aspects of Judaism in an attempt to justify its criminal practices of apartheid & genocide of indigenous Palestinians.",
       "sovietTextFull": "The main posits of modern Zionism are militant chauvinism, racism, anti-Communism and anti-Sovietism. The anti-human reactionary essence of Zionism is overt and covert fight against freedom movements and against the USSR."
-    },
-    {
-      "sovietText": "Serving as the front squad of colonialism and neo-colonialism, international Zionism actively participates in the fight against national liberation movements of the peoples of Africa, Asia and Latin America.",
-      "sovietSource": "Great Soviet Encyclopedia",
-      "sovietYear": 1975,
-      "sovietAuthor": "CPSU",
-      "modernText": "israel is an extension of colonialism in the middle east. this state does not represent the interests of the Jews, but of colonialism",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "tropes": [
-        "ZIONISM_IMPERIALISM"
-      ],
-      "echo_explanation": "Both texts frame Zionism as a form of colonialism serving imperial interests, not Jewish interests. The Soviet Encyclopedia calls it 'the front squad of colonialism and neo-colonialism'; the modern tweet calls Israel 'an extension of colonialism' that 'does not represent the interests of the Jews, but of colonialism.' The specific claim \u2014 that Zionism serves colonialism, not Jews \u2014 is identical.",
-      "id": 3,
-      "similarity": 0.6498,
-      "confidence": "high",
-      "modernTextFull": "israel is an extension of colonialism in the middle east. this state does not represent the interests of the Jews, but of colonialism",
-      "sovietTextFull": "Serving as the front squad of colonialism and neo-colonialism, international Zionism actively participates in the fight against national liberation movements of the peoples of Africa, Asia and Latin America."
     },
     {
       "sovietText": "One of the demagogic methods of defending Zionism against all attacks on Zionism as a whole is to qualify them as anti-Semitic acts.",
@@ -79,7 +209,7 @@
         "WEAPONIZED_ANTISEMITISM"
       ],
       "echo_explanation": "Both texts make the same argument: accusations of antisemitism are a tactic used to shield Zionism from criticism. Ivanov calls it 'one of the demagogic methods of defending Zionism'; the modern tweet calls it silencing Palestinians. The Soviet formulation \u2014 that antisemitism claims are a Zionist weapon, not a legitimate concern \u2014 is reproduced almost word for word in contemporary discourse.",
-      "id": 4,
+      "id": 7,
       "similarity": 0.6701,
       "confidence": "high",
       "modernTextFull": "Calling anti-Zionism anti-Semitism doesn't protect Jews. It silences Palestinians.",
@@ -98,65 +228,11 @@
         "ZIONISM_IMPERIALISM"
       ],
       "echo_explanation": "Both texts define Zionism through a list of its alleged pathologies. The 1983 Soviet declaration catalogues 'ultra-nationalism, chauvinism, racial intolerance, territorial occupation'; the modern text condenses this to 'Jewish supremacist ideology based in hate and exclusion.' The Soviet approach of defining Zionism as a comprehensive catalogue of evils \u2014 rather than engaging with any of its actual claims \u2014 set the template for how anti-Zionist discourse characterizes the ideology today.",
-      "id": 5,
+      "id": 8,
       "similarity": 0.681,
       "confidence": "high",
       "modernTextFull": "Jewish supremacist ideology based in hate and exclusion.",
       "sovietTextFull": "By its nature, Zionism concentrates ultra-nationalism, chauvinism and racial intolerance, excuse for territorial occupation and annexation, military opportunism, cult of political promiscuousness and irresponsibility, demagogy and ideological diversion, dirty tactics and perfidy."
-    },
-    {
-      "sovietText": "Absurd are attempts of Zionist ideologists to present those who criticize them, or condemn the aggressive politics of Israel's ruling circles, as antisemitic.",
-      "sovietSource": "Anti-Zionist Committee Declaration (Pravda)",
-      "sovietYear": 1983,
-      "sovietAuthor": "CPSU / KGB",
-      "modernText": "According to ZioNazis in order for you NOT to be anti Semitic you have to support israel's murder of Palestinian children daily. You have to praise the illegal occupation of Palestine and support the bombings and besiegement of Gaza. Then maybe, you're ok... that's the mentality.",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "tropes": [
-        "WEAPONIZED_ANTISEMITISM"
-      ],
-      "echo_explanation": "Both texts dismiss antisemitism accusations as a cynical Zionist tactic. The Soviet Anti-Zionist Committee calls such accusations 'absurd'; the modern tweet sarcastically lists what you supposedly must support to avoid being called antisemitic. Both frame the antisemitism charge as a tool of political coercion rather than a response to genuine prejudice. The Soviet state pioneered this dismissal; it is now one of the most common responses to antisemitism allegations.",
-      "id": 6,
-      "similarity": 0.6375,
-      "confidence": "high",
-      "modernTextFull": "According to ZioNazis in order for you NOT to be anti Semitic you have to support israel's murder of Palestinian children daily. You have to praise the illegal occupation of Palestine and support the bombings and besiegement of Gaza. Then maybe, you're ok... that's the mentality.",
-      "sovietTextFull": "Absurd are attempts of Zionist ideologists to present those who criticize them, or condemn the aggressive politics of Israel's ruling circles, as antisemitic."
-    },
-    {
-      "sovietText": "The Hitlerites acted in the same way when they exterminated the inferior Jewish race. His ugly statements about man-hating Zionism and his equation, Zionism-Fascism-Hitlerism.",
-      "sovietSource": "Leningradskaya Pravda (via Novick)",
-      "sovietYear": 1983,
-      "sovietAuthor": "Kravtsov / Dragunsky",
-      "modernText": "Zionists are basically Nazis & not really Jews at all, one needs merely to read what Herzl, Jabotinsky & later Rabbi Kahane to understand Jews who went wrong & destroyed the best that is from Jews.",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "tropes": [
-        "ZIONISM_NAZISM"
-      ],
-      "echo_explanation": "Both texts assert the same equation: Zionism equals Nazism. The Soviet text references the official formula 'Zionism-Fascism-Hitlerism'; the modern text states 'Zionists are basically Nazis.' Both add the same qualifier \u2014 Zionists are 'not really Jews' \u2014 which allows the Nazi comparison while claiming not to target Jews as a group. This two-part formula (Zionism = Nazism + Zionists \u2260 real Jews) was engineered by Soviet propagandists and remains in active use.",
-      "id": 7,
-      "similarity": 0.7731,
-      "confidence": "high",
-      "modernTextFull": "Zionists are basically Nazis & not really Jews at all, one needs merely to read what Herzl, Jabotinsky & later Rabbi Kahane to understand Jews who went wrong & destroyed the best that is from Jews.",
-      "sovietTextFull": "The Hitlerites acted in the same way when they exterminated the inferior Jewish race. His ugly statements about man-hating Zionism and his equation, Zionism-Fascism-Hitlerism."
-    },
-    {
-      "sovietText": "The Zionist Concern is at the same time one of the world's largest associations of finance capital, a self-styled global ministry for the affairs of world Jewry, an international intelligence centre, and a well-run misinformation and propaganda service.",
-      "sovietSource": "Caution: Zionism! (Preface)",
-      "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "Zionist Jews rule Washington, media, academia, sports and entertainment industries. This is just a fact, not an antiSemitic statement.",
-      "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
-      "modernYear": 2023,
-      "tropes": [
-        "JEWISH_CONSPIRACY"
-      ],
-      "echo_explanation": "Both texts present Zionist control of major institutions as established fact. Ivanov describes a Zionist 'association of finance capital' that is simultaneously 'an intelligence centre and a propaganda service'; the modern text claims 'Zionist Jews rule Washington, media, academia.' Both use the same rhetorical move: state the conspiracy as obvious fact, not theory. The modern text even preemptively adds 'this is just a fact, not an antisemitic statement' \u2014 echoing the Soviet insistence that exposing Zionist power is not antisemitism.",
-      "id": 8,
-      "similarity": 0.5957,
-      "confidence": "high",
-      "modernTextFull": "Zionist Jews rule Washington, media, academia, sports and entertainment industries. This is just a fact, not an antiSemitic statement.",
-      "sovietTextFull": "The Zionist Concern is at the same time one of the world's largest associations of finance capital, a self-styled global ministry for the affairs of world Jewry, an international intelligence centre, and a well-run misinformation and propaganda service."
     },
     {
       "sovietText": "We call on all Soviet citizens: workers, peasants, representatives of intelligentsia: take active part in exposing Zionism, strongly rebuke its endeavors.",
@@ -175,25 +251,6 @@
       "confidence": "high",
       "modernTextFull": "Workers and Students: Unite to crush imperialism and Zionism.",
       "sovietTextFull": "We call on all Soviet citizens: workers, peasants, representatives of intelligentsia: take active part in exposing Zionism, strongly rebuke its endeavors."
-    },
-    {
-      "sovietText": "Attacking the socialist community, the international communist and working-class movement, Zionism is also opposing the national liberation movement.",
-      "sovietSource": "Caution: Zionism! (Preface)",
-      "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "This fight was and will always be about the total liberation of our people and dismantlement of settler colonialism and Zionism.",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "tropes": [
-        "ANTI_ZIONISM_PROGRESSIVE",
-        "ZIONISM_IMPERIALISM"
-      ],
-      "echo_explanation": "Both texts position Zionism as the enemy of liberation movements. The Soviet text claims Zionism 'opposes the national liberation movement'; the modern text frames the Palestinian cause as 'total liberation' requiring 'the dismantlement of Zionism.' The Soviet Union successfully embedded anti-Zionism into the global language of national liberation \u2014 a framing that now structures how many activists worldwide understand the Israeli-Palestinian conflict.",
-      "id": 10,
-      "similarity": 0.5153,
-      "confidence": "high",
-      "modernTextFull": "This fight was and will always be about the total liberation of our people and dismantlement of settler colonialism and Zionism.",
-      "sovietTextFull": "Attacking the socialist community, the international communist and working-class movement, Zionism is also opposing the national liberation movement."
     }
   ],
   "tropeDistribution": [
@@ -202,63 +259,63 @@
       "name": "Zionism = Imperialism/Colonialism",
       "description": "Israel as tool of Western imperialism; settler-colonial framing",
       "sovietCount": 621,
-      "modernCount": 12
+      "modernCount": 3
     },
     {
       "id": "ANTI_ZIONISM_PROGRESSIVE",
       "name": "Anti-Zionism as Progressive Duty",
       "description": "Opposition to Zionism framed as anti-racist/progressive",
       "sovietCount": 599,
-      "modernCount": 14
+      "modernCount": 0
     },
     {
       "id": "JEWISH_CONSPIRACY",
       "name": "Jewish/Zionist Conspiracy",
       "description": "Zionist control of media, finance, governments",
       "sovietCount": 407,
-      "modernCount": 14
+      "modernCount": 0
     },
     {
       "id": "ZIONISM_NAZISM",
       "name": "Zionism = Nazism/Fascism",
       "description": "Zionist-Nazi collaboration; Israel employs Nazi methods",
       "sovietCount": 359,
-      "modernCount": 30
+      "modernCount": 2
     },
     {
       "id": "DUAL_LOYALTY",
       "name": "Dual Loyalty",
       "description": "Jews as agents of foreign power; conflation with Israel",
       "sovietCount": 250,
-      "modernCount": 4
+      "modernCount": 0
     },
     {
       "id": "ZIONISM_RACISM",
       "name": "Zionism = Racism",
       "description": "Zionism as inherently racist ideology; apartheid comparisons",
       "sovietCount": 114,
-      "modernCount": 16
+      "modernCount": 2
     },
     {
       "id": "BLOOD_LIBEL",
       "name": "Blood Libel / Atrocity Propaganda",
       "description": "Accusations of deliberate child killing; dehumanization",
       "sovietCount": 88,
-      "modernCount": 10
+      "modernCount": 0
     },
     {
       "id": "DELEGITIMIZATION",
       "name": "Delegitimization of Jewish Self-Determination",
       "description": "Denial of Jewish nationhood; 'Zionist entity'",
       "sovietCount": 23,
-      "modernCount": 1
+      "modernCount": 0
     },
     {
       "id": "WEAPONIZED_ANTISEMITISM",
       "name": "Weaponization of Antisemitism Claims",
       "description": "Dismissing antisemitism accusations as Zionist tricks",
       "sovietCount": 8,
-      "modernCount": 1
+      "modernCount": 0
     }
   ],
   "timeline": [
@@ -316,43 +373,43 @@
   "calibration": {
     "echoScores": [
       {
-        "label": "CONAN Counter-Narrative Dataset",
-        "score": 0.8,
-        "type": "echo"
-      },
-      {
-        "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
-        "type": "echo"
-      },
-      {
-        "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
+        "label": "CONAN Dialogue Dataset",
+        "score": 0.814,
         "type": "echo"
       },
       {
         "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
-        "type": "echo"
-      },
-      {
-        "label": "ADL H.E.A.T. Map",
-        "score": 0.8,
+        "score": 0.8006,
         "type": "echo"
       },
       {
         "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
+        "score": 0.8232,
         "type": "echo"
       },
       {
         "label": "ISCA Twitter Dataset (Zenodo)",
-        "score": 0.8,
+        "score": 0.806,
         "type": "echo"
       },
       {
         "label": "ISCA ClassData 2022-2023 (Zenodo)",
-        "score": 0.8,
+        "score": 0.8605,
+        "type": "echo"
+      },
+      {
+        "label": "ADL H.E.A.T. Map",
+        "score": 0.6939,
+        "type": "echo"
+      },
+      {
+        "label": "ISCA Twitter Dataset (Zenodo)",
+        "score": 0.6701,
+        "type": "echo"
+      },
+      {
+        "label": "ADL H.E.A.T. Map",
+        "score": 0.681,
         "type": "echo"
       }
     ],
