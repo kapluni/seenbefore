@@ -259,63 +259,63 @@
       "name": "Zionism = Imperialism/Colonialism",
       "description": "Israel as tool of Western imperialism; settler-colonial framing",
       "sovietCount": 621,
-      "modernCount": 3
+      "modernCount": 127
     },
     {
       "id": "ANTI_ZIONISM_PROGRESSIVE",
       "name": "Anti-Zionism as Progressive Duty",
       "description": "Opposition to Zionism framed as anti-racist/progressive",
       "sovietCount": 599,
-      "modernCount": 0
+      "modernCount": 127
     },
     {
       "id": "JEWISH_CONSPIRACY",
       "name": "Jewish/Zionist Conspiracy",
       "description": "Zionist control of media, finance, governments",
       "sovietCount": 407,
-      "modernCount": 0
+      "modernCount": 297
     },
     {
       "id": "ZIONISM_NAZISM",
       "name": "Zionism = Nazism/Fascism",
       "description": "Zionist-Nazi collaboration; Israel employs Nazi methods",
       "sovietCount": 359,
-      "modernCount": 2
+      "modernCount": 380
     },
     {
       "id": "DUAL_LOYALTY",
       "name": "Dual Loyalty",
       "description": "Jews as agents of foreign power; conflation with Israel",
       "sovietCount": 250,
-      "modernCount": 0
+      "modernCount": 36
     },
     {
       "id": "ZIONISM_RACISM",
       "name": "Zionism = Racism",
       "description": "Zionism as inherently racist ideology; apartheid comparisons",
       "sovietCount": 114,
-      "modernCount": 2
+      "modernCount": 344
     },
     {
       "id": "BLOOD_LIBEL",
       "name": "Blood Libel / Atrocity Propaganda",
       "description": "Accusations of deliberate child killing; dehumanization",
       "sovietCount": 88,
-      "modernCount": 0
+      "modernCount": 100
     },
     {
       "id": "DELEGITIMIZATION",
       "name": "Delegitimization of Jewish Self-Determination",
       "description": "Denial of Jewish nationhood; 'Zionist entity'",
       "sovietCount": 23,
-      "modernCount": 0
+      "modernCount": 23
     },
     {
       "id": "WEAPONIZED_ANTISEMITISM",
       "name": "Weaponization of Antisemitism Claims",
       "description": "Dismissing antisemitism accusations as Zionist tricks",
       "sovietCount": 8,
-      "modernCount": 0
+      "modernCount": 7
     }
   ],
   "timeline": [
