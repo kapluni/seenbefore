@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import ScrollViz from './ScrollViz.jsx'
 import ExploreViz from './ExploreViz.jsx'
+import { ThemeProvider } from './useTheme.jsx'
 
 // Use query params to show different views
 const params = window.location.search;
@@ -13,6 +14,8 @@ const View = params.includes('scroll') ? ScrollViz
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <View />
+    <ThemeProvider>
+      <View />
+    </ThemeProvider>
   </StrictMode>,
 )
