@@ -326,6 +326,8 @@ def load_soviet_corpus():
          {"source":"azc_1983","title":"Anti-Zionist Committee: Aims and Tasks","author":"CPSU / KGB","year":1983,"language":"en","corpus":"soviet"}),
         ("corpus/soviet_sources/zionism_enemy_peace_progress_1985.txt",
          {"source":"progress_1985","title":"Zionism: Enemy of Peace and Social Progress","author":"Progress Publishers","year":1985,"language":"en","corpus":"soviet"}),
+        ("corpus/soviet_sources/kichko_judaism_without_embellishment_1963.txt",
+         {"source":"kichko_1963","title":"Judaism Without Embellishment (analysis)","author":"Trofim Kichko / Ukrainian Academy of Sciences","year":1963,"language":"en","corpus":"soviet"}),
     ]
     for path, meta in additional_sources:
         if os.path.exists(path):
