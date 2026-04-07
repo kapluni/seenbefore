@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Card — Instagram Carousel (1080x1080 per slide)</title>
+<style>
+  /* 1080x1080 per slide — Instagram Carousel (shown at 400x400, ~37% scale) */
+  body {
+    margin: 0;
+    padding: 40px;
+    background: #111;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    gap: 32px;
+    overflow-x: auto;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .slide-wrapper {
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .slide-label {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .slide {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  /* Swipe dots */
+  .dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .dot.active {
+    background: #1d9bf0;
+  }
+
+  /* ============ SLIDE 1: TITLE CARD ============ */
+  .title-slide {
+    background: linear-gradient(135deg, #0f0f1a 0%, #0a0a12 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .title-slide .icon-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .title-slide .icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .icon-circle.red {
+    background: rgba(192,57,43,0.2);
+    border: 2px solid rgba(192,57,43,0.4);
+    color: #c0392b;
+  }
+
+  .icon-circle.blue {
+    background: rgba(41,128,185,0.2);
+    border: 2px solid rgba(41,128,185,0.4);
+    color: #2980b9;
+  }
+
+  .title-slide .arrow {
+    font-size: 20px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .title-slide h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+
+  .title-slide h1 .gradient-text {
+    background: linear-gradient(90deg, #c0392b, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .title-slide .subtitle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    max-width: 300px;
+  }
+
+  .title-slide .swipe-cta {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ============ SLIDES 2-4: MATCH SLIDES ============ */
+  .match-slide {
+    background: #0a0a12;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .match-header {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .match-number {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .match-similarity {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e74c3c;
+  }
+
+  .match-content {
+    flex: 1;
+    display: flex;
+  }
+
+  .match-half {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .match-half.soviet {
+    background: rgba(192,57,43,0.03);
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .match-half.soviet::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #c0392b;
+  }
+
+  .match-half.modern {
+    background: rgba(41,128,185,0.03);
+  }
+
+  .match-half.modern::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #2980b9;
+  }
+
+  .match-era {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .match-era.then { color: #c0392b; }
+  .match-era.now { color: #2980b9; }
+
+  .match-year {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+  }
+
+  .match-year.then { color: #c0392b; }
+  .match-year.now { color: #2980b9; }
+
+  .match-quote {
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 10px;
+  }
+
+  .match-source {
+    font-size: 9px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.4;
+  }
+
+  .match-footer {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .trope-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .trope-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e74c3c;
+  }
+
+  .match-footer .brand {
+    font-size: 10px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  /* ============ SLIDE 5: CTA + TAXONOMY ============ */
+  .cta-slide {
+    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cta-slide .cta-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .cta-slide .cta-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .taxonomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .taxonomy-item {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .taxonomy-item .t-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 auto 6px auto;
+  }
+
+  .taxonomy-item .t-name {
+    font-size: 9px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.3;
+  }
+
+  /* Trope-specific colors */
+  .t-dot.c1 { background: #e74c3c; }
+  .t-dot.c2 { background: #e67e22; }
+  .t-dot.c3 { background: #f1c40f; }
+  .t-dot.c4 { background: #2ecc71; }
+  .t-dot.c5 { background: #1abc9c; }
+  .t-dot.c6 { background: #3498db; }
+  .t-dot.c7 { background: #9b59b6; }
+  .t-dot.c8 { background: #e91e63; }
+  .t-dot.c9 { background: #00bcd4; }
+
+  .cta-slide .cta-bottom {
+    margin-top: auto;
+    text-align: center;
+  }
+
+  .cta-slide .url-pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .cta-slide .hashtag-line {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Instagram Carousel — 1080x1080 per slide (displayed at ~400x400) -->
+
+<!-- SLIDE 1: TITLE CARD -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 1 &mdash; Title</div>
+  <div class="slide title-slide">
+    <div class="icon-row">
+      <div class="icon-circle red">&#9733;</div>
+      <div class="arrow">&rarr;</div>
+      <div class="icon-circle blue">&#9679;</div>
+    </div>
+    <h1>I've Seen<br>This Before</h1>
+    <h1 style="font-size:15px; font-weight:400; margin-top:0;"><span class="gradient-text">Soviet Propaganda &rarr; Modern Rhetoric</span></h1>
+    <div class="subtitle">Machine learning reveals how Cold War anti-Zionist language lives on in today's public discourse.</div>
+    <div class="swipe-cta">Swipe to see the evidence &rarr;</div>
+  </div>
+  <div class="dots">
+    <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 2: MATCH #1 — Zionism = Nazism (ID 5, 86.1%) -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 2 &mdash; Match 1</div>
+  <div class="slide match-slide">
+    <div class="match-header">
+      <span class="match-number">Match 1 of 3</span>
+      <span class="match-similarity">86.1% similar</span>
+    </div>
+    <div class="match-content">
+      <div class="match-half soviet">
+        <div class="match-era then">Then</div>
+        <div class="match-year then">1983</div>
+        <div class="match-quote">"We say that the Israeli government is employing methods used by the nazis."</div>
+        <div class="match-source">Anti-Zionist Committee<br>CPSU / KGB</div>
+      </div>
+      <div class="match-half modern">
+        <div class="match-era now">Now</div>
+        <div class="match-year now">2023</div>
+        <div class="match-quote">"The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people."</div>
+        <div class="match-source">Social Media<br>ISCA ClassData</div>
+      </div>
+    </div>
+    <div class="match-footer">
+      <div class="trope-tag"><div class="dot active" style="background:#e67e22;width:8px;height:8px;"></div> Zionism = Nazism</div>
+      <div class="brand">#IveSeenThisBefore</div>
+    </div>
+  </div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: MATCH #2 — Zionism = Racism (ID 3, 82.3%) -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 3 &mdash; Match 2</div>
+  <div class="slide match-slide">
+    <div class="match-header">
+      <span class="match-number">Match 2 of 3</span>
+      <span class="match-similarity">82.3% similar</span>
+    </div>
+    <div class="match-content">
+      <div class="match-half soviet">
+        <div class="match-era then">Then</div>
+        <div class="match-year then">1970</div>
+        <div class="match-quote">"The Israeli version of apartheid... plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose."</div>
+        <div class="match-source">Yuri Ivanov<br><em>Caution: Zionism!</em></div>
+      </div>
+      <div class="match-half modern">
+        <div class="match-era now">Now</div>
+        <div class="match-year now">2021</div>
+        <div class="match-quote">"Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population."</div>
+        <div class="match-source">Social Media<br>ISCA Twitter Dataset</div>
+      </div>
+    </div>
+    <div class="match-footer">
+      <div class="trope-tag"><div class="dot active" style="background:#e74c3c;width:8px;height:8px;"></div> Zionism = Racism</div>
+      <div class="brand">#IveSeenThisBefore</div>
+    </div>
+  </div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: MATCH #3 — Weaponized Antisemitism (ID 7, 67.0%) -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 4 &mdash; Match 3</div>
+  <div class="slide match-slide">
+    <div class="match-header">
+      <span class="match-number">Match 3 of 3</span>
+      <span class="match-similarity">67.0% similar</span>
+    </div>
+    <div class="match-content">
+      <div class="match-half soviet">
+        <div class="match-era then">Then</div>
+        <div class="match-year then">1970</div>
+        <div class="match-quote">"One of the demagogic methods of defending Zionism against all attacks... is to qualify them as anti-Semitic acts."</div>
+        <div class="match-source">Yuri Ivanov<br><em>Caution: Zionism!</em></div>
+      </div>
+      <div class="match-half modern">
+        <div class="match-era now">Now</div>
+        <div class="match-year now">2021</div>
+        <div class="match-quote">"Calling anti-Zionism anti-Semitism doesn't protect Jews. It silences Palestinians."</div>
+        <div class="match-source">Social Media<br>ISCA Twitter Dataset</div>
+      </div>
+    </div>
+    <div class="match-footer">
+      <div class="trope-tag"><div class="dot active" style="background:#3498db;width:8px;height:8px;"></div> Weaponized Antisemitism</div>
+      <div class="brand">#IveSeenThisBefore</div>
+    </div>
+  </div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 5: CTA + TAXONOMY -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 5 &mdash; CTA</div>
+  <div class="slide cta-slide">
+    <div class="cta-title">9 Soviet Propaganda Tropes</div>
+    <div class="cta-sub">Still active in modern discourse</div>
+    <div class="taxonomy-grid">
+      <div class="taxonomy-item">
+        <div class="t-dot c1"></div>
+        <div class="t-name">Zionism<br>= Racism</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c2"></div>
+        <div class="t-name">Zionism<br>= Nazism</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c3"></div>
+        <div class="t-name">Zionism =<br>Imperialism</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c4"></div>
+        <div class="t-name">Jewish<br>Conspiracy</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c5"></div>
+        <div class="t-name">Delegitimi-<br>zation</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c6"></div>
+        <div class="t-name">Weaponized<br>Antisemitism</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c7"></div>
+        <div class="t-name">Dual<br>Loyalty</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c8"></div>
+        <div class="t-name">Blood<br>Libel</div>
+      </div>
+      <div class="taxonomy-item">
+        <div class="t-dot c9"></div>
+        <div class="t-name">Anti-Zionism<br>as Progress</div>
+      </div>
+    </div>
+    <div class="cta-bottom">
+      <div class="url-pill">iveseenthisbefore.org</div>
+      <div class="hashtag-line">#IveSeenThisBefore</div>
+    </div>
+  </div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Card — Twitter/X Thread Format</title>
+<style>
+  /* Twitter/X Thread — shows how a 3-4 tweet thread would look */
+  body {
+    margin: 0;
+    padding: 40px;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .thread-container {
+    width: 598px;
+    background: #000;
+  }
+
+  .thread-label {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  /* Tweet component */
+  .tweet {
+    border: 1px solid #2f3336;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #000;
+  }
+
+  .tweet-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c0392b, #2980b9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .user-info {
+    flex: 1;
+  }
+
+  .display-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e7e9ea;
+  }
+
+  .handle {
+    font-size: 15px;
+    color: #71767b;
+  }
+
+  .tweet-text {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #e7e9ea;
+    margin-bottom: 12px;
+    white-space: pre-wrap;
+  }
+
+  .tweet-text .hashtag {
+    color: #1d9bf0;
+  }
+
+  .tweet-text .thread-indicator {
+    color: #71767b;
+  }
+
+  /* Embedded image card */
+  .image-card {
+    border: 1px solid #2f3336;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .image-card-visual {
+    height: 200px;
+    position: relative;
+    display: flex;
+  }
+
+  .image-card-soviet {
+    flex: 1;
+    background: linear-gradient(180deg, #1a0808, #0d0505);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .image-card-soviet::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #c0392b;
+  }
+
+  .image-card-modern {
+    flex: 1;
+    background: linear-gradient(180deg, #08081a, #050510);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .image-card-modern::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #2980b9;
+  }
+
+  .ic-era {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .ic-era.then { color: #c0392b; }
+  .ic-era.now { color: #2980b9; }
+
+  .ic-quote {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 10px;
+  }
+
+  .ic-source {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .image-card-footer {
+    background: #16181c;
+    padding: 12px 16px;
+  }
+
+  .ic-title {
+    font-size: 15px;
+    font-weight: 400;
+    color: #e7e9ea;
+  }
+
+  .ic-domain {
+    font-size: 13px;
+    color: #71767b;
+    margin-top: 2px;
+  }
+
+  /* Soviet-only image card */
+  .image-card-solo {
+    height: 260px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .image-card-solo.soviet-solo {
+    background: linear-gradient(180deg, #1a0808 0%, #0d0505 100%);
+  }
+
+  .image-card-solo.soviet-solo::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #c0392b;
+  }
+
+  .image-card-solo.modern-solo {
+    background: linear-gradient(180deg, #08081a 0%, #050510 100%);
+  }
+
+  .image-card-solo.modern-solo::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #2980b9;
+  }
+
+  .solo-year {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -2px;
+  }
+
+  .solo-year.then { color: #c0392b; }
+  .solo-year.now { color: #2980b9; }
+
+  .solo-quote {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 16px;
+  }
+
+  .solo-source {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .solo-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .solo-badge.then {
+    background: rgba(192,57,43,0.2);
+    color: #c0392b;
+    border: 1px solid rgba(192,57,43,0.3);
+  }
+
+  .solo-badge.now {
+    background: rgba(41,128,185,0.2);
+    color: #2980b9;
+    border: 1px solid rgba(41,128,185,0.3);
+  }
+
+  /* Tweet metrics */
+  .tweet-metrics {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin-top: 12px;
+  }
+
+  .metric {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #71767b;
+    font-size: 13px;
+  }
+
+  .metric svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  /* Thread line */
+  .thread-connector {
+    width: 2px;
+    height: 16px;
+    background: #2f3336;
+    margin-left: 35px;
+    margin-top: -12px;
+    margin-bottom: -4px;
+  }
+
+  /* Character count */
+  .char-count {
+    text-align: right;
+    font-size: 11px;
+    color: #71767b;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+<body>
+
+<!-- Thread format — using match ID 7 (Weaponized Antisemitism) for variety -->
+
+<div class="thread-container">
+  <div class="thread-label">Twitter/X Thread &mdash; 4 Tweets</div>
+
+  <!-- TWEET 1: Hook with Soviet quote -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar">IB</div>
+      <div class="user-info">
+        <div class="display-name">I've Seen This Before</div>
+        <div class="handle">@iveseenthis &middot; 1h</div>
+      </div>
+    </div>
+    <div class="tweet-text">In 1970, Soviet propagandist Yuri Ivanov wrote this in a book printed 800,000 times and distributed worldwide:
+
+<span class="thread-indicator">1/4</span></div>
+    <div class="image-card">
+      <div class="image-card-solo soviet-solo">
+        <span class="solo-badge then">Soviet Propaganda</span>
+        <div class="solo-year then">1970</div>
+        <div class="solo-quote">"One of the demagogic methods of defending Zionism against all attacks on Zionism as a whole is to qualify them as anti-Semitic acts."</div>
+        <div class="solo-source">Yuri Ivanov, <em>Caution: Zionism!</em> (Progress Publishers, Moscow)</div>
+      </div>
+    </div>
+    <div class="char-count">148 / 280 characters</div>
+  </div>
+
+  <div class="thread-connector"></div>
+
+  <!-- TWEET 2: Modern reveal -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar">IB</div>
+      <div class="user-info">
+        <div class="display-name">I've Seen This Before</div>
+        <div class="handle">@iveseenthis &middot; 1h</div>
+      </div>
+    </div>
+    <div class="tweet-text">Now look at this post from 2021.
+
+The same argument. The same structure. 51 years later.
+
+<span class="thread-indicator">2/4</span></div>
+    <div class="image-card">
+      <div class="image-card-solo modern-solo">
+        <span class="solo-badge now">Modern Rhetoric</span>
+        <div class="solo-year now">2021</div>
+        <div class="solo-quote">"Calling anti-Zionism anti-Semitism doesn't protect Jews. It silences Palestinians."</div>
+        <div class="solo-source">Social Media &mdash; ISCA Twitter Dataset</div>
+      </div>
+    </div>
+    <div class="char-count">89 / 280 characters</div>
+  </div>
+
+  <div class="thread-connector"></div>
+
+  <!-- TWEET 3: Side-by-side + explanation -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar">IB</div>
+      <div class="user-info">
+        <div class="display-name">I've Seen This Before</div>
+        <div class="handle">@iveseenthis &middot; 1h</div>
+      </div>
+    </div>
+    <div class="tweet-text">This is the "Weaponized Antisemitism" trope. The idea that accusations of antisemitism are a tactic to shield Zionism from criticism.
+
+The Soviet Union formulated it. Today it's a mainstream talking point.
+
+Our ML engine detected 67% semantic similarity between these texts.
+
+<span class="thread-indicator">3/4</span></div>
+    <div class="image-card">
+      <div class="image-card-visual">
+        <div class="image-card-soviet">
+          <div class="ic-era then">1970 &mdash; USSR</div>
+          <div class="ic-quote">"One of the demagogic methods of defending Zionism against all attacks... is to qualify them as anti-Semitic acts."</div>
+          <div class="ic-source">Ivanov, <em>Caution: Zionism!</em></div>
+        </div>
+        <div class="image-card-modern">
+          <div class="ic-era now">2021 &mdash; Social Media</div>
+          <div class="ic-quote">"Calling anti-Zionism anti-Semitism doesn't protect Jews. It silences Palestinians."</div>
+          <div class="ic-source">ISCA Twitter Dataset</div>
+        </div>
+      </div>
+      <div class="image-card-footer">
+        <div class="ic-title">#IveSeenThisBefore &mdash; Trope: Weaponized Antisemitism</div>
+        <div class="ic-domain">iveseenthisbefore.org</div>
+      </div>
+    </div>
+    <div class="char-count">271 / 280 characters</div>
+  </div>
+
+  <div class="thread-connector"></div>
+
+  <!-- TWEET 4: CTA -->
+  <div class="tweet">
+    <div class="tweet-header">
+      <div class="avatar">IB</div>
+      <div class="user-info">
+        <div class="display-name">I've Seen This Before</div>
+        <div class="handle">@iveseenthis &middot; 1h</div>
+      </div>
+    </div>
+    <div class="tweet-text">"I've Seen This Before" maps Soviet anti-Zionist propaganda to modern rhetoric using NLP.
+
+1,807 Soviet passages. 3,900 modern texts. 9 propaganda tropes.
+
+The language changed. The playbook didn't.
+
+Explore the full analysis: iveseenthisbefore.org
+
+<span class="hashtag">#IveSeenThisBefore</span> <span class="hashtag">#Antisemitism</span>
+
+<span class="thread-indicator">4/4</span></div>
+    <div class="char-count">278 / 280 characters</div>
+  </div>
+</div>
+
+</body>
+</html>
