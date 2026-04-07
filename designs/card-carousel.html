@@ -364,6 +364,70 @@
     color: rgba(255,255,255,0.2);
     letter-spacing: 0.5px;
   }
+
+  /* ============ SLIDE 2: THESIS ============ */
+  .thesis-slide {
+    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    text-align: left;
+  }
+
+  .thesis-slide .thesis-heading {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.35;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .thesis-slide .thesis-heading em {
+    font-style: normal;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .thesis-slide .thesis-body {
+    font-size: 13px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .thesis-slide .thesis-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #c0392b, #2980b9);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  .thesis-slide .thesis-tagline {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  .thesis-slide .swipe-cta {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -385,13 +449,28 @@
     <div class="swipe-cta">Swipe to see the evidence &rarr;</div>
   </div>
   <div class="dots">
-    <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
-<!-- SLIDE 2: MATCH #1 — Zionism = Nazism (ID 5, 86.1%) -->
+<!-- SLIDE 2: THESIS -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 2 &mdash; Match 1</div>
+  <div class="slide-label">Slide 2 &mdash; Thesis</div>
+  <div class="slide thesis-slide">
+    <div class="thesis-heading">These talking points weren't born on social media. They were <em>manufactured by Soviet propagandists.</em></div>
+    <div class="thesis-divider"></div>
+    <div class="thesis-body">The ideology behind this propaganda:<br><strong style="color:rgba(255,255,255,0.85);">USSR: 20M dead &middot; China: 45M+ dead &middot; Cambodia: 2M dead</strong><br><br>Communism failed everywhere it was tried, at the cost of tens of millions of lives. Yet its anti-Zionist disinformation &mdash; formulated in Moscow and injected into global discourse &mdash; lives on in today's progressive movements.</div>
+    <div class="thesis-tagline">Same arguments. Same language. Decades apart.</div>
+    <div class="swipe-cta">Swipe to see the evidence &rarr;</div>
+  </div>
+  <div class="dots">
+    <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</div>
+
+<!-- SLIDE 3: MATCH #1 — Zionism = Nazism (ID 5, 86.1%) -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slide 3 &mdash; Match 1</div>
   <div class="slide match-slide">
     <div class="match-header">
       <span class="match-number">Match 1 of 3</span>
@@ -417,13 +496,13 @@
     </div>
   </div>
   <div class="dots">
-    <div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
-<!-- SLIDE 3: MATCH #2 — Zionism = Racism (ID 3, 82.3%) -->
+<!-- SLIDE 4: MATCH #2 — Zionism = Racism (ID 3, 82.3%) -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 3 &mdash; Match 2</div>
+  <div class="slide-label">Slide 4 &mdash; Match 2</div>
   <div class="slide match-slide">
     <div class="match-header">
       <span class="match-number">Match 2 of 3</span>
@@ -449,13 +528,13 @@
     </div>
   </div>
   <div class="dots">
-    <div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div>
   </div>
 </div>
 
-<!-- SLIDE 4: MATCH #3 — Weaponized Antisemitism (ID 7, 67.0%) -->
+<!-- SLIDE 5: MATCH #3 — Weaponized Antisemitism (ID 7, 67.0%) -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 4 &mdash; Match 3</div>
+  <div class="slide-label">Slide 5 &mdash; Match 3</div>
   <div class="slide match-slide">
     <div class="match-header">
       <span class="match-number">Match 3 of 3</span>
@@ -481,13 +560,13 @@
     </div>
   </div>
   <div class="dots">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div>
   </div>
 </div>
 
-<!-- SLIDE 5: CTA + TAXONOMY -->
+<!-- SLIDE 6: CTA + TAXONOMY -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 5 &mdash; CTA</div>
+  <div class="slide-label">Slide 6 &mdash; CTA</div>
   <div class="slide cta-slide">
     <div class="cta-title">9 Soviet Propaganda Tropes</div>
     <div class="cta-sub">Still active in modern discourse</div>
@@ -535,7 +614,7 @@
     </div>
   </div>
   <div class="dots">
-    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div>
   </div>
 </div>
 
