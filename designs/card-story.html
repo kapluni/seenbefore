@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Card — Instagram Story (1080x1920 per slide)</title>
 <style>
-  /* 1080x1920 per slide — Instagram Story format */
   body {
     margin: 0;
     padding: 40px;
@@ -33,375 +32,18 @@
   }
 
   .slide {
-    width: 360px;  /* Displayed at 1/3 scale; actual: 1080x1920 */
-    height: 640px;
+    width: 360px;  /* 1/3 of 1080 */
+    height: 640px; /* 1/3 of 1920 */
     position: relative;
     overflow: hidden;
     border-radius: 16px;
-  }
-
-  /* ============ SLIDE 1: HOOK ============ */
-  .slide-1 {
-    background: linear-gradient(180deg, #1a0a0a 0%, #0d0505 40%, #0a0a0a 100%);
-  }
-
-  .slide-1 .year-intro {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 14px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
-  .slide-1 .big-year {
-    position: absolute;
-    top: 130px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 96px;
-    font-weight: 800;
-    color: #c0392b;
-    letter-spacing: -3px;
-    text-shadow: 0 0 60px rgba(192,57,43,0.3);
-  }
-
-  .slide-1 .quote {
-    position: absolute;
-    top: 260px;
-    left: 32px;
-    right: 32px;
-    font-size: 22px;
-    line-height: 1.5;
-    color: rgba(255,255,255,0.85);
-    font-weight: 400;
-    text-align: left;
-  }
-
-  .slide-1 .quote::before {
-    content: '\201C';
-    font-size: 72px;
-    color: #c0392b;
-    opacity: 0.4;
-    display: block;
-    line-height: 0.5;
-    margin-bottom: 16px;
-  }
-
-  .slide-1 .source {
-    position: absolute;
-    bottom: 100px;
-    left: 32px;
-    right: 32px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.35);
-    line-height: 1.6;
-    border-top: 1px solid rgba(192,57,43,0.2);
-    padding-top: 16px;
-  }
-
-  .slide-1 .red-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background: #c0392b;
-  }
-
-  .slide-1 .aged-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(192,57,43,0.02) 2px,
-      rgba(192,57,43,0.02) 4px
-    );
-    pointer-events: none;
-  }
-
-  /* ============ SLIDE 2: REVEAL ============ */
-  .slide-2 {
-    background: linear-gradient(180deg, #0a0a1a 0%, #050510 40%, #0a0a0a 100%);
-  }
-
-  .slide-2 .year-intro {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 14px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
-  .slide-2 .big-year {
-    position: absolute;
-    top: 130px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 96px;
-    font-weight: 800;
-    color: #2980b9;
-    letter-spacing: -3px;
-    text-shadow: 0 0 60px rgba(41,128,185,0.3);
-  }
-
-  .slide-2 .quote {
-    position: absolute;
-    top: 260px;
-    left: 32px;
-    right: 32px;
-    font-size: 22px;
-    line-height: 1.5;
-    color: rgba(255,255,255,0.85);
-    font-weight: 400;
-    text-align: left;
-  }
-
-  .slide-2 .quote::before {
-    content: '\201C';
-    font-size: 72px;
-    color: #2980b9;
-    opacity: 0.4;
-    display: block;
-    line-height: 0.5;
-    margin-bottom: 16px;
-  }
-
-  .slide-2 .source {
-    position: absolute;
-    bottom: 100px;
-    left: 32px;
-    right: 32px;
-    font-size: 13px;
-    color: rgba(255,255,255,0.35);
-    line-height: 1.6;
-    border-top: 1px solid rgba(41,128,185,0.2);
-    padding-top: 16px;
-  }
-
-  .slide-2 .blue-bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    background: #2980b9;
-  }
-
-  /* ============ SLIDE 3: EXPLANATION ============ */
-  .slide-3 {
-    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
-  }
-
-  .slide-3 .label {
-    position: absolute;
-    top: 80px;
-    left: 32px;
-    right: 32px;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    font-weight: 700;
-  }
-
-  .slide-3 .trope-title {
-    position: absolute;
-    top: 110px;
-    left: 32px;
-    right: 32px;
-    font-size: 28px;
-    font-weight: 700;
-    color: #e74c3c;
-    line-height: 1.3;
-  }
-
-  .slide-3 .explanation {
-    position: absolute;
-    top: 200px;
-    left: 32px;
-    right: 32px;
-    font-size: 17px;
-    line-height: 1.65;
-    color: rgba(255,255,255,0.75);
-  }
-
-  .slide-3 .similarity-meter {
-    position: absolute;
-    bottom: 140px;
-    left: 32px;
-    right: 32px;
-  }
-
-  .slide-3 .meter-label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .slide-3 .meter-track {
-    height: 8px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .slide-3 .meter-fill {
-    height: 100%;
-    width: 86.1%;
-    background: linear-gradient(90deg, #c0392b, #e74c3c);
-    border-radius: 4px;
-  }
-
-  .slide-3 .meter-value {
-    font-size: 14px;
-    color: rgba(255,255,255,0.5);
-    margin-top: 8px;
-    font-weight: 600;
-  }
-
-  .slide-3 .divider-line {
-    position: absolute;
-    top: 175px;
-    left: 32px;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, #c0392b, #2980b9);
-    border-radius: 2px;
-  }
-
-  /* ============ SLIDE 4: CONTEXT / CTA ============ */
-  .slide-4 {
-    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
-    text-align: center;
-  }
-
-  .slide-4 .logo-area {
-    position: absolute;
-    top: 120px;
-    left: 32px;
-    right: 32px;
-    text-align: center;
-  }
-
-  .slide-4 .project-name {
-    font-size: 32px;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-    line-height: 1.3;
-  }
-
-  .slide-4 .project-name span {
-    display: block;
-    background: linear-gradient(90deg, #c0392b, #2980b9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .slide-4 .context-text {
-    position: absolute;
-    top: 240px;
-    left: 40px;
-    right: 40px;
-    font-size: 18px;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.6);
-    text-align: center;
-  }
-
-  .slide-4 .stat-row {
-    position: absolute;
-    top: 400px;
-    left: 32px;
-    right: 32px;
     display: flex;
-    gap: 12px;
-    justify-content: center;
+    flex-direction: column;
   }
 
-  .slide-4 .stat {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 16px 20px;
-    text-align: center;
-    flex: 1;
-  }
-
-  .slide-4 .stat-number {
-    font-size: 24px;
-    font-weight: 800;
-    color: #ffffff;
-    display: block;
-  }
-
-  .slide-4 .stat-label {
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 4px;
-    display: block;
-  }
-
-  .slide-4 .url-cta {
-    position: absolute;
-    bottom: 140px;
-    left: 32px;
-    right: 32px;
-    text-align: center;
-  }
-
-  .slide-4 .url-box {
-    display: inline-block;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 30px;
-    padding: 14px 32px;
-    font-size: 16px;
-    color: rgba(255,255,255,0.7);
-    font-weight: 600;
-    letter-spacing: 0.3px;
-  }
-
-  .slide-4 .swipe-hint {
-    position: absolute;
-    bottom: 80px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 12px;
-    color: rgba(255,255,255,0.2);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* Progress bar at top (story style) */
   .progress-bar {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    right: 12px;
+    top: 12px; left: 12px; right: 12px;
     display: flex;
     gap: 4px;
     z-index: 10;
@@ -418,38 +60,33 @@
     background: rgba(255,255,255,0.7);
   }
 
-  /* ============ SLIDE 0: THESIS INTRO ============ */
+  /* ============ SLIDE 0: THESIS ============ */
   .slide-0 {
     background: linear-gradient(180deg, #0d0505 0%, #0a0a0a 50%, #050510 100%);
+    padding: 60px 28px 40px;
+    justify-content: center;
   }
 
   .slide-0 .thesis-label {
-    position: absolute;
-    top: 90px;
-    left: 32px;
-    right: 32px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.3);
     text-align: center;
+    margin-bottom: 24px;
   }
 
   .slide-0 .thesis-text {
-    position: absolute;
-    top: 150px;
-    left: 28px;
-    right: 28px;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.55;
-    color: rgba(255,255,255,0.92);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
     text-align: left;
+    margin-bottom: 20px;
   }
 
-  .slide-0 .thesis-text em {
-    font-style: normal;
+  .slide-0 .thesis-text .highlight {
     background: linear-gradient(90deg, #c0392b, #e74c3c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -457,37 +94,326 @@
     font-weight: 800;
   }
 
+  .slide-0 .death-toll {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 16px 0;
+  }
+
+  .slide-0 .toll-item {
+    background: rgba(192,57,43,0.1);
+    border: 1px solid rgba(192,57,43,0.2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .slide-0 .toll-num {
+    font-size: 16px;
+    font-weight: 800;
+    color: #c0392b;
+    display: block;
+  }
+
+  .slide-0 .toll-label {
+    font-size: 8px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 2px;
+  }
+
   .slide-0 .thesis-kicker {
-    position: absolute;
-    bottom: 120px;
-    left: 32px;
-    right: 32px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.45);
     text-align: center;
     border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 20px;
+    padding-top: 16px;
+    margin-top: 16px;
   }
 
   .slide-0 .gradient-bar {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: 4px;
     background: linear-gradient(90deg, #c0392b, #2980b9);
+  }
+
+  /* ============ SLIDE 1: SOVIET QUOTE ============ */
+  .slide-1 {
+    background: linear-gradient(180deg, #1a0a0a 0%, #0d0505 40%, #0a0a0a 100%);
+    padding: 50px 28px 40px;
+    justify-content: center;
+  }
+
+  .slide-1 .red-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: #c0392b;
+  }
+
+  .slide-1 .year-intro {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .slide-1 .big-year {
+    text-align: center;
+    font-size: 80px;
+    font-weight: 800;
+    color: #c0392b;
+    letter-spacing: -3px;
+    text-shadow: 0 0 60px rgba(192,57,43,0.3);
+    margin-bottom: 24px;
+    line-height: 1;
+  }
+
+  .slide-1 .quote {
+    font-size: 18px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    text-align: left;
+    border-left: 3px solid #c0392b;
+    padding-left: 16px;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .slide-1 .source {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.6;
+    border-top: 1px solid rgba(192,57,43,0.2);
+    padding-top: 12px;
+    margin-top: 16px;
+  }
+
+  /* ============ SLIDE 2: MODERN QUOTE ============ */
+  .slide-2 {
+    background: linear-gradient(180deg, #0a0a1a 0%, #050510 40%, #0a0a0a 100%);
+    padding: 50px 28px 40px;
+    justify-content: center;
+  }
+
+  .slide-2 .blue-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: #2980b9;
+  }
+
+  .slide-2 .year-intro {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .slide-2 .big-year {
+    text-align: center;
+    font-size: 80px;
+    font-weight: 800;
+    color: #2980b9;
+    letter-spacing: -3px;
+    text-shadow: 0 0 60px rgba(41,128,185,0.3);
+    margin-bottom: 24px;
+    line-height: 1;
+  }
+
+  .slide-2 .reveal-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .slide-2 .quote {
+    font-size: 18px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.85);
+    text-align: left;
+    border-left: 3px solid #2980b9;
+    padding-left: 16px;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .slide-2 .source {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.6;
+    border-top: 1px solid rgba(41,128,185,0.2);
+    padding-top: 12px;
+    margin-top: 16px;
+  }
+
+  /* ============ SLIDE 3: EXPLANATION ============ */
+  .slide-3 {
+    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
+    padding: 50px 28px 40px;
+    justify-content: center;
+  }
+
+  .slide-3 .label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .slide-3 .trope-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #e74c3c;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .slide-3 .divider-line {
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #c0392b, #2980b9);
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  .slide-3 .explanation {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.75);
+    flex: 1;
+  }
+
+  .slide-3 .similarity-meter {
+    margin-top: 16px;
+  }
+
+  .slide-3 .meter-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .slide-3 .meter-track {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .slide-3 .meter-fill {
+    height: 100%;
+    width: 86.1%;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    border-radius: 3px;
+  }
+
+  .slide-3 .meter-value {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* ============ SLIDE 4: CTA ============ */
+  .slide-4 {
+    background: linear-gradient(180deg, #0f0f1a 0%, #0a0a12 100%);
+    padding: 50px 28px 40px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .slide-4 .project-name {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #c0392b, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .slide-4 .context-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 24px;
+  }
+
+  .slide-4 .stat-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .slide-4 .stat {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .slide-4 .stat-number {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    display: block;
+  }
+
+  .slide-4 .stat-label {
+    font-size: 8px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .slide-4 .url-box {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 10px 28px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .slide-4 .hashtag {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
   }
 </style>
 </head>
 <body>
 
-<!-- Match used: ID 5 — Israel/Nazi comparison, 86.1% similarity, ZIONISM_NAZISM trope
-     Each slide: 1080x1920 (shown at 360x640, 1/3 scale) -->
-
-<!-- SLIDE 0: THESIS INTRO -->
+<!-- SLIDE 0: THESIS -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 1 &mdash; Thesis</div>
+  <div class="slide-label">Slide 1 — Thesis</div>
   <div class="slide slide-0">
     <div class="progress-bar">
       <div class="progress-segment active"></div>
@@ -496,16 +422,43 @@
       <div class="progress-segment"></div>
       <div class="progress-segment"></div>
     </div>
+
     <div class="thesis-label">What if it's not new?</div>
-    <div class="thesis-text">&ldquo;Zionism is racism.&rdquo; &ldquo;Israel is an apartheid state.&rdquo; &ldquo;Criticizing Zionism isn't antisemitism.&rdquo;<br><br>These talking points weren't born on social media. They were <em>manufactured by Soviet propagandists</em> during the Cold War &mdash; a regime that killed 20 million of its own citizens through purges, gulags, and engineered famines.<br><br>Communism failed everywhere it was tried: USSR (20M dead), China (45M+), Cambodia (2M &mdash; one quarter of the population). Yet its propaganda lives on.</div>
-    <div class="thesis-kicker">Same arguments. Same language.<br>Decades apart. Here's the proof.</div>
+
+    <div class="thesis-text">
+      "Zionism is racism." "Israel is apartheid." "Criticizing Israel isn't antisemitism."
+      <br><br>
+      These talking points weren't born on social media. They were <span class="highlight">manufactured by Soviet propagandists</span> during the Cold War.
+    </div>
+
+    <div class="death-toll">
+      <div class="toll-item">
+        <span class="toll-num">20M</span>
+        <span class="toll-label">USSR dead</span>
+      </div>
+      <div class="toll-item">
+        <span class="toll-num">45M+</span>
+        <span class="toll-label">China dead</span>
+      </div>
+      <div class="toll-item">
+        <span class="toll-num">2M</span>
+        <span class="toll-label">Cambodia dead</span>
+      </div>
+    </div>
+
+    <div class="thesis-kicker">
+      Communism failed everywhere it was tried.<br>
+      Yet its propaganda lives on.<br><br>
+      Same arguments. Same language. Decades apart.
+    </div>
+
     <div class="gradient-bar"></div>
   </div>
 </div>
 
-<!-- SLIDE 2: HOOK (Soviet quote) -->
+<!-- SLIDE 1: SOVIET QUOTE -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 2 &mdash; Hook</div>
+  <div class="slide-label">Slide 2 — Then</div>
   <div class="slide slide-1">
     <div class="progress-bar">
       <div class="progress-segment active"></div>
@@ -515,17 +468,17 @@
       <div class="progress-segment"></div>
     </div>
     <div class="red-bar"></div>
-    <div class="aged-overlay"></div>
+
     <div class="year-intro">This was said in</div>
     <div class="big-year">1983</div>
-    <div class="quote">We say that the Israeli government is employing methods used by the nazis. At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.</div>
-    <div class="source">Anti-Zionist Committee of Soviet Public<br>CPSU / KGB &mdash; Moscow, USSR</div>
+    <div class="quote">"We say that the Israeli government is employing methods used by the nazis. If Israel is a nazi state, it should not have the right to exist."</div>
+    <div class="source">Anti-Zionist Committee of Soviet Public<br>CPSU / KGB — Moscow, USSR</div>
   </div>
 </div>
 
-<!-- SLIDE 3: REVEAL -->
+<!-- SLIDE 2: MODERN QUOTE -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 3 &mdash; Reveal</div>
+  <div class="slide-label">Slide 3 — Now</div>
   <div class="slide slide-2">
     <div class="progress-bar">
       <div class="progress-segment active"></div>
@@ -535,16 +488,18 @@
       <div class="progress-segment"></div>
     </div>
     <div class="blue-bar"></div>
+
     <div class="year-intro">This was said in</div>
     <div class="big-year">2023</div>
-    <div class="quote">The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews. #NAZIONISM</div>
-    <div class="source">Social Media Post<br>ISCA ClassData 2022&ndash;2023</div>
+    <div class="reveal-text">Sound familiar?</div>
+    <div class="quote">"The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews."</div>
+    <div class="source">Social Media Post — 2023</div>
   </div>
 </div>
 
-<!-- SLIDE 4: EXPLANATION -->
+<!-- SLIDE 3: EXPLANATION -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 4 &mdash; Explanation</div>
+  <div class="slide-label">Slide 4 — Evidence</div>
   <div class="slide slide-3">
     <div class="progress-bar">
       <div class="progress-segment active"></div>
@@ -553,23 +508,31 @@
       <div class="progress-segment active"></div>
       <div class="progress-segment"></div>
     </div>
+
     <div class="label">Propaganda Trope Identified</div>
     <div class="trope-title">Zionism = Nazism</div>
     <div class="divider-line"></div>
-    <div class="explanation">Both texts make the same explosive claim: Israel's government uses Nazi methods. The Soviet text states it directly. The modern post goes further, claiming Israeli policies "aim at the systematic extermination of the Palestinian people."<br><br>The Israel-Nazi equation, first systematized by Soviet propaganda, is now one of the most common tropes in anti-Zionist discourse.</div>
+    <div class="explanation">
+      Both texts make the same claim: Israel uses Nazi methods.
+      <br><br>
+      The Soviet Anti-Zionist Committee stated this as official policy in 1983. The modern tweet applies the same equation to the Gaza conflict 40 years later.
+      <br><br>
+      The Israel-Nazi comparison was a centerpiece of Soviet anti-Zionist campaigns. It remains one of the most common tropes in modern discourse.
+    </div>
+
     <div class="similarity-meter">
       <div class="meter-label">Semantic Similarity</div>
       <div class="meter-track">
         <div class="meter-fill"></div>
       </div>
-      <div class="meter-value">86.1% match &mdash; High Confidence</div>
+      <div class="meter-value">86.1% match — High Confidence</div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 5: CONTEXT / CTA -->
+<!-- SLIDE 4: CTA -->
 <div class="slide-wrapper">
-  <div class="slide-label">Slide 5 &mdash; Context / CTA</div>
+  <div class="slide-label">Slide 5 — CTA</div>
   <div class="slide slide-4">
     <div class="progress-bar">
       <div class="progress-segment active"></div>
@@ -578,10 +541,14 @@
       <div class="progress-segment active"></div>
       <div class="progress-segment active"></div>
     </div>
-    <div class="logo-area">
-      <div class="project-name"><span>I've Seen This Before</span></div>
+
+    <div class="project-name">I've Seen This Before</div>
+    <div class="context-text">
+      We use machine learning to map Soviet anti-Zionist propaganda from the Cold War era to today's anti-Israel rhetoric.
+      <br><br>
+      Same arguments. Same language. Five decades apart.
     </div>
-    <div class="context-text">Soviet propaganda from the Cold War era is echoed in today's public discourse. We use machine learning to map the lineage of anti-Zionist rhetoric across five decades.</div>
+
     <div class="stat-row">
       <div class="stat">
         <span class="stat-number">1,807</span>
@@ -593,13 +560,13 @@
       </div>
       <div class="stat">
         <span class="stat-number">9</span>
-        <span class="stat-label">Trope Categories</span>
+        <span class="stat-label">Tropes</span>
       </div>
     </div>
-    <div class="url-cta">
-      <span class="url-box">iveseenthisbefore.org</span>
-    </div>
-    <div class="swipe-hint">#IveSeenThisBefore</div>
+
+    <div class="url-box">iveseenthisbefore.org</div>
+    <br>
+    <div class="hashtag">#IveSeenThisBefore</div>
   </div>
 </div>
 
