@@ -154,8 +154,9 @@ function ConfidenceBadge({ level }) {
 function SimilarityBar({ score }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.85 ? "#2ecc71" : score >= 0.70 ? "#f1c40f" : score >= 0.55 ? "#e67e22" : "#555";
+  const tooltip = `${pct}% cosine similarity — Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.`;
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <div title={tooltip} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "help" }}>
       <div style={{ flex: 1, height: 6, background: "var(--bg-card-alt)", borderRadius: 3, overflow: "hidden" }}>
         <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 3, transition: "width 1s ease-out" }} />
       </div>
@@ -168,8 +169,9 @@ function ScoreDonut({ score, size = 44 }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.70 ? "#2ecc71" : score >= 0.55 ? "#f1c40f" : "#e67e22";
   const inner = size - 8;
+  const tooltip = `${pct}% cosine similarity — Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space. All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.`;
   return (
-    <div style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div title={tooltip} style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "help" }}>
       <div style={{ width: inner, height: inner, borderRadius: "50%", background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "var(--text-heading)" }}>
         {pct}%
       </div>
@@ -207,12 +209,11 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
       border: "1px solid var(--border)", borderRadius: 12, padding: 24,
       animation: `fadeSlideIn 0.5s ease-out ${index * 0.12}s both`,
     }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, flexWrap: "wrap", gap: 8 }}>
-        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-          <ConfidenceBadge level={match.confidence} />
+      {match.tropes.length > 0 && (
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 16 }}>
           {match.tropes.map(t => <TropeBadge key={t} trope={t} tropeNames={tropeNames} tropeColors={tropeColors} />)}
         </div>
-      </div>
+      )}
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, marginBottom: 16 }}>
         <div>
