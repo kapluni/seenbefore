@@ -1290,7 +1290,7 @@ function ExplorerTab({ tropeNames, tropeColors }) {
 // MAIN APP
 // ============================================================
 
-const TABS = ["The Story", "Top Matches", "Explorer", "Analyzer", "Timeline", "Tropes", "Methodology", "Share", "Full History"];
+const TABS = ["The Story", "Top Matches", "Explorer", "Timeline", "Tropes", "Methodology", "Share", "Full History", "Thanks!"];
 
 const DOC_TIMELINE = [
   { year: 1903, label: "Protocols of the Elders of Zion published — Tsarist secret police forgery", type: "soviet" },
@@ -1342,9 +1342,6 @@ export default function App() {
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div style={{ fontSize: 11, letterSpacing: 6, color: "#c0392b", textTransform: "uppercase", marginBottom: 8 }}>
-            {isLive ? "Live Data" : "Sample Data"}{model ? ` • ${model.split("/").pop()}` : ""}
-          </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
             <h1 style={{ fontSize: 32, fontWeight: 300, color: "var(--text-heading)", margin: 0, fontFamily: "'Georgia', serif", letterSpacing: 1 }}>
               I've Seen This Before
@@ -1354,16 +1351,6 @@ export default function App() {
           <p style={{ fontSize: 13, color: "var(--text-secondary)", maxWidth: 600, margin: "12px auto 0", lineHeight: 1.6 }}>
             Mapping Soviet anti-Zionist propaganda to its modern echoes using semantic similarity
           </p>
-          {!isLive && (
-            <div style={{ fontSize: 10, color: "#d35400", marginTop: 8 }}>
-              Using sample data. Run <code style={{ background: "var(--bg-card-alt)", padding: "2px 6px", borderRadius: 3 }}>python generate_viz_data.py --generate</code> to use real embeddings.
-            </div>
-          )}
-          {generatedAt && (
-            <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 4 }}>
-              Generated: {new Date(generatedAt).toLocaleString()}
-            </div>
-          )}
         </div>
 
         {/* Tabs */}
@@ -1385,7 +1372,7 @@ export default function App() {
         {activeTab === 0 && (
           <MarkdownTab
             url="/background.md"
-            onNavigate={() => setActiveTab(8)}
+            onNavigate={() => setActiveTab(7)}
             navigateLabel="Read Full History with Sources"
           />
         )}
@@ -1393,9 +1380,6 @@ export default function App() {
         {/* 1: Top Matches */}
         {activeTab === 1 && (
           <div>
-            <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 20, lineHeight: 1.6, maxWidth: 720, background: "var(--bg-card)", padding: "12px 16px", borderRadius: 8, borderLeft: "3px solid var(--text-muted)" }}>
-              <strong style={{ color: "var(--text-primary)" }}>About these matches:</strong> Each pair shows a Soviet propaganda passage alongside modern rhetoric that uses strikingly similar framing. These are <em>structural parallels</em> in argumentation — they do not by themselves prove that modern speakers learned these arguments from Soviet sources. Establishing actual transmission pathways requires historical evidence beyond computational analysis. Matches were selected from a larger candidate set and reviewed for rhetorical coherence.
-            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {matches.map((match, i) => (
                 <MatchCard key={match.id || i} match={match} index={i} tropeNames={tropeNames} tropeColors={tropeColors} />
@@ -1409,23 +1393,16 @@ export default function App() {
           <ExplorerTab tropeNames={tropeNames} tropeColors={tropeColors} />
         )}
 
-        {/* 3: Analyzer */}
+        {/* 3: Timeline */}
         {activeTab === 3 && (
-          <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
-            <LiveAnalyzer tropeNames={tropeNames} tropeColors={tropeColors} />
-          </div>
-        )}
-
-        {/* 4: Timeline */}
-        {activeTab === 4 && (
           <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
             <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 16 }}>From Tsarist forgery to campus encampments — how Soviet anti-Zionist propaganda outlived the USSR</div>
             <TimelineView timeline={enrichedTimeline} />
           </div>
         )}
 
-        {/* 5: Tropes */}
-        {activeTab === 5 && (
+        {/* 4: Tropes */}
+        {activeTab === 4 && (
           <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
             <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 16 }}>Which Soviet propaganda tropes appear most frequently in modern discourse</div>
             <TropeChart tropeDistribution={tropeDistribution} />
@@ -1433,8 +1410,8 @@ export default function App() {
           </div>
         )}
 
-        {/* 6: Methodology */}
-        {activeTab === 6 && (
+        {/* 5: Methodology */}
+        {activeTab === 5 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
             {/* Section 1: Approach */}
@@ -1626,8 +1603,8 @@ export default function App() {
           </div>
         )}
 
-        {/* 7: Share */}
-        {activeTab === 7 && (
+        {/* 6: Share */}
+        {activeTab === 6 && (
           <div>
             <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 16 }}>Shareable cards for the #IveSeenThisBefore campaign</div>
             <div style={{ display: "flex", gap: 8, marginBottom: 20, justifyContent: "center", flexWrap: "wrap" }}>
@@ -1646,9 +1623,87 @@ export default function App() {
           </div>
         )}
 
-        {/* 8: Full History */}
-        {activeTab === 8 && (
+        {/* 7: Full History */}
+        {activeTab === 7 && (
           <MarkdownTab url="/full-history.md" />
+        )}
+
+        {/* 8: Thanks! */}
+        {activeTab === 8 && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 8px", fontFamily: "'Georgia', serif" }}>Scholars & Authors</h3>
+              <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+                The historical research and scholarship that made this project possible.
+              </p>
+              <div style={{ display: "grid", gap: 10 }}>
+                {[
+                  { name: "Izabella Tabarovsky", desc: "Author of \"Be a Refusenik\" and \"Demonization Blueprints\" — the foundational work tracing Soviet anti-Zionist propaganda to modern discourse. Senior advisor at the Kennan Institute, Wilson Center." },
+                  { name: "Robert Wistrich", desc: "Author of \"A Lethal Obsession\" (2010), the most comprehensive history of antisemitism, with extensive documentation of Soviet anti-Zionist campaigns." },
+                  { name: "Jeffrey Herf", desc: "Author of \"Undeclared Wars with Israel\" (2016), documenting East Germany's anti-Zionist operations using newly opened state archives." },
+                  { name: "Ion Mihai Pacepa", desc: "Highest-ranking Eastern Bloc defector. His testimony in \"Disinformation\" (2013) revealed KGB operational details behind the anti-Zionist campaign." },
+                  { name: "Yuri Ivanov", desc: "Author of \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. 800,000 copies in 16 languages. Cited here as a primary source, not an inspiration." },
+                ].map((s, i) => (
+                  <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #c0392b" }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }}>{s.name}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 8px", fontFamily: "'Georgia', serif" }}>Datasets & Organizations</h3>
+              <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+                The organizations and research groups whose open datasets power the modern corpus.
+              </p>
+              <div style={{ display: "grid", gap: 10 }}>
+                {[
+                  { name: "Institute for the Study of Contemporary Antisemitism (ISCA)", org: "Indiana University", desc: "IHRA-labeled antisemitism datasets (GoldStandard 2024, ClassData 2022-2023) — the backbone of our modern corpus." },
+                  { name: "Anti-Defamation League (ADL)", org: "", desc: "H.E.A.T. Map incident data documenting antisemitic events across the United States, providing real-world context for online rhetoric." },
+                  { name: "CONAN Project", org: "Fondazione Bruno Kessler", desc: "Expert-authored counter-narrative hate speech dataset. Their multi-target and dialogue collections provided hundreds of Jewish-targeted passages." },
+                  { name: "CyberWell", org: "", desc: "Nonprofit maintaining an open database of verified antisemitic social media content. A valuable resource for ongoing research." },
+                  { name: "Internet Archive", org: "", desc: "Hosting freely accessible scans of Soviet-era pamphlets that form the historical corpus — preserving materials that might otherwise be lost." },
+                  { name: "Marxists Internet Archive", org: "", desc: "Hosting the complete English translation of Ivanov's \"Caution: Zionism!\" — the single most important primary source in this project." },
+                ].map((s, i) => (
+                  <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #2980b9" }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 2 }}>
+                      {s.name}{s.org && <span style={{ fontWeight: 400, color: "var(--text-secondary)" }}> — {s.org}</span>}
+                    </div>
+                    <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 8px", fontFamily: "'Georgia', serif" }}>Built With</h3>
+              <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+                The tools and technology behind this project.
+              </p>
+              <div style={{ display: "grid", gap: 10 }}>
+                {[
+                  { name: "Claude by Anthropic", desc: "This entire site — the embedding pipeline, data processing, visualization, and frontend — was built collaboratively with Claude, Anthropic's AI assistant. Claude also performed match quality review, filtering 1,000 candidate pairs down to the genuine rhetorical echoes you see here." },
+                  { name: "BAAI/bge-large-en-v1.5", desc: "The embedding model powering semantic similarity search, selected via benchmark against four candidates for its superior separation between genuine echoes and false positives." },
+                  { name: "sentence-transformers", desc: "The open-source library by UKP Lab (TU Darmstadt) that makes state-of-the-art text embeddings accessible to everyone." },
+                ].map((s, i) => (
+                  <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #27ae60" }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }}>{s.name}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ background: "var(--bg-card-alt)", borderRadius: 12, padding: 24, textAlign: "center" }}>
+              <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8, margin: 0, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
+                This project was created by <strong style={{ color: "var(--text-primary)" }}>Ilya Kaplun</strong>, who emigrated from the USSR in 1991.
+                It is dedicated to everyone who sees these patterns and refuses to look away.
+              </p>
+            </div>
+
+          </div>
         )}
 
         {/* Dataset Info Bar */}
@@ -1670,7 +1725,7 @@ export default function App() {
         {/* Footer */}
         <div style={{ textAlign: "center", marginTop: 16, paddingTop: 24, borderTop: "1px solid var(--bg-card-alt)" }}>
           <div style={{ fontSize: 10, color: "var(--text-muted)", letterSpacing: 2 }}>
-            {isLive ? "LIVE DATA FROM ML PIPELINE" : "PROTOTYPE — SAMPLE DATA"} • SIMILARITY SCORES {isLive ? "COMPUTED BY" : "WILL BE COMPUTED BY"} EMBEDDING MODEL
+            SIMILARITY SCORES COMPUTED BY EMBEDDING MODEL
           </div>
         </div>
       </div>

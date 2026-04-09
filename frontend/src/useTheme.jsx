@@ -5,9 +5,9 @@ const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("isb-theme") || "dark";
+      return localStorage.getItem("isb-theme") || "light";
     }
-    return "dark";
+    return "light";
   });
 
   useEffect(() => {
