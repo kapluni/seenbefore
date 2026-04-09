@@ -404,32 +404,37 @@ function TimelineView({ timeline }) {
   );
 }
 
-function TropeChart({ tropeDistribution }) {
+function TropeChart({ tropeDistribution, sovietCorpusSize, modernCorpusSize }) {
+  const sovietTotal = sovietCorpusSize || tropeDistribution.reduce((s, d) => s + (d.sovietCount || 0), 0) || 1;
+  const modernTotal = modernCorpusSize || tropeDistribution.reduce((s, d) => s + (d.modernCount || 0), 0) || 1;
+
   const chartData = tropeDistribution
     .filter(d => d.sovietCount > 0 || d.modernCount > 0)
     .map(d => ({
       ...d,
       shortLabel: TROPE_SHORT_LABELS[d.id] || d.name,
+      sovietPct: Math.round((d.sovietCount / sovietTotal) * 1000) / 10,
+      modernPct: Math.round((d.modernCount / modernTotal) * 1000) / 10,
     }));
 
-  // Show all 9 tropes if available; ensure enough height per bar
   const barHeight = 44;
   const chartHeight = Math.max(300, chartData.length * barHeight + 60);
 
   const CustomTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null;
+    const d = payload[0]?.payload;
     return (
       <div style={{ background: "var(--bg-card-alt)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 14px", fontSize: 12, color: "var(--text-primary)", maxWidth: 280 }}>
         <div style={{ fontWeight: 700, marginBottom: 4, color: "var(--text-heading)" }}>
-          {payload[0]?.payload?.name}
+          {d?.name}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 16, marginTop: 2 }}>
           <span style={{ color: "#c0392b" }}>Soviet (THEN)</span>
-          <span style={{ fontWeight: 700 }}>{payload[0]?.value || 0}</span>
+          <span style={{ fontWeight: 700 }}>{d?.sovietPct}% ({d?.sovietCount} passages)</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 16, marginTop: 2 }}>
           <span style={{ color: "#3498db" }}>Modern (NOW)</span>
-          <span style={{ fontWeight: 700 }}>{payload[1]?.value || 0}</span>
+          <span style={{ fontWeight: 700 }}>{d?.modernPct}% ({d?.modernCount} passages)</span>
         </div>
       </div>
     );
@@ -439,11 +444,11 @@ function TropeChart({ tropeDistribution }) {
     <>
     <ResponsiveContainer width="100%" height={chartHeight}>
       <BarChart data={chartData} layout="vertical" margin={{ left: 10, right: 20, top: 10, bottom: 10 }}>
-        <XAxis type="number" tick={{ fill: "var(--text-secondary)", fontSize: 11 }} allowDecimals={false} />
+        <XAxis type="number" tick={{ fill: "var(--text-secondary)", fontSize: 11 }} tickFormatter={v => `${v}%`} />
         <YAxis type="category" dataKey="shortLabel" width={120} tick={{ fill: "var(--text-primary)", fontSize: 12, fontWeight: 500 }} />
         <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="sovietCount" name="Soviet (THEN)" fill="#c0392b" radius={[0, 4, 4, 0]} barSize={14} />
-        <Bar dataKey="modernCount" name="Modern (NOW)" fill="#3498db" radius={[0, 4, 4, 0]} barSize={14} />
+        <Bar dataKey="sovietPct" name="Soviet (THEN)" fill="#c0392b" radius={[0, 4, 4, 0]} barSize={14} />
+        <Bar dataKey="modernPct" name="Modern (NOW)" fill="#3498db" radius={[0, 4, 4, 0]} barSize={14} />
       </BarChart>
     </ResponsiveContainer>
     <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 8, fontSize: 12 }}>
@@ -1409,7 +1414,7 @@ export default function App() {
         {activeTab === 4 && (
           <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
             <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 16 }}>Which Soviet propaganda tropes appear most frequently in modern discourse</div>
-            <TropeChart tropeDistribution={tropeDistribution} />
+            <TropeChart tropeDistribution={tropeDistribution} sovietCorpusSize={sovietCorpusSize} modernCorpusSize={modernCorpusSize} />
             <TropeDescriptionTable tropeNames={tropeNames} />
           </div>
         )}
