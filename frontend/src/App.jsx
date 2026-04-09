@@ -1351,6 +1351,9 @@ export default function App() {
           <p style={{ fontSize: 13, color: "var(--text-secondary)", maxWidth: 600, margin: "12px auto 0", lineHeight: 1.6 }}>
             Mapping Soviet anti-Zionist propaganda to its modern echoes using semantic similarity
           </p>
+          <p style={{ fontSize: 13, color: "var(--text-secondary)", maxWidth: 680, margin: "16px auto 0", lineHeight: 1.8, textAlign: "left" }}>
+            The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were <strong style={{ color: "var(--text-primary)" }}>engineered by the Soviet propaganda apparatus</strong> in the 1960s–80s, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse. This project uses machine learning to surface those connections: placing Soviet propaganda passages side by side with modern rhetoric to reveal how strikingly — and often verbatim — the language has survived.
+          </p>
         </div>
 
         {/* Tabs */}
