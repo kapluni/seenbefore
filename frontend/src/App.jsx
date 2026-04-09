@@ -1642,14 +1642,16 @@ export default function App() {
               </p>
               <div style={{ display: "grid", gap: 10 }}>
                 {[
-                  { name: "Izabella Tabarovsky", desc: "Author of \"Be a Refusenik\" and \"Demonization Blueprints\" — the foundational work tracing Soviet anti-Zionist propaganda to modern discourse. Senior advisor at the Kennan Institute, Wilson Center." },
-                  { name: "Robert Wistrich", desc: "Author of \"A Lethal Obsession\" (2010), the most comprehensive history of antisemitism, with extensive documentation of Soviet anti-Zionist campaigns." },
-                  { name: "Jeffrey Herf", desc: "Author of \"Undeclared Wars with Israel\" (2016), documenting East Germany's anti-Zionist operations using newly opened state archives." },
-                  { name: "Ion Mihai Pacepa", desc: "Highest-ranking Eastern Bloc defector. His testimony in \"Disinformation\" (2013) revealed KGB operational details behind the anti-Zionist campaign." },
-                  { name: "Yuri Ivanov", desc: "Author of \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. 800,000 copies in 16 languages. Cited here as a primary source, not an inspiration." },
+                  { name: "Izabella Tabarovsky", url: "https://www.wilsoncenter.org/person/izabella-tabarovsky", desc: "Author of \"Be a Refusenik\" and \"Demonization Blueprints\" — the foundational work tracing Soviet anti-Zionist propaganda to modern discourse. Senior advisor at the Kennan Institute, Wilson Center." },
+                  { name: "Robert Wistrich", url: "https://sicsa.huji.ac.il/robert-wistrich", desc: "Author of \"A Lethal Obsession\" (2010), the most comprehensive history of antisemitism, with extensive documentation of Soviet anti-Zionist campaigns." },
+                  { name: "Jeffrey Herf", url: "https://history.umd.edu/directory/jeffrey-herf", desc: "Author of \"Undeclared Wars with Israel\" (2016), documenting East Germany's anti-Zionist operations using newly opened state archives." },
+                  { name: "Ion Mihai Pacepa", url: "https://www.hoover.org/research/disinformation-former-spy-chief-reveals-secret-strategies-undermining-freedom", desc: "Highest-ranking Eastern Bloc defector. His testimony in \"Disinformation\" (2013) revealed KGB operational details behind the anti-Zionist campaign." },
+                  { name: "Yuri Ivanov", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf", desc: "Author of \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. 800,000 copies in 16 languages. Cited here as a primary source, not an inspiration." },
                 ].map((s, i) => (
                   <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #c0392b" }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }}>{s.name}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-primary)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}>{s.name}</a>
+                    </div>
                     <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
                   </div>
                 ))}
@@ -1663,16 +1665,17 @@ export default function App() {
               </p>
               <div style={{ display: "grid", gap: 10 }}>
                 {[
-                  { name: "Institute for the Study of Contemporary Antisemitism (ISCA)", org: "Indiana University", desc: "IHRA-labeled antisemitism datasets (GoldStandard 2024, ClassData 2022-2023) — the backbone of our modern corpus." },
-                  { name: "Anti-Defamation League (ADL)", org: "", desc: "H.E.A.T. Map incident data documenting antisemitic events across the United States, providing real-world context for online rhetoric." },
-                  { name: "CONAN Project", org: "Fondazione Bruno Kessler", desc: "Expert-authored counter-narrative hate speech dataset. Their multi-target and dialogue collections provided hundreds of Jewish-targeted passages." },
-                  { name: "CyberWell", org: "", desc: "Nonprofit maintaining an open database of verified antisemitic social media content. A valuable resource for ongoing research." },
-                  { name: "Internet Archive", org: "", desc: "Hosting freely accessible scans of Soviet-era pamphlets that form the historical corpus — preserving materials that might otherwise be lost." },
-                  { name: "Marxists Internet Archive", org: "", desc: "Hosting the complete English translation of Ivanov's \"Caution: Zionism!\" — the single most important primary source in this project." },
+                  { name: "Institute for the Study of Contemporary Antisemitism (ISCA)", org: "Indiana University", url: "https://isca.indiana.edu/", desc: "IHRA-labeled antisemitism datasets (GoldStandard 2024, ClassData 2022-2023) — the backbone of our modern corpus." },
+                  { name: "Anti-Defamation League (ADL)", org: "", url: "https://www.adl.org/heat-map", desc: "H.E.A.T. Map incident data documenting antisemitic events across the United States, providing real-world context for online rhetoric." },
+                  { name: "CONAN Project", org: "Fondazione Bruno Kessler", url: "https://github.com/marcoguerini/CONAN", desc: "Expert-authored counter-narrative hate speech dataset. Their multi-target and dialogue collections provided hundreds of Jewish-targeted passages." },
+                  { name: "CyberWell", org: "", url: "https://www.cyberwell.org/", desc: "Nonprofit maintaining an open database of verified antisemitic social media content. A valuable resource for ongoing research." },
+                  { name: "Internet Archive", org: "", url: "https://archive.org/", desc: "Hosting freely accessible scans of Soviet-era pamphlets that form the historical corpus — preserving materials that might otherwise be lost." },
+                  { name: "Marxists Internet Archive", org: "", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf", desc: "Hosting the complete English translation of Ivanov's \"Caution: Zionism!\" — the single most important primary source in this project." },
                 ].map((s, i) => (
                   <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #2980b9" }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 2 }}>
-                      {s.name}{s.org && <span style={{ fontWeight: 400, color: "var(--text-secondary)" }}> — {s.org}</span>}
+                    <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 2 }}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-primary)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}>{s.name}</a>
+                      {s.org && <span style={{ fontWeight: 400, color: "var(--text-secondary)" }}> — {s.org}</span>}
                     </div>
                     <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
                   </div>
@@ -1687,12 +1690,14 @@ export default function App() {
               </p>
               <div style={{ display: "grid", gap: 10 }}>
                 {[
-                  { name: "Claude by Anthropic", desc: "This entire site — the embedding pipeline, data processing, visualization, and frontend — was built collaboratively with Claude, Anthropic's AI assistant. Claude also performed match quality review, filtering 1,000 candidate pairs down to the genuine rhetorical echoes you see here." },
-                  { name: "BAAI/bge-large-en-v1.5", desc: "The embedding model powering semantic similarity search, selected via benchmark against four candidates for its superior separation between genuine echoes and false positives." },
-                  { name: "sentence-transformers", desc: "The open-source library by UKP Lab (TU Darmstadt) that makes state-of-the-art text embeddings accessible to everyone." },
+                  { name: "Claude by Anthropic", url: "https://claude.ai/", desc: "This entire site — the embedding pipeline, data processing, visualization, and frontend — was built collaboratively with Claude, Anthropic's AI assistant. Claude also performed match quality review, filtering 1,000 candidate pairs down to the genuine rhetorical echoes you see here." },
+                  { name: "BAAI/bge-large-en-v1.5", url: "https://huggingface.co/BAAI/bge-large-en-v1.5", desc: "The embedding model powering semantic similarity search, selected via benchmark against four candidates for its superior separation between genuine echoes and false positives." },
+                  { name: "sentence-transformers", url: "https://www.sbert.net/", desc: "The open-source library by UKP Lab (TU Darmstadt) that makes state-of-the-art text embeddings accessible to everyone." },
                 ].map((s, i) => (
                   <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #27ae60" }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }}>{s.name}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-primary)", textDecoration: "none", borderBottom: "1px solid var(--border)" }}>{s.name}</a>
+                    </div>
                     <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{s.desc}</div>
                   </div>
                 ))}
@@ -1701,8 +1706,7 @@ export default function App() {
 
             <div style={{ background: "var(--bg-card-alt)", borderRadius: 12, padding: 24, textAlign: "center" }}>
               <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8, margin: 0, maxWidth: 600, marginLeft: "auto", marginRight: "auto" }}>
-                This project was created by <strong style={{ color: "var(--text-primary)" }}>Ilya Kaplun</strong>, who emigrated from the USSR in 1991.
-                It is dedicated to everyone who sees these patterns and refuses to look away.
+                Dedicated to everyone who sees these patterns and refuses to look away.
               </p>
             </div>
 
