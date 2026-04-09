@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import ReactDOM from "react-dom";
 import { toPng } from "html-to-image";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from "recharts";
 import { ThemeToggle } from "./useTheme.jsx";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -148,6 +149,58 @@ const TROPE_DESCRIPTIONS = {
 };
 
 // ============================================================
+// TOOLTIP COMPONENT
+// ============================================================
+
+function Tooltip({ text, children, maxWidth = 300 }) {
+  const [show, setShow] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef(null);
+  const tipRef = useRef(null);
+
+  useEffect(() => {
+    if (show && triggerRef.current && tipRef.current) {
+      const tr = triggerRef.current.getBoundingClientRect();
+      const tip = tipRef.current.getBoundingClientRect();
+      // Position above by default; flip below if not enough room
+      let top = tr.top - tip.height - 8;
+      let left = tr.left + tr.width / 2 - tip.width / 2;
+      if (top < 8) top = tr.bottom + 8;
+      if (left < 8) left = 8;
+      if (left + tip.width > window.innerWidth - 8) left = window.innerWidth - tip.width - 8;
+      setPos({ top: top + window.scrollY, left });
+    }
+  }, [show]);
+
+  if (!text) return children;
+
+  return (
+    <>
+      <span
+        ref={triggerRef}
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        onClick={() => setShow(!show)}
+        style={{ cursor: "help" }}
+      >
+        {children}
+      </span>
+      {show && ReactDOM.createPortal(
+        <div ref={tipRef} style={{
+          position: "absolute", top: pos.top, left: pos.left, zIndex: 9999,
+          background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8,
+          padding: "10px 14px", maxWidth, fontSize: 12, color: "var(--text-secondary)",
+          lineHeight: 1.6, boxShadow: "0 4px 16px rgba(0,0,0,0.25)", pointerEvents: "none",
+        }}>
+          {text}
+        </div>,
+        document.body
+      )}
+    </>
+  );
+}
+
+// ============================================================
 // HELPER — resolve data from pipeline JSON or fallback to samples
 // ============================================================
 
@@ -184,14 +237,15 @@ function ConfidenceBadge({ level }) {
 function SimilarityBar({ score }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.85 ? "#2ecc71" : score >= 0.70 ? "#f1c40f" : score >= 0.55 ? "#e67e22" : "#555";
-  const tooltip = `${pct}% cosine similarity — Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.`;
   return (
-    <div title={tooltip} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "help" }}>
-      <div style={{ flex: 1, height: 6, background: "var(--bg-card-alt)", borderRadius: 3, overflow: "hidden" }}>
-        <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 3, transition: "width 1s ease-out" }} />
+    <Tooltip text={`${pct}% cosine similarity — Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.`}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ flex: 1, height: 6, background: "var(--bg-card-alt)", borderRadius: 3, overflow: "hidden" }}>
+          <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 3, transition: "width 1s ease-out" }} />
+        </div>
+        <span style={{ fontSize: 13, fontWeight: 700, color, minWidth: 40, textAlign: "right" }}>{pct}%</span>
       </div>
-      <span style={{ fontSize: 13, fontWeight: 700, color, minWidth: 40, textAlign: "right" }}>{pct}%</span>
-    </div>
+    </Tooltip>
   );
 }
 
@@ -199,32 +253,15 @@ function ScoreDonut({ score, size = 44 }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.70 ? "#2ecc71" : score >= 0.55 ? "#f1c40f" : "#e67e22";
   const inner = size - 8;
-  const [showTip, setShowTip] = useState(false);
+  const tipText = <><strong style={{ color: "var(--text-heading)" }}>{pct}% cosine similarity</strong><div style={{ marginTop: 6 }}>Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.</div><div style={{ marginTop: 6 }}>All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.</div></>;
   return (
-    <div style={{ position: "relative", display: "inline-block" }}>
-      <div
-        onClick={() => setShowTip(!showTip)}
-        onMouseEnter={() => setShowTip(true)}
-        onMouseLeave={() => setShowTip(false)}
-        style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "help" }}
-      >
+    <Tooltip text={tipText} maxWidth={300}>
+      <div style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: inner, height: inner, borderRadius: "50%", background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "var(--text-heading)" }}>
           {pct}%
         </div>
       </div>
-      {showTip && (
-        <div style={{
-          position: "absolute", bottom: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%)",
-          background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 14px",
-          fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, width: 280, zIndex: 100,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-        }}>
-          <strong style={{ color: "var(--text-heading)" }}>{pct}% cosine similarity</strong>
-          <div style={{ marginTop: 6 }}>Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.</div>
-          <div style={{ marginTop: 6 }}>All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.</div>
-        </div>
-      )}
-    </div>
+    </Tooltip>
   );
 }
 
@@ -272,7 +309,9 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           <div style={{ fontFamily: "'Georgia', serif", fontSize: 15, lineHeight: 1.6, color: "var(--text-primary)", fontStyle: "italic", borderLeft: "3px solid #c0392b", paddingLeft: 16 }}>
             "{match.sovietText}"
           </div>
-          <div title={getSourceTooltip(match.sovietSource) || ""} style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, cursor: getSourceTooltip(match.sovietSource) ? "help" : "default", borderBottom: getSourceTooltip(match.sovietSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.sovietSource}</div>
+          <Tooltip text={getSourceTooltip(match.sovietSource)}>
+            <div style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, borderBottom: getSourceTooltip(match.sovietSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.sovietSource}</div>
+          </Tooltip>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <ScoreDonut score={match.similarity} />
@@ -284,7 +323,9 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           <div style={{ fontFamily: "'Georgia', serif", fontSize: 15, lineHeight: 1.6, color: "var(--text-primary)", fontStyle: "italic", borderLeft: "3px solid #3498db", paddingLeft: 16 }}>
             "{match.modernText}"
           </div>
-          <div title={getSourceTooltip(match.modernSource) || ""} style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, cursor: getSourceTooltip(match.modernSource) ? "help" : "default", borderBottom: getSourceTooltip(match.modernSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.modernSource}</div>
+          <Tooltip text={getSourceTooltip(match.modernSource)}>
+            <div style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, borderBottom: getSourceTooltip(match.modernSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.modernSource}</div>
+          </Tooltip>
         </div>
       </div>
 
@@ -495,7 +536,7 @@ function TropeChart({ tropeDistribution, sovietCorpusSize, modernCorpusSize }) {
       <BarChart data={chartData} layout="vertical" margin={{ left: 10, right: 20, top: 10, bottom: 10 }}>
         <XAxis type="number" tick={{ fill: "var(--text-secondary)", fontSize: 11 }} tickFormatter={v => `${v}%`} />
         <YAxis type="category" dataKey="shortLabel" width={120} tick={{ fill: "var(--text-primary)", fontSize: 12, fontWeight: 500 }} />
-        <Tooltip content={<CustomTooltip />} />
+        <RechartsTooltip content={<CustomTooltip />} />
         <Bar dataKey="sovietPct" name="Soviet (THEN)" fill="#c0392b" radius={[0, 4, 4, 0]} barSize={14} />
         <Bar dataKey="modernPct" name="Modern (NOW)" fill="#3498db" radius={[0, 4, 4, 0]} barSize={14} />
       </BarChart>
