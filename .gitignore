@@ -38,3 +38,4 @@ frontend/dist/
 # Misc
 *.log
 .env
+.wrangler/
