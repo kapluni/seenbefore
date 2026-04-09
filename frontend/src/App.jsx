@@ -93,6 +93,36 @@ const DEFAULT_TROPE_COLORS = {
   DUAL_LOYALTY: "#1abc9c", BLOOD_LIBEL: "#e74c3c", ANTI_ZIONISM_PROGRESSIVE: "#3498db",
 };
 
+// Source descriptions — used in Methodology tab and as tooltips on match sources
+const SOURCE_DESCRIPTIONS = {
+  // Soviet sources
+  "Ivanov": "Yuri Ivanov's \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. Printed 800,000+ copies in 16 languages, described by scholars as essentially a repackaged Protocols of the Elders of Zion.",
+  "Great Soviet Encyclopedia": "The official state encyclopedia of the USSR. Its entry on Zionism defined it as \"the ideology of the wealthy Jewish bourgeoisie\" — a definition mandatory for all Soviet reference works.",
+  "Anti-Zionist Committee": "The Anti-Zionist Committee of the Soviet Public, established in 1983 by the CPSU Central Committee and KGB to coordinate anti-Zionist messaging using prominent Soviet Jewish figures as public faces.",
+  "Pravda": "The official newspaper of the Communist Party of the Soviet Union. Anti-Zionist articles in Pravda carried the weight of state policy and were reprinted across the Soviet media ecosystem.",
+  "Kichko": "Trofim Kichko's \"Judaism Without Embellishment\" (1963) — published by the Ukrainian Academy of Sciences, with caricatures compared to Nazi Der Stürmer by international observers.",
+  "Novosti": "The Novosti Press Agency (APN) — the Soviet Union's external propaganda arm, producing pamphlets and articles in dozens of languages for foreign distribution.",
+  "Progress": "Progress Publishers Moscow — the Soviet state publishing house for foreign-language books, responsible for distributing anti-Zionist literature worldwide.",
+  "Leningrad": "Soviet regional press outlets that amplified centrally directed anti-Zionist campaigns with local commentary and editorial content.",
+  // Modern sources
+  "ISCA": "The Institute for the Study of Contemporary Antisemitism at Indiana University. Their IHRA-labeled Twitter datasets (GoldStandard 2024, ClassData 2022-2023) are the largest annotated antisemitism corpora available to researchers.",
+  "CONAN": "The CONAN dataset by Fondazione Bruno Kessler — expert-authored hate speech and counter-narrative pairs. Researchers wrote realistic hate speech examples to train detection models, providing high-quality labeled data.",
+  "ADL": "The Anti-Defamation League's H.E.A.T. Map — a database of antisemitic incidents across the United States, including direct quotes from perpetrators and event descriptions verified by ADL analysts.",
+  "H.E.A.T": "The Anti-Defamation League's H.E.A.T. Map — a database of antisemitic incidents across the United States, including direct quotes from perpetrators and event descriptions verified by ADL analysts.",
+  "CyberWell": "CyberWell — a nonprofit maintaining an open database of verified antisemitic social media content, with each post reviewed against the IHRA working definition of antisemitism.",
+  "Campus": "Rhetoric documented at university campus protests, BDS resolutions, and student government debates — sourced from news reports and public records.",
+  "Social Media": "Posts from social media platforms (Twitter/X, Reddit, Telegram) identified as containing antisemitic content by researchers using the IHRA working definition.",
+  "Protest": "Slogans, speeches, and chants documented at public demonstrations, sourced from news coverage and direct observation by monitoring organizations.",
+};
+
+function getSourceTooltip(source) {
+  if (!source) return null;
+  for (const [key, desc] of Object.entries(SOURCE_DESCRIPTIONS)) {
+    if (source.includes(key)) return desc;
+  }
+  return null;
+}
+
 const TROPE_SHORT_LABELS = {
   ZIONISM_RACISM: "Racism",
   ZIONISM_NAZISM: "Nazism",
@@ -242,7 +272,7 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           <div style={{ fontFamily: "'Georgia', serif", fontSize: 15, lineHeight: 1.6, color: "var(--text-primary)", fontStyle: "italic", borderLeft: "3px solid #c0392b", paddingLeft: 16 }}>
             "{match.sovietText}"
           </div>
-          <div style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8 }}>— {match.sovietSource}</div>
+          <div title={getSourceTooltip(match.sovietSource) || ""} style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, cursor: getSourceTooltip(match.sovietSource) ? "help" : "default", borderBottom: getSourceTooltip(match.sovietSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.sovietSource}</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <ScoreDonut score={match.similarity} />
@@ -254,7 +284,7 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           <div style={{ fontFamily: "'Georgia', serif", fontSize: 15, lineHeight: 1.6, color: "var(--text-primary)", fontStyle: "italic", borderLeft: "3px solid #3498db", paddingLeft: 16 }}>
             "{match.modernText}"
           </div>
-          <div style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8 }}>— {match.modernSource}</div>
+          <div title={getSourceTooltip(match.modernSource) || ""} style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, cursor: getSourceTooltip(match.modernSource) ? "help" : "default", borderBottom: getSourceTooltip(match.modernSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.modernSource}</div>
         </div>
       </div>
 
@@ -1566,12 +1596,12 @@ export default function App() {
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#c0392b", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>Soviet Corpus (~1,800 filtered passages)</div>
                   <div style={{ display: "grid", gap: 6 }}>
                     {[
-                      { name: "Ivanov, \"Caution: Zionism!\" (1970)", desc: "800,000 copies, 16 languages. Full English translation.", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf" },
-                      { name: "Kichko, \"Judaism Without Embellishment\" (1963)", desc: "Cartoons compared to Nazi Der Sturmer by international observers." },
-                      { name: "\"Zionism: Instrument of Imperialist Reaction\" (Novosti, 1970)", desc: "Soviet press agency pamphlet. Downloaded from Internet Archive.", url: "https://archive.org" },
-                      { name: "\"Anti-Zionist Committee: Aims and Tasks\" (Novosti, 1983)", desc: "Established by CPSU and KGB to coordinate anti-Zionist messaging." },
-                      { name: "\"Zionism: Enemy of Peace and Social Progress\" (Progress, 1985)", desc: "Progress Publishers Moscow. 871 raw passages." },
-                      { name: "Great Soviet Encyclopedia entry on Zionism", desc: "Official Soviet state encyclopedia definition." },
+                      { name: "Ivanov, \"Caution: Zionism!\" (1970)", desc: "The foundational Soviet anti-Zionist text. Printed 800,000+ copies in 16 languages, described by scholars as essentially a repackaged Protocols of the Elders of Zion. Full English translation freely available.", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf" },
+                      { name: "Kichko, \"Judaism Without Embellishment\" (1963)", desc: "Published by the Ukrainian Academy of Sciences with caricatures compared to Nazi Der Stürmer by international observers. Temporarily withdrawn after global condemnation, then republished at 5x the print run." },
+                      { name: "\"Zionism: Instrument of Imperialist Reaction\" (Novosti, 1970)", desc: "A pamphlet produced by the Novosti Press Agency (APN), the Soviet Union's external propaganda arm. Distributed in dozens of languages to present anti-Zionism as a natural extension of anti-imperialism.", url: "https://archive.org" },
+                      { name: "\"Anti-Zionist Committee: Aims and Tasks\" (Novosti, 1983)", desc: "Official publication of the Anti-Zionist Committee of the Soviet Public, established by the CPSU Central Committee and KGB. Used prominent Soviet Jewish figures as public faces to deflect charges of antisemitism." },
+                      { name: "\"Zionism: Enemy of Peace and Social Progress\" (Progress, 1985)", desc: "Published by Progress Publishers Moscow, the Soviet state house for foreign-language books. Part of a systematic effort to distribute anti-Zionist literature worldwide through embassies and friendship societies. 871 raw passages." },
+                      { name: "Great Soviet Encyclopedia entry on Zionism", desc: "The official state encyclopedia of the USSR. Its entry defined Zionism as \"the ideology of the wealthy Jewish bourgeoisie\" — a mandatory reference for all Soviet institutions and publications." },
                     ].map((s, i) => (
                       <div key={i} style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, padding: "6px 12px", background: "var(--bg-card-alt)", borderRadius: 6 }}>
                         <strong style={{ color: "var(--text-primary)" }}>{s.name}</strong>
@@ -1585,10 +1615,10 @@ export default function App() {
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#2980b9", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>Modern Corpus (~3,900 passages)</div>
                   <div style={{ display: "grid", gap: 6 }}>
                     {[
-                      { name: "ISCA GoldStandard 2024 (Zenodo)", desc: "11,311 IHRA-labeled tweets, filtered to 1,838 biased Jewish/Israel-targeted.", url: "https://zenodo.org" },
-                      { name: "ISCA ClassData 2022-2023", desc: "14,597 multi-group bias tweets, filtered to 127 Jewish-targeted biased." },
-                      { name: "CONAN Counter-Narratives", desc: "Expert-written hate speech pairs. 406 + 547 Jewish-targeted passages.", url: "https://github.com/marcoguerini/CONAN" },
-                      { name: "ADL H.E.A.T. Map", desc: "3,672 antisemitic incident descriptions, 971 Israel/Zionism-related with quotes extracted.", url: "https://www.adl.org/heat-map" },
+                      { name: "ISCA GoldStandard 2024 (Zenodo)", desc: "The largest annotated antisemitism corpus available to researchers, created by the Institute for the Study of Contemporary Antisemitism at Indiana University. 11,311 tweets labeled against the IHRA working definition, filtered to 1,838 biased Jewish/Israel-targeted passages.", url: "https://zenodo.org" },
+                      { name: "ISCA ClassData 2022-2023", desc: "A multi-group bias dataset from the same Indiana University research group. 14,597 tweets covering multiple target groups, filtered to 127 Jewish-targeted biased passages for this project." },
+                      { name: "CONAN Counter-Narratives", desc: "Created by Fondazione Bruno Kessler researchers who wrote realistic hate speech examples to train detection models. The multi-target and dialogue collections provided 406 + 547 high-quality Jewish-targeted passages with expert annotation.", url: "https://github.com/marcoguerini/CONAN" },
+                      { name: "ADL H.E.A.T. Map", desc: "The Anti-Defamation League's database of antisemitic, anti-LGBTQ+, and extremist incidents across the United States. Each entry is verified by ADL analysts. 3,672 incident descriptions with direct quotes extracted, 971 Israel/Zionism-related.", url: "https://www.adl.org/heat-map" },
                     ].map((s, i) => (
                       <div key={i} style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, padding: "6px 12px", background: "var(--bg-card-alt)", borderRadius: 6 }}>
                         <strong style={{ color: "var(--text-primary)" }}>{s.name}</strong>
