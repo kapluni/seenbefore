@@ -98,6 +98,7 @@ const DEFAULT_TROPE_COLORS = {
 const SOURCE_DESCRIPTIONS = {
   // Soviet sources
   "Ivanov": "Yuri Ivanov's \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. Printed 800,000+ copies in 16 languages, described by scholars as essentially a repackaged Protocols of the Elders of Zion.",
+  "Caution: Zionism": "Yuri Ivanov's \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. Printed 800,000+ copies in 16 languages, described by scholars as essentially a repackaged Protocols of the Elders of Zion.",
   "Great Soviet Encyclopedia": "The official state encyclopedia of the USSR. Its entry on Zionism defined it as \"the ideology of the wealthy Jewish bourgeoisie\" — a definition mandatory for all Soviet reference works.",
   "Anti-Zionist Committee": "The Anti-Zionist Committee of the Soviet Public, established in 1983 by the CPSU Central Committee and KGB to coordinate anti-Zionist messaging using prominent Soviet Jewish figures as public faces.",
   "Pravda": "The official newspaper of the Communist Party of the Soviet Union. Anti-Zionist articles in Pravda carried the weight of state policy and were reprinted across the Soviet media ecosystem.",
@@ -105,6 +106,9 @@ const SOURCE_DESCRIPTIONS = {
   "Novosti": "The Novosti Press Agency (APN) — the Soviet Union's external propaganda arm, producing pamphlets and articles in dozens of languages for foreign distribution.",
   "Progress": "Progress Publishers Moscow — the Soviet state publishing house for foreign-language books, responsible for distributing anti-Zionist literature worldwide.",
   "Leningrad": "Soviet regional press outlets that amplified centrally directed anti-Zionist campaigns with local commentary and editorial content.",
+  "Zionism: Enemy of Peace": "\"Zionism: Enemy of Peace and Social Progress\" (Progress Publishers, 1985) — a Soviet state publication distributed worldwide through embassies and friendship societies as part of the systematic anti-Zionist literature campaign.",
+  "Zionism: Instrument": "\"Zionism: Instrument of Imperialist Reaction\" (Novosti Press Agency, 1970) — produced by the USSR's external propaganda arm for foreign distribution in dozens of languages, framing anti-Zionism as anti-imperialism.",
+  "Aims and Tasks": "\"Anti-Zionist Committee: Aims and Tasks\" (Novosti, 1983) — official publication of the Anti-Zionist Committee of the Soviet Public, established by the CPSU Central Committee and KGB using prominent Soviet Jewish figures as public faces.",
   // Modern sources
   "ISCA": "The Institute for the Study of Contemporary Antisemitism at Indiana University. Their IHRA-labeled Twitter datasets (GoldStandard 2024, ClassData 2022-2023) are the largest annotated antisemitism corpora available to researchers.",
   "CONAN": "The CONAN dataset by Fondazione Bruno Kessler — expert-authored hate speech and counter-narrative pairs. Researchers wrote realistic hate speech examples to train detection models, providing high-quality labeled data.",
