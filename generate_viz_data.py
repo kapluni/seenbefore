@@ -588,7 +588,7 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
     print(f"  → {output_path}")
     return viz
 
-def serve_api(model_name=None):
+def serve_api(model_name=None, port=8000):
     import uvicorn
     from fastapi import FastAPI
     from fastapi.middleware.cors import CORSMiddleware
@@ -636,8 +636,8 @@ def serve_api(model_name=None):
         return {"query_text":req.text,"tropes_detected":[{"trope":t,"name":TROPE_TAXONOMY[t]["name"]} for t in tropes],"matches":res,"is_propaganda_derived":best>=0.70,"summary":f"{best:.0%} similarity. "+("Strong echo." if best>=0.85 else "Moderate." if best>=0.70 else "Weak/none.")}
     @app.get("/api/health")
     async def health(): return {"status":"ok","soviet":len(sim.soviet_passages),"model":model_name}
-    print(f"\nhttp://localhost:8000  POST /api/analyze")
-    uvicorn.run(app,host="0.0.0.0",port=8000)
+    print(f"\nhttp://localhost:{port}  POST /api/analyze")
+    uvicorn.run(app,host="0.0.0.0",port=port)
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
@@ -648,7 +648,8 @@ if __name__=="__main__":
     p.add_argument("--max-modern",type=int,default=500)
     p.add_argument("--top-matches",type=int,default=20)
     p.add_argument("--verify",action="store_true",help="Enable LLM verification of matches (requires anthropic package and ANTHROPIC_API_KEY)")
+    p.add_argument("--port",type=int,default=8000,help="Port for the API server (default: 8000)")
     a=p.parse_args()
     if not a.generate and not a.serve: a.generate=True
     if a.generate: generate_viz_data(a.output,a.model,a.max_modern,a.top_matches,a.verify)
-    if a.serve: serve_api(a.model)
+    if a.serve: serve_api(a.model,a.port)

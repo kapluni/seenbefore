@@ -276,7 +276,7 @@ function LiveAnalyzer({ tropeNames, tropeColors }) {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [apiUrl, setApiUrl] = useState("");
+  const [apiUrl, setApiUrl] = useState(import.meta.env.VITE_API_URL || "");
 
   const analyze = useCallback(async () => {
     if (!input.trim()) return;
@@ -1290,7 +1290,7 @@ function ExplorerTab({ tropeNames, tropeColors }) {
 // MAIN APP
 // ============================================================
 
-const TABS = ["The Story", "Top Matches", "Explorer", "Analyzer", "Timeline", "Tropes", "Calibration", "Share", "Full History"];
+const TABS = ["The Story", "Top Matches", "Explorer", "Analyzer", "Timeline", "Tropes", "Methodology", "Share", "Full History"];
 
 const DOC_TIMELINE = [
   { year: 1903, label: "Protocols of the Elders of Zion published — Tsarist secret police forgery", type: "soviet" },
@@ -1433,11 +1433,196 @@ export default function App() {
           </div>
         )}
 
-        {/* 6: Calibration */}
+        {/* 6: Methodology */}
         {activeTab === 6 && (
-          <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
-            <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 16 }}>Confidence calibration — legitimate criticism scores well below match threshold</div>
-            <CalibrationView calibration={calibration} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+
+            {/* Section 1: Approach */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Approach</h3>
+              <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                <p style={{ margin: "0 0 12px" }}>
+                  This project uses <strong style={{ color: "var(--text-primary)" }}>embedding-based semantic similarity</strong> to identify modern texts
+                  that echo the rhetorical patterns of Soviet anti-Zionist propaganda from the 1960s through 1980s.
+                </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>Two-stage pipeline:</strong> Passages are embedded using BGE-large-en-v1.5 for initial retrieval
+                  via cosine similarity, identifying candidate matches from a corpus of ~3,900 modern texts against ~1,800 filtered Soviet passages.
+                </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>Human review:</strong> Automated matching achieves approximately 50% precision. Every match
+                  displayed in this tool has been manually reviewed to confirm genuine rhetorical echoing -- not merely topical overlap. Two texts can discuss
+                  the same subject from opposite angles and still score 0.80+ on cosine similarity.
+                </p>
+                <div style={{ background: "var(--bg-card-alt)", borderRadius: 8, padding: 16, marginTop: 16, borderLeft: "3px solid #f39c12" }}>
+                  <p style={{ margin: 0, fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, fontStyle: "italic" }}>
+                    These are structural parallels in argumentation, not proven causal chains. Establishing that modern speakers
+                    learned these arguments from Soviet sources requires historical evidence beyond NLP. This project demonstrates
+                    that the rhetorical patterns are strikingly similar -- the question of transmission is for historians.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 2: The Trope Taxonomy */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 8px", fontFamily: "'Georgia', serif" }}>The Trope Taxonomy</h3>
+              <p style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, margin: "0 0 16px" }}>
+                The taxonomy of 9 Soviet propaganda categories is the core intellectual contribution of this project -- mapping
+                how specific Soviet rhetorical strategies reappear in modern discourse. This taxonomy should be validated by domain experts
+                before any public launch.
+              </p>
+              <div style={{ display: "grid", gap: 8 }}>
+                {Object.keys(TROPE_DESCRIPTIONS).map(id => (
+                  <div key={id} style={{ display: "flex", alignItems: "baseline", gap: 10, padding: "8px 12px", background: "var(--bg-card-alt)", borderRadius: 6, borderLeft: `3px solid ${DEFAULT_TROPE_COLORS[id] || "#888"}` }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: DEFAULT_TROPE_COLORS[id] || "var(--text-primary)", minWidth: 140, fontFamily: "inherit" }}>
+                      {DEFAULT_TROPE_NAMES[id] || id}
+                    </span>
+                    <span style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.5 }}>
+                      {TROPE_DESCRIPTIONS[id]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section 3: Datasets */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Datasets</h3>
+              <div style={{ display: "grid", gap: 20 }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#c0392b", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>Soviet Corpus (~1,800 filtered passages)</div>
+                  <div style={{ display: "grid", gap: 6 }}>
+                    {[
+                      { name: "Ivanov, \"Caution: Zionism!\" (1970)", desc: "800,000 copies, 16 languages. Full English translation.", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf" },
+                      { name: "Kichko, \"Judaism Without Embellishment\" (1963)", desc: "Cartoons compared to Nazi Der Sturmer by international observers." },
+                      { name: "\"Zionism: Instrument of Imperialist Reaction\" (Novosti, 1970)", desc: "Soviet press agency pamphlet. Downloaded from Internet Archive.", url: "https://archive.org" },
+                      { name: "\"Anti-Zionist Committee: Aims and Tasks\" (Novosti, 1983)", desc: "Established by CPSU and KGB to coordinate anti-Zionist messaging." },
+                      { name: "\"Zionism: Enemy of Peace and Social Progress\" (Progress, 1985)", desc: "Progress Publishers Moscow. 871 raw passages." },
+                      { name: "Great Soviet Encyclopedia entry on Zionism", desc: "Official Soviet state encyclopedia definition." },
+                    ].map((s, i) => (
+                      <div key={i} style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, padding: "6px 12px", background: "var(--bg-card-alt)", borderRadius: 6 }}>
+                        <strong style={{ color: "var(--text-primary)" }}>{s.name}</strong>
+                        {" -- "}{s.desc}
+                        {s.url && <> (<a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "#3498db" }}>source</a>)</>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#2980b9", marginBottom: 8, letterSpacing: 1, textTransform: "uppercase" }}>Modern Corpus (~3,900 passages)</div>
+                  <div style={{ display: "grid", gap: 6 }}>
+                    {[
+                      { name: "ISCA GoldStandard 2024 (Zenodo)", desc: "11,311 IHRA-labeled tweets, filtered to 1,838 biased Jewish/Israel-targeted.", url: "https://zenodo.org" },
+                      { name: "ISCA ClassData 2022-2023", desc: "14,597 multi-group bias tweets, filtered to 127 Jewish-targeted biased." },
+                      { name: "CONAN Counter-Narratives", desc: "Expert-written hate speech pairs. 406 + 547 Jewish-targeted passages.", url: "https://github.com/marcoguerini/CONAN" },
+                      { name: "ADL H.E.A.T. Map", desc: "3,672 antisemitic incident descriptions, 971 Israel/Zionism-related with quotes extracted.", url: "https://www.adl.org/heat-map" },
+                    ].map((s, i) => (
+                      <div key={i} style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, padding: "6px 12px", background: "var(--bg-card-alt)", borderRadius: 6 }}>
+                        <strong style={{ color: "var(--text-primary)" }}>{s.name}</strong>
+                        {" -- "}{s.desc}
+                        {s.url && <> (<a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: "#3498db" }}>source</a>)</>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4: Embedding Model */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Embedding Model</h3>
+              <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                <p style={{ margin: "0 0 12px" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>BAAI/bge-large-en-v1.5</strong> was selected via benchmark against four candidates:
+                  E5-large, BGE-large, MiniLM, and Nomic. Each was tested on 10 domain-specific pairs (5 genuine echoes + 5 negatives).
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, margin: "16px 0" }}>
+                  {[
+                    { label: "Dimensions", value: "1,024" },
+                    { label: "Similarity Metric", value: "Cosine" },
+                    { label: "Score Gap (good vs bad)", value: "0.21 (2x E5)" },
+                  ].map(item => (
+                    <div key={item.label} style={{ background: "var(--bg-card-alt)", borderRadius: 8, padding: "12px 16px", textAlign: "center" }}>
+                      <div style={{ fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>{item.label}</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--text-heading)" }}>{item.value}</div>
+                    </div>
+                  ))}
+                </div>
+                <p style={{ margin: "12px 0 0", fontSize: 12, color: "var(--text-muted)" }}>
+                  BGE-large achieved both higher scores on genuine echo pairs AND lower scores on negative pairs, producing
+                  twice the separation gap (0.21) compared to E5-large (0.11). The trade-off: BGE is English-only,
+                  so multilingual capability (Russian sources) was sacrificed. All current corpus is English translations, making this acceptable.
+                </p>
+              </div>
+            </div>
+
+            {/* Section 5: Quality Controls */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Quality Controls</h3>
+              <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                <div style={{ display: "grid", gap: 12, marginBottom: 20 }}>
+                  {[
+                    { title: "Propaganda Pre-Filter", desc: "The is_propaganda_chunk() filter removes historical narrative, quoted material (>50% inside quotation marks), citation-heavy passages (3+ reference brackets), and pure statistics. This eliminates ~53% of raw Soviet text that would produce incoherent matches." },
+                    { title: "Trope Gate", desc: "Only Soviet passages with at least one trope label from the taxonomy are used for matching. This is the strongest quality signal, ensuring every match connects to a specific propaganda strategy." },
+                    { title: "Diversity Enforcement", desc: "Soviet passage reuse is capped at 2-3 uses to prevent a single passage from dominating results. No single modern source may exceed 40% of match slots." },
+                    { title: "Near-Duplicate Dedup", desc: "Normalized text matching catches trivial variations like 'Jews control the U.S. government' vs 'The Jews control the US government' to prevent redundant matches." },
+                  ].map(item => (
+                    <div key={item.title} style={{ padding: "12px 16px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #27ae60" }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-primary)", marginBottom: 4 }}>{item.title}</div>
+                      <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6 }}>{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", marginBottom: 12 }}>Calibration: Legitimate Criticism Scores Low</div>
+                  <CalibrationView calibration={calibration} />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 6: Limitations */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Limitations</h3>
+              <div style={{ display: "grid", gap: 10 }}>
+                {[
+                  "Cosine similarity measures topical overlap, not rhetorical echoing. Two texts can discuss Israel from opposite perspectives and still score 0.80+.",
+                  "Automated matching achieves approximately 50% precision -- half of top-scoring pairs are topically related but make different arguments. This is why human review is required.",
+                  "The corpus uses English translations only. Switching from E5-large (multilingual) to BGE-large (English-only) sacrificed the ability to process Russian-language originals. This is acceptable since all current sources are translated.",
+                  "No causal chain is established. These are structural parallels in argumentation patterns, not proof that modern speakers learned these arguments from Soviet sources. The question of transmission pathways is for historians.",
+                ].map((text, i) => (
+                  <div key={i} style={{ display: "flex", gap: 10, alignItems: "baseline", fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7 }}>
+                    <span style={{ color: "#e74c3c", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
+                    <span>{text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section 7: Open Source */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Open Source</h3>
+              <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                <p style={{ margin: "0 0 12px" }}>
+                  This project is designed to be fully open-source. All taxonomy definitions, processing code, threshold configurations,
+                  and training data are publicly documented and reproducible.
+                </p>
+                <p style={{ margin: "0 0 16px" }}>
+                  Source code:{" "}
+                  <a href="https://github.com/kapluni/seenbefore" target="_blank" rel="noopener noreferrer" style={{ color: "#3498db", fontWeight: 600 }}>
+                    github.com/kapluni/seenbefore
+                  </a>
+                </p>
+                <div style={{ fontSize: 12, color: "var(--text-muted)", borderTop: "1px solid var(--border)", paddingTop: 12 }}>
+                  <strong style={{ color: "var(--text-secondary)" }}>Key scholars whose work informs this project:</strong>
+                  <ul style={{ margin: "8px 0 0", paddingLeft: 20, lineHeight: 2 }}>
+                    <li><strong style={{ color: "var(--text-primary)" }}>Izabella Tabarovsky</strong> -- "Be a Refusenik," senior advisor at Kennan Institute/Wilson Center. Author of "Demonization Blueprints" tracing Soviet anti-Zionism to modern discourse.</li>
+                    <li><strong style={{ color: "var(--text-primary)" }}>Robert Wistrich</strong> -- "A Lethal Obsession" (2010), comprehensive history of antisemitism including Soviet anti-Zionism.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
 
