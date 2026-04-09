@@ -1146,7 +1146,7 @@ function CollapsibleSection({ heading, children }) {
         onClick={() => setOpen(!open)}
         style={{
           background: "none", border: "none", cursor: "pointer", padding: 0, width: "100%", textAlign: "left",
-          display: "flex", alignItems: "center", gap: 8,
+          display: "flex", alignItems: "center", gap: 8, fontFamily: "'Courier New', 'Consolas', monospace",
         }}
       >
         <span style={{ fontSize: 14, color: "var(--text-muted)", transition: "transform 0.2s", transform: open ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block" }}>&#9654;</span>
