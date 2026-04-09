@@ -169,12 +169,31 @@ function ScoreDonut({ score, size = 44 }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.70 ? "#2ecc71" : score >= 0.55 ? "#f1c40f" : "#e67e22";
   const inner = size - 8;
-  const tooltip = `${pct}% cosine similarity — Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space. All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.`;
+  const [showTip, setShowTip] = useState(false);
   return (
-    <div title={tooltip} style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "help" }}>
-      <div style={{ width: inner, height: inner, borderRadius: "50%", background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "var(--text-heading)" }}>
-        {pct}%
+    <div style={{ position: "relative", display: "inline-block" }}>
+      <div
+        onClick={() => setShowTip(!showTip)}
+        onMouseEnter={() => setShowTip(true)}
+        onMouseLeave={() => setShowTip(false)}
+        style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center", cursor: "help" }}
+      >
+        <div style={{ width: inner, height: inner, borderRadius: "50%", background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "var(--text-heading)" }}>
+          {pct}%
+        </div>
       </div>
+      {showTip && (
+        <div style={{
+          position: "absolute", bottom: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%)",
+          background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 14px",
+          fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, width: 280, zIndex: 100,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+        }}>
+          <strong style={{ color: "var(--text-heading)" }}>{pct}% cosine similarity</strong>
+          <div style={{ marginTop: 6 }}>Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.</div>
+          <div style={{ marginTop: 6 }}>All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.</div>
+        </div>
+      )}
     </div>
   );
 }
