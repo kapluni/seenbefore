@@ -305,7 +305,7 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
         </div>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, marginBottom: 16 }}>
+      <div className="isb-match-grid" style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, marginBottom: 16 }}>
         <div>
           <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: 2, color: "#c0392b", fontWeight: 700, marginBottom: 8 }}>
             THEN — {match.sovietYear}
@@ -317,7 +317,7 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
             <div style={{ fontSize: 11, color: "var(--text-source)", marginTop: 8, borderBottom: getSourceTooltip(match.sovietSource) ? "1px dotted var(--text-muted)" : "none", display: "inline-block" }}>— {match.sovietSource}</div>
           </Tooltip>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="isb-match-donut" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <ScoreDonut score={match.similarity} />
         </div>
         <div>
@@ -573,7 +573,7 @@ function TropeDescriptionTable({ tropeNames }) {
             padding: "8px 12px", background: "var(--bg-card)", borderRadius: 8,
             borderLeft: "3px solid var(--text-muted)",
           }}>
-            <div style={{ minWidth: 130 }}>
+            <div className="isb-trope-label" style={{ minWidth: 130 }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text-primary)" }}>
                 {TROPE_SHORT_LABELS[id] || id}
               </span>
@@ -607,7 +607,7 @@ function CalibrationView({ calibration }) {
         const isLegit = item.type === "legitimate";
         return (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-            <span style={{ fontSize: 11, color: isLegit ? "#2ecc71" : "var(--text-primary)", minWidth: 150, textAlign: "right", fontWeight: isLegit ? 700 : 400 }}>
+            <span className="isb-cal-label" style={{ fontSize: 11, color: isLegit ? "#2ecc71" : "var(--text-primary)", minWidth: 150, textAlign: "right", fontWeight: isLegit ? 700 : 400 }}>
               {isLegit ? "✓ " : ""}{item.label}
             </span>
             <div style={{ flex: 1, height: 8, background: "var(--bg-card-alt)", borderRadius: 4, overflow: "hidden" }}>
@@ -1353,9 +1353,9 @@ function ExplorerTab({ tropeNames, tropeColors }) {
         ))}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 20, alignItems: "start" }}>
+      <div className="isb-explorer-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 20, alignItems: "start" }}>
         {/* Left: passage list */}
-        <div style={{ maxHeight: 600, overflowY: "auto", border: "1px solid var(--border)", borderRadius: 8 }}>
+        <div className="isb-explorer-list" style={{ maxHeight: 600, overflowY: "auto", border: "1px solid var(--border)", borderRadius: 8 }}>
           {passages.map((p, i) => (
             <div key={p.id} onClick={() => setSelectedIdx(i)} style={{
               padding: "10px 12px", cursor: "pointer", borderBottom: "1px solid var(--bg-card-alt)",
@@ -1502,15 +1502,29 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-page)", color: "var(--text-primary)", fontFamily: "'Courier New', 'Consolas', monospace", padding: "32px 24px" }}>
+    <div className="isb-root" style={{ minHeight: "100vh", background: "var(--bg-page)", color: "var(--text-primary)", fontFamily: "'Courier New', 'Consolas', monospace", padding: "32px 24px" }}>
       <style>{`
         @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 640px) {
+          .isb-root { padding: 16px 12px !important; }
+          .isb-header-title { font-size: 24px !important; }
+          .isb-header-intro { font-size: 14px !important; }
+          .isb-match-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .isb-match-donut { display: flex; justify-content: center; order: -1; }
+          .isb-tab-btn { padding: 8px 10px !important; font-size: 11px !important; }
+          .isb-explorer-grid { grid-template-columns: 1fr !important; }
+          .isb-explorer-list { max-height: 300px !important; }
+          .isb-cal-label { min-width: 100px !important; font-size: 10px !important; }
+          .isb-trope-label { min-width: 90px !important; font-size: 10px !important; }
+          .isb-method-trope-label { min-width: 100px !important; }
+          .isb-stat-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
       <div style={{ maxWidth: 900, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-            <h1 style={{ fontSize: 32, fontWeight: 300, color: "var(--text-heading)", margin: 0, fontFamily: "'Georgia', serif", letterSpacing: 1 }}>
+            <h1 className="isb-header-title" style={{ fontSize: 32, fontWeight: 300, color: "var(--text-heading)", margin: 0, fontFamily: "'Georgia', serif", letterSpacing: 1 }}>
               I've Seen This Before
             </h1>
             <ThemeToggle />
@@ -1518,7 +1532,7 @@ export default function App() {
           <p style={{ fontSize: 13, color: "var(--text-secondary)", maxWidth: 600, margin: "12px auto 0", lineHeight: 1.6 }}>
             Mapping Soviet anti-Zionist propaganda to its modern echoes using semantic similarity
           </p>
-          <p style={{ fontSize: 16, color: "var(--text-primary)", maxWidth: 720, margin: "20px auto 0", lineHeight: 1.9, textAlign: "left", fontFamily: "'Georgia', serif" }}>
+          <p className="isb-header-intro" style={{ fontSize: 16, color: "var(--text-primary)", maxWidth: 720, margin: "20px auto 0", lineHeight: 1.9, textAlign: "left", fontFamily: "'Georgia', serif" }}>
             The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were <strong style={{ color: "#c0392b" }}>engineered by the Soviet propaganda apparatus</strong> in the 1960s–80s, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse. This project uses machine learning to surface those connections: placing Soviet propaganda passages side by side with modern rhetoric to reveal how strikingly — and often verbatim — the language has survived.
           </p>
         </div>
@@ -1526,7 +1540,7 @@ export default function App() {
         {/* Tabs */}
         <div style={{ display: "flex", gap: 2, marginBottom: 32, borderBottom: "1px solid var(--bg-card-alt)", paddingBottom: 1, overflowX: "auto" }}>
           {TABS.map((tab, i) => (
-            <button key={tab} onClick={() => setActiveTab(i)} style={{
+            <button key={tab} onClick={() => setActiveTab(i)} className="isb-tab-btn" style={{
               background: activeTab === i ? "var(--bg-card-alt)" : "transparent", border: "none",
               color: activeTab === i ? "var(--text-heading)" : "var(--text-source)", padding: "10px 16px", cursor: "pointer",
               fontSize: 12, fontFamily: "inherit", fontWeight: activeTab === i ? 700 : 400,
@@ -1622,7 +1636,7 @@ export default function App() {
               <div style={{ display: "grid", gap: 8 }}>
                 {Object.keys(TROPE_DESCRIPTIONS).map(id => (
                   <div key={id} style={{ display: "flex", alignItems: "baseline", gap: 10, padding: "8px 12px", background: "var(--bg-card-alt)", borderRadius: 6, borderLeft: `3px solid ${DEFAULT_TROPE_COLORS[id] || "#888"}` }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: DEFAULT_TROPE_COLORS[id] || "var(--text-primary)", minWidth: 140, fontFamily: "inherit" }}>
+                    <span className="isb-method-trope-label" style={{ fontSize: 12, fontWeight: 700, color: DEFAULT_TROPE_COLORS[id] || "var(--text-primary)", minWidth: 140, fontFamily: "inherit" }}>
                       {DEFAULT_TROPE_NAMES[id] || id}
                     </span>
                     <span style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.5 }}>
@@ -1684,7 +1698,7 @@ export default function App() {
                   <strong style={{ color: "var(--text-primary)" }}>BAAI/bge-large-en-v1.5</strong> was selected via benchmark against four candidates:
                   E5-large, BGE-large, MiniLM, and Nomic. Each was tested on 10 domain-specific pairs (5 genuine echoes + 5 negatives).
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, margin: "16px 0" }}>
+                <div className="isb-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12, margin: "16px 0" }}>
                   {[
                     { label: "Dimensions", value: "1,024" },
                     { label: "Similarity Metric", value: "Cosine" },
