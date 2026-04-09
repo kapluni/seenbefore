@@ -405,8 +405,8 @@ function TimelineView({ timeline }) {
 }
 
 function TropeChart({ tropeDistribution, sovietCorpusSize, modernCorpusSize }) {
-  const sovietTotal = sovietCorpusSize || tropeDistribution.reduce((s, d) => s + (d.sovietCount || 0), 0) || 1;
-  const modernTotal = modernCorpusSize || tropeDistribution.reduce((s, d) => s + (d.modernCount || 0), 0) || 1;
+  const sovietTotal = tropeDistribution.reduce((s, d) => s + (d.sovietCount || 0), 0) || 1;
+  const modernTotal = tropeDistribution.reduce((s, d) => s + (d.modernCount || 0), 0) || 1;
 
   const chartData = tropeDistribution
     .filter(d => d.sovietCount > 0 || d.modernCount > 0)
