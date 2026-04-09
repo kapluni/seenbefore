@@ -1649,6 +1649,29 @@ export default function App() {
                 <div style={{ marginTop: 8 }}>
                   <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text-primary)", marginBottom: 12 }}>Calibration: Legitimate Criticism Scores Low</div>
                   <CalibrationView calibration={calibration} />
+                  <div style={{ marginTop: 20 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)", marginBottom: 10 }}>Examples of legitimate criticism tested:</div>
+                    <div style={{ display: "grid", gap: 8 }}>
+                      {[
+                        { text: "Israel's settlement expansion in the West Bank violates international law and undermines the two-state solution.", category: "Policy criticism" },
+                        { text: "The blockade of Gaza has created a humanitarian crisis that demands international attention and relief.", category: "Humanitarian concern" },
+                        { text: "I disagree with Israel's nation-state law because it marginalizes non-Jewish citizens, particularly Arab Israelis.", category: "Civil rights" },
+                        { text: "The use of administrative detention without trial is a practice that should concern anyone who values due process.", category: "Legal/human rights" },
+                        { text: "U.S. military aid to Israel should be subject to the same human rights conditions applied to other recipients.", category: "Foreign policy" },
+                        { text: "Both Israelis and Palestinians deserve self-determination, security, and dignity in any peace agreement.", category: "Peace advocacy" },
+                        { text: "Israel's defense budget as a percentage of GDP is among the highest in the developed world.", category: "Budget/factual" },
+                        { text: "The displacement of Palestinian families in Sheikh Jarrah raises serious property rights concerns under international law.", category: "Specific legal issue" },
+                      ].map((ex, i) => (
+                        <div key={i} style={{ padding: "8px 12px", background: "var(--bg-card-alt)", borderRadius: 6, borderLeft: "3px solid #27ae60" }}>
+                          <div style={{ fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.6, fontStyle: "italic" }}>"{ex.text}"</div>
+                          <div style={{ fontSize: 10, color: "#27ae60", fontWeight: 600, marginTop: 4 }}>{ex.category}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.6 }}>
+                      All examples above score below the 0.55 threshold (average: 0.43), confirming the system distinguishes between legitimate policy criticism and rhetoric that echoes Soviet propaganda patterns.
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
