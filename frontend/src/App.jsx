@@ -1317,7 +1317,7 @@ const DOC_TIMELINE = [
 
 export default function App() {
   const { matches, tropeDistribution, timeline, calibration, tropeNames, tropeColors, isLive, loading, model, generatedAt, sovietCorpusSize, modernCorpusSize } = useResolvedData();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
   const [selectedCard, setSelectedCard] = useState(0);
 
   // Use the richer timeline from the documentation
