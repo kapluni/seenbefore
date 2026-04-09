@@ -1108,6 +1108,55 @@ const MD_COMPONENTS = {
   ),
 };
 
+const COLLAPSIBLE_HEADINGS = [
+  "Scholarly Books and Monographs",
+  "Peer-Reviewed Journal Articles",
+  "Major Journalism and Long-Form Analysis",
+  "Institutional and Advocacy Sources",
+  "Historical Event Sources",
+  "Wikipedia and Encyclopedias",
+  "Historiographical Note on Disputed Claims",
+];
+
+function splitCollapsibleSections(md) {
+  const lines = md.split("\n");
+  const sections = [];
+  let current = { lines: [], collapsible: false, heading: "" };
+
+  for (const line of lines) {
+    const h2Match = line.match(/^## (.+)/);
+    if (h2Match) {
+      if (current.lines.length > 0) sections.push(current);
+      const heading = h2Match[1];
+      const isCollapsible = COLLAPSIBLE_HEADINGS.some(h => heading.includes(h));
+      current = { lines: [line], collapsible: isCollapsible, heading };
+    } else {
+      current.lines.push(line);
+    }
+  }
+  if (current.lines.length > 0) sections.push(current);
+  return sections;
+}
+
+function CollapsibleSection({ heading, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginTop: 32, marginBottom: 16 }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          background: "none", border: "none", cursor: "pointer", padding: 0, width: "100%", textAlign: "left",
+          display: "flex", alignItems: "center", gap: 8,
+        }}
+      >
+        <span style={{ fontSize: 14, color: "var(--text-muted)", transition: "transform 0.2s", transform: open ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block" }}>&#9654;</span>
+        <h2 style={{ fontSize: 22, fontWeight: 700, color: "var(--text-heading)", margin: 0, lineHeight: 1.3 }}>{heading}</h2>
+      </button>
+      {open && <div style={{ marginTop: 12 }}>{children}</div>}
+    </div>
+  );
+}
+
 function MarkdownTab({ url, onNavigate, navigateLabel }) {
   const [content, setContent] = useState(null);
 
@@ -1117,11 +1166,29 @@ function MarkdownTab({ url, onNavigate, navigateLabel }) {
 
   if (!content) return <div style={{ color: "var(--text-secondary)", textAlign: "center", padding: 40 }}>Loading...</div>;
 
+  const sections = splitCollapsibleSections(content);
+
   return (
     <div style={{ maxWidth: 760, margin: "0 auto" }}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
-        {content}
-      </ReactMarkdown>
+      {sections.map((section, i) => {
+        const md = section.lines.join("\n");
+        if (section.collapsible) {
+          // Render heading as collapsible toggle, body inside
+          const bodyMd = section.lines.slice(1).join("\n");
+          return (
+            <CollapsibleSection key={i} heading={section.heading}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
+                {bodyMd}
+              </ReactMarkdown>
+            </CollapsibleSection>
+          );
+        }
+        return (
+          <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
+            {md}
+          </ReactMarkdown>
+        );
+      })}
       {onNavigate && (
         <div style={{ textAlign: "center", margin: "32px 0" }}>
           <button onClick={onNavigate} style={{
