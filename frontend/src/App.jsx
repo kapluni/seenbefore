@@ -1894,7 +1894,7 @@ export default function App() {
               </p>
               <div style={{ display: "grid", gap: 10 }}>
                 {[
-                  { name: "Claude by Anthropic", url: "https://claude.ai/", desc: "This entire site — the embedding pipeline, data processing, visualization, and frontend — was built collaboratively with Claude, Anthropic's AI assistant. Claude also performed match quality review, filtering 1,000 candidate pairs down to the genuine rhetorical echoes you see here." },
+                  { name: "Claude by Anthropic", url: "https://claude.ai/", desc: "This entire site — the embedding pipeline, data processing, visualization, and frontend — was built collaboratively with Claude, Anthropic's AI assistant. Much of the historical research, source synthesis, and writing on the background and full history pages was also produced by Claude, drawing on the scholarly works cited above. Claude also performed match quality review, filtering 1,000 candidate pairs down to the genuine rhetorical echoes you see here." },
                   { name: "BAAI/bge-large-en-v1.5", url: "https://huggingface.co/BAAI/bge-large-en-v1.5", desc: "The embedding model powering semantic similarity search, selected via benchmark against four candidates for its superior separation between genuine echoes and false positives." },
                   { name: "sentence-transformers", url: "https://www.sbert.net/", desc: "The open-source library by UKP Lab (TU Darmstadt) that makes state-of-the-art text embeddings accessible to everyone." },
                 ].map((s, i) => (
