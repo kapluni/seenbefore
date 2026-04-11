@@ -1855,7 +1855,6 @@ export default function App() {
                   { name: "Robert Wistrich", url: "https://sicsa.huji.ac.il/robert-wistrich", desc: "Author of \"A Lethal Obsession\" (2010), the most comprehensive history of antisemitism, with extensive documentation of Soviet anti-Zionist campaigns." },
                   { name: "Jeffrey Herf", url: "https://history.umd.edu/directory/jeffrey-herf", desc: "Author of \"Undeclared Wars with Israel\" (2016), documenting East Germany's anti-Zionist operations using newly opened state archives." },
                   { name: "Ion Mihai Pacepa", url: "https://www.hoover.org/research/disinformation-former-spy-chief-reveals-secret-strategies-undermining-freedom", desc: "Highest-ranking Eastern Bloc defector. His testimony in \"Disinformation\" (2013) revealed KGB operational details behind the anti-Zionist campaign." },
-                  { name: "Yuri Ivanov", url: "https://www.marxists.org/subject/jewish/caution-zionism.pdf", desc: "Author of \"Caution: Zionism!\" (1970) — the foundational Soviet anti-Zionist text. 800,000 copies in 16 languages. Cited here as a primary source, not an inspiration." },
                 ].map((s, i) => (
                   <div key={i} style={{ padding: "10px 14px", background: "var(--bg-card-alt)", borderRadius: 8, borderLeft: "3px solid #c0392b" }}>
                     <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4 }}>
