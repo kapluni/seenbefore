@@ -14,7 +14,7 @@
 
 The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were engineered by the Soviet propaganda apparatus, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse.
 
-**Live site**: [ive-seen-this-before.pages.dev](https://ive-seen-this-before.pages.dev)
+**Live site**: [iveseenthisbefore.org](https://iveseenthisbefore.org)
 
 ## Approach
 
