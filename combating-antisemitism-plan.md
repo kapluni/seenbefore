@@ -12,7 +12,7 @@ I'm Ilya — an ML engineering manager at Spotify, where I lead teams building l
 
 **Concept:** Build a semantic similarity engine and public-facing platform that maps Soviet anti-Zionist propaganda language to modern antisemitic/anti-Zionist rhetoric on campuses and social media. Combines Izabella Tabarovsky's qualitative research with quantitative NLP infrastructure.
 
-**Why it matters:** The language used in modern anti-Israel protests — "Zionism is racism," "settler-colonial," "fascist," "apartheid" — was literally engineered by Soviet propagandists in the 1960s-80s. Most people repeating it don't know its origin.
+**Why it matters:** The language used in modern anti-Israel protests — "Zionism is racism," "settler-colonial," "fascist," "apartheid" — was adopted, amplified, and globally disseminated by the Soviet propaganda apparatus in the 1960s-80s. Most people repeating it don't know this history.
 
 **Format options:**
 - Interactive website with side-by-side comparisons (Soviet source → modern echo)

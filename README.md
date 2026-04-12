@@ -12,7 +12,7 @@
 
 "I've Seen This Before" uses semantic embeddings to place Soviet anti-Zionist propaganda (1960s–1980s) side by side with modern antisemitic and anti-Zionist rhetoric, surfacing how strikingly — and often verbatim — the language has survived.
 
-The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were engineered by the Soviet propaganda apparatus, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse.
+The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — did not emerge in a vacuum. They were adopted, amplified, and globally disseminated by the Soviet propaganda apparatus, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse.
 
 **Live site**: [iveseenthisbefore.org](https://iveseenthisbefore.org)
 

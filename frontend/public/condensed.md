@@ -4,7 +4,7 @@
 
 The slogans that dominate today's anti-Israel activism — "Zionism is racism," "settler-colonialism," "apartheid state," "genocide" — did not emerge in a vacuum. They were **adopted, amplified, and globally disseminated by the Soviet propaganda apparatus** beginning in the late 1960s, field-tested across dozens of languages, broadcast to billions, and embedded in international institutions where they continue to operate decades after the USSR ceased to exist. Some of these frames had independent intellectual origins — Palestinian and French-Marxist scholars developed settler-colonial analyses of Zionism as early as the mid-1960s — but it was the Soviet state's industrial-scale propaganda machine that transformed them into a global political vocabulary.
 
-This is not a conspiracy theory. It is documented history, corroborated by the Mitrokhin Archive (smuggled out of KGB headquarters), the testimony of the highest-ranking Eastern Bloc defector (Ion Mihai Pacepa), East German state archives analyzed by historian Jeffrey Herf, and the detailed scholarship of Izabella Tabarovsky, Robert Wistrich, and others. The Soviet Union produced **hundreds of anti-Zionist books in dozens of languages**, broadcast over **1,000 hours of weekly radio content** through Radio Moscow, created a pseudo-academic discipline called "Zionology" with mandatory reading lists for military and party members, and orchestrated the passage of UN Resolution 3379 declaring "Zionism is a form of racism."
+The historical core is well established and corroborated by the Mitrokhin Archive (smuggled out of KGB headquarters), the testimony of the highest-ranking Eastern Bloc defector (Ion Mihai Pacepa), East German state archives analyzed by historian Jeffrey Herf, and the detailed scholarship of Izabella Tabarovsky, Robert Wistrich, and others. What is documented fact: the Soviet anti-Zionist propaganda campaign existed at massive scale, and its language closely parallels modern rhetoric. What is strong inference: some of that modern rhetoric inherited or absorbed Soviet-era framings through identifiable transmission vectors. What remains contested: the degree to which independent Palestinian, postcolonial, and academic traditions developed the same conclusions on separate tracks. The Soviet Union produced **hundreds of anti-Zionist books in dozens of languages**, broadcast over **1,000 hours of weekly radio content** through Radio Moscow, created a pseudo-academic discipline called "Zionology" with mandatory reading lists for military and party members, and helped drive the passage of UN Resolution 3379 declaring "Zionism is a form of racism."
 
 When this tool shows you a modern slogan next to a Soviet pamphlet from 1975, it is showing you a **striking structural parallel with a documented historical backdrop** — not a loose analogy, but not a proven causal chain either. The historical record demonstrates that the Soviets built the rhetorical infrastructure; the similarity engine shows how precisely that infrastructure's language persists.
 
@@ -46,7 +46,7 @@ Once that equation was planted — in UN resolutions, in Third World solidarity 
 
 The Soviet Union collapsed in 1991. Its anti-Zionist vocabulary not only survived — it *thrived.* The 2001 Durban Conference relaunched it in NGO form. The BDS movement operationalized it. Social media scaled it to infinity. Today's campus slogans reproduce 1970s Soviet pamphlets with what Tabarovsky documents as "stunning fidelity."
 
-**That is what this tool detects.** When the similarity engine matches a modern text to a Soviet source, it is surfacing a real historical connection — a chain of transmission from KGB-directed propaganda to the rhetoric in your social media feed.
+**That is what this tool detects.** When the similarity engine matches a modern text to a Soviet source, it is surfacing a striking rhetorical parallel — one backed by a documented historical record of Soviet propaganda dissemination, even if the precise chain of transmission for any individual modern text cannot be proven by NLP alone.
 
 ---
 
@@ -71,7 +71,7 @@ The Soviet Union collapsed in 1991. Its anti-Zionist vocabulary not only survive
 | **1990** | *Pravda* admits the anti-Zionist campaign was antisemitic "Black Hundred" material in Marxist disguise |
 | **1991** | Resolution 3379 revoked (111–25). USSR collapses. But the vocabulary survives. |
 | **2001** | **Durban Conference**: NGO forum declares Israel an "apartheid state"; *Protocols* distributed on-site; BDS strategy launched |
-| **2005–present** | BDS movement, academic "settler-colonial studies," apartheid reports by international NGOs — all deploying frameworks traceable to Soviet-era propaganda |
+| **2005–present** | BDS movement, academic "settler-colonial studies," apartheid reports by international NGOs — deploying frameworks that echo Soviet-era rhetoric |
 
 ---
 
