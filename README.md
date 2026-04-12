@@ -246,4 +246,4 @@ This project is intended for educational and research purposes. The Soviet texts
 
 ## Author
 
-**Ilya Kaplun** — ML Engineering Manager. Emigrated from the USSR in 1991. With a ton of help from [Anthropic Claude](https://claude.ai).
+**Ilya Kaplun** — Emigrated from the USSR in 1991. With a ton of help from [Anthropic Claude](https://claude.ai).
