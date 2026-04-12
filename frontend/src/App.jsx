@@ -1792,9 +1792,14 @@ export default function App() {
                   and training data are publicly documented and reproducible.
                 </p>
                 <p style={{ margin: "0 0 16px" }}>
+                  Project documentation:{" "}
+                  <a href="https://kapluni.github.io/seenbefore" target="_blank" rel="noopener noreferrer" style={{ color: "#3498db", fontWeight: 600 }}>
+                    kapluni.github.io/seenbefore
+                  </a>
+                  {" | "}
                   Source code:{" "}
                   <a href="https://github.com/kapluni/seenbefore" target="_blank" rel="noopener noreferrer" style={{ color: "#3498db", fontWeight: 600 }}>
-                    github.com/kapluni/seenbefore
+                    GitHub
                   </a>
                 </p>
                 <div style={{ fontSize: 12, color: "var(--text-muted)", borderTop: "1px solid var(--border)", paddingTop: 12 }}>
