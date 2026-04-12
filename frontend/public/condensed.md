@@ -2,11 +2,11 @@
 
 ## The pattern you're seeing is not a coincidence
 
-The slogans that dominate today's anti-Israel activism — "Zionism is racism," "settler-colonialism," "apartheid state," "genocide" — were not organically coined by grassroots movements. They were **engineered by the Soviet propaganda apparatus** in the late 1960s and 1970s, field-tested across dozens of languages, broadcast to billions, and embedded in international institutions where they continue to operate decades after the USSR ceased to exist.
+The slogans that dominate today's anti-Israel activism — "Zionism is racism," "settler-colonialism," "apartheid state," "genocide" — did not emerge in a vacuum. They were **adopted, amplified, and globally disseminated by the Soviet propaganda apparatus** beginning in the late 1960s, field-tested across dozens of languages, broadcast to billions, and embedded in international institutions where they continue to operate decades after the USSR ceased to exist. Some of these frames had independent intellectual origins — Palestinian and French-Marxist scholars developed settler-colonial analyses of Zionism as early as the mid-1960s — but it was the Soviet state's industrial-scale propaganda machine that transformed them into a global political vocabulary.
 
 This is not a conspiracy theory. It is documented history, corroborated by the Mitrokhin Archive (smuggled out of KGB headquarters), the testimony of the highest-ranking Eastern Bloc defector (Ion Mihai Pacepa), East German state archives analyzed by historian Jeffrey Herf, and the detailed scholarship of Izabella Tabarovsky, Robert Wistrich, and others. The Soviet Union produced **hundreds of anti-Zionist books in dozens of languages**, broadcast over **1,000 hours of weekly radio content** through Radio Moscow, created a pseudo-academic discipline called "Zionology" with mandatory reading lists for military and party members, and orchestrated the passage of UN Resolution 3379 declaring "Zionism is a form of racism."
 
-When this tool shows you a modern slogan next to a Soviet pamphlet from 1975, it is showing you a **documented chain of transmission** — not a loose analogy.
+When this tool shows you a modern slogan next to a Soviet pamphlet from 1975, it is showing you a **striking structural parallel with a documented historical backdrop** — not a loose analogy, but not a proven causal chain either. The historical record demonstrates that the Soviets built the rhetorical infrastructure; the similarity engine shows how precisely that infrastructure's language persists.
 
 ---
 

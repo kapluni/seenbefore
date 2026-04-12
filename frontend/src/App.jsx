@@ -1533,7 +1533,7 @@ export default function App() {
             Mapping Soviet anti-Zionist propaganda to its modern echoes using semantic similarity
           </p>
           <p className="isb-header-intro" style={{ fontSize: 16, color: "var(--text-primary)", maxWidth: 720, margin: "20px auto 0", lineHeight: 1.9, textAlign: "left", fontFamily: "'Georgia', serif" }}>
-            The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were <strong style={{ color: "#c0392b" }}>engineered by the Soviet propaganda apparatus</strong> in the 1960s–80s, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse. That campaign succeeded in making Israel a unique focus of international condemnation — despite the fact that the practices anti-Zionists protest (state religion, ethnic nationhood, post-imperial partition, military occupation) are shared by dozens or even hundreds of other countries. None of those countries face a global movement questioning their right to exist. This site uses machine learning to expose the hypocrisy: placing Soviet propaganda side by side with modern rhetoric to show how strikingly — and often verbatim — the language has survived, and providing the <button onClick={() => setActiveTab(8)} style={{ background: "none", border: "none", color: "#3498db", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", padding: 0, textDecoration: "underline" }}>comparative evidence</button> that Israel is being singled out.
+            The slogans that define today's anti-Zionist movement — "Zionism is racism," "apartheid state," "settler-colonialism" — were not coined by grassroots activists. They were <strong style={{ color: "#c0392b" }}>amplified, institutionalized, and globally disseminated by the Soviet propaganda apparatus</strong> in the 1960s–80s, broadcast in 80 languages, and embedded in international institutions where they persist decades after the USSR's collapse. That campaign succeeded in making Israel a unique focus of international condemnation — despite the fact that the practices anti-Zionists protest (state religion, ethnic nationhood, post-imperial partition, military occupation) are shared by dozens or even hundreds of other countries. None of those countries face a global movement questioning their right to exist. This site uses machine learning to expose the hypocrisy: placing Soviet propaganda side by side with modern rhetoric to show how strikingly — and often verbatim — the language has survived, and providing the <button onClick={() => setActiveTab(8)} style={{ background: "none", border: "none", color: "#3498db", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", padding: 0, textDecoration: "underline" }}>comparative evidence</button> that Israel is being singled out.
           </p>
         </div>
 
@@ -1555,7 +1555,7 @@ export default function App() {
         {/* 0: The Story (condensed background) */}
         {activeTab === 0 && (
           <MarkdownTab
-            url="/background.md"
+            url="/condensed.md"
             onNavigate={() => setActiveTab(7)}
             navigateLabel="Read Full History with Sources"
           />
