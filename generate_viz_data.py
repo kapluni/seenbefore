@@ -220,38 +220,54 @@ def is_weak_match(match):
 
     return None
 
-def trim_passage(text, max_chars=280):
+def trim_passage(text, max_chars=280, prefer_claim=None):
     """Trim a long passage to the most content-rich sentences, up to max_chars.
-    Keeps the text readable while removing filler context."""
+    Keeps the text readable while removing filler context. If prefer_claim is
+    provided, force-include the sentence most similar to that claim so the
+    displayed text always covers what the match panel references."""
     if len(text) <= max_chars:
         return text
     # Split into sentences (also split on semicolons for Soviet-style long sentences)
     sentences = re.split(r'(?<=[.!?;])\s+', text)
     if len(sentences) <= 1:
         return text[:max_chars].rsplit(' ', 1)[0] + '...'
-    # Score sentences by content density (propaganda keywords, shorter = denser)
+
+    # If a claim is given, find the sentence with the most overlapping tokens
+    preferred_idx = None
+    if prefer_claim:
+        claim_tokens = set(re.findall(r'\w+', prefer_claim.lower()))
+        claim_tokens -= {'the','a','an','is','are','of','to','and','in','that','this','it','for','on'}
+        best_overlap = 0
+        for i, s in enumerate(sentences):
+            s_tokens = set(re.findall(r'\w+', s.lower()))
+            overlap = len(claim_tokens & s_tokens)
+            if overlap > best_overlap:
+                best_overlap = overlap
+                preferred_idx = i
+
     scored = []
-    for s in sentences:
+    for i, s in enumerate(sentences):
         score = len(s.split())  # baseline: word count (prefer medium-length)
         if score < 5: continue
-        # Boost sentences with strong claims
         sl = s.lower()
         for kw in ['zionism', 'zionist', 'imperialism', 'racism', 'apartheid', 'nazi',
                     'conspiracy', 'control', 'colonialism', 'propaganda', 'antisemit']:
             if kw in sl: score += 5
-        scored.append((score, s))
+        if i == preferred_idx: score += 1000  # force the claim sentence in
+        scored.append((score, i, s))
     if not scored:
         return text[:max_chars].rsplit(' ', 1)[0] + '...'
-    # Take best sentences up to max_chars
     scored.sort(key=lambda x: -x[0])
-    result = []
+    picked = []
     total = 0
-    for _, s in scored:
-        if total + len(s) > max_chars and result:
+    for _, i, s in scored:
+        if total + len(s) > max_chars and picked:
             break
-        result.append(s)
+        picked.append((i, s))
         total += len(s) + 1
-    return ' '.join(result)
+    # Preserve original order so the output reads naturally
+    picked.sort(key=lambda x: x[0])
+    return ' '.join(s for _, s in picked)
 
 def verify_matches_llm(matches, max_matches=30):
     """Use Claude to verify whether matches are genuine rhetorical echoes.
@@ -718,6 +734,9 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
                         m["claimPair"] = {"sovietClaim": best_sov_claim, "modernClaim": best_mod_claim}
                         m["sovietClaims"] = sov_claims
                         m["modernClaims"] = mod_claims
+                        # Re-trim display text so it contains the matched claim sentence
+                        m["sovietText"] = trim_passage(sov_text, prefer_claim=best_sov_claim)
+                        m["modernText"] = trim_passage(mod_text, prefer_claim=best_mod_claim)
                     else:
                         m["claimSimilarity"] = 0.0
                         m["claimPair"] = None
