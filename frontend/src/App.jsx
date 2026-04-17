@@ -1685,13 +1685,15 @@ export default function App() {
           />
         )}
 
-        {/* 1: Top Matches */}
+        {/* 1: Top Matches — strong only (ensembleScore ≥ 0.70) */}
         {activeTab === 1 && (
           <div>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {matches.map((match, i) => (
-                <MatchCard key={match.id || i} match={match} index={i} tropeNames={tropeNames} tropeColors={tropeColors} />
-              ))}
+              {matches
+                .filter(m => (m.ensembleScore ?? m.similarity ?? 0) >= 0.70)
+                .map((match, i) => (
+                  <MatchCard key={match.id || i} match={match} index={i} tropeNames={tropeNames} tropeColors={tropeColors} />
+                ))}
             </div>
           </div>
         )}
