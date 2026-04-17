@@ -113,10 +113,12 @@ TROPE_TAXONOMY = {
     },
     "WEAPONIZED_ANTISEMITISM": {
         "name": "Weaponization of Antisemitism Claims",
-        "description": "Dismissing antisemitism accusations as Zionist tricks",
+        "description": "Dismissing antisemitism accusations as Zionist tricks; tokenizing anti-Zionist Jews",
         "keywords": ["anti-semitic acts", "playing the victim", "weaponize",
                      "deflect", "silence criticism", "smear", "hasbara",
-                     "absurd are attempts", "present criticizing them"],
+                     "absurd are attempts", "present criticizing them",
+                     "anti-zionist not anti", "jews also oppose",
+                     "jewish voices", "jews against zionism"],
     },
     "DUAL_LOYALTY": {
         "name": "Dual Loyalty",
@@ -132,10 +134,13 @@ TROPE_TAXONOMY = {
     },
     "ANTI_ZIONISM_PROGRESSIVE": {
         "name": "Anti-Zionism as Progressive Duty",
-        "description": "Opposition to Zionism framed as anti-racist/progressive",
+        "description": "Opposition to Zionism framed as anti-racist/progressive; 'good Jews' reject Zionism",
         "keywords": ["progressive", "solidarity", "boycott", "divest", "sanctions",
                      "liberation", "justice", "resistance", "struggle",
-                     "anti-communism", "reactionary"],
+                     "anti-communism", "reactionary",
+                     "not all jews", "don't have to be", "good jews", "jews can be good",
+                     "forced to support", "not in my name", "as a jew",
+                     "don't represent", "doesn't represent", "do not represent"],
     },
 }
 
@@ -186,6 +191,11 @@ class CorpusProcessor:
 
     def __init__(self, config=CONFIG):
         self.config = config
+        # Load system dictionary for OCR period-split correction
+        self._dictionary = set()
+        dict_path = Path("/usr/share/dict/words")
+        if dict_path.exists():
+            self._dictionary = {w.strip().lower() for w in dict_path.read_text().splitlines() if len(w.strip()) >= 2}
 
     def chunk_text(self, text: str, source_meta: dict) -> list[Passage]:
         """Split text into overlapping chunks suitable for embedding."""
@@ -327,11 +337,119 @@ Example: ["ZIONISM_RACISM", "ZIONISM_IMPERIALISM"]"""
             line = line.strip().strip('"').strip()
             if line:
                 clean_lines.append(line)
+
+        # Fix OCR period-split words across lines BEFORE joining:
+        # "So.\n viet" → "Soviet", "Zi.\nonism" → "Zionism"
+        # The 1985 pamphlet OCR uses period instead of hyphen at line breaks
+        fixed_lines = []
+        i = 0
+        while i < len(clean_lines):
+            line = clean_lines[i]
+            if (i + 1 < len(clean_lines) and
+                re.search(r'(?<![.A-Z])[A-Z][a-z]+\.\s*$', line) and
+                clean_lines[i + 1] and clean_lines[i + 1][0].islower()):
+                # Remove the trailing period and join with next line
+                line = re.sub(r'([A-Z][a-z]*)\.\s*$', r'\1', line)
+                line = line + clean_lines[i + 1]
+                i += 2
+            else:
+                i += 1
+            fixed_lines.append(line)
+        clean_lines = fixed_lines
+
         text = " ".join(clean_lines)
-        # Fix OCR line-break hyphenation artifacts (e.g., "charac- teristic" → "characteristic")
-        text = re.sub(r'(\w)- (\w)', r'\1\2', text)
-        # Also fix hyphen+newline that survived joining
-        text = re.sub(r'(\w)-\s+(\w)', lambda m: m.group(1) + m.group(2) if m.group(1).islower() and m.group(2).islower() else m.group(0), text)
+
+        # Fix inline period-split OCR artifacts: "Com.mittee" → "Committee"
+        # The 1985 pamphlet uses periods where hyphens should be at line breaks
+        def _is_real_word(word):
+            """Check if word (or its base form) is in the dictionary."""
+            w = word.lower()
+            if w in self._dictionary:
+                # Also verify each fragment alone isn't a word (avoid "in.reality" → "inreality")
+                return True
+            # Try stripping common suffixes to find base form
+            for suffix in ('s', 'ed', 'ing', 'er', 'ers', 'es', 'ly', 'ment',
+                           'ness', 'tion', 'sion', 'ous', 'ive', 'ity', 'ful',
+                           'less', 'able', 'ible', 'ment', 'ence', 'ance'):
+                if w.endswith(suffix):
+                    stem = w[:-len(suffix)]
+                    if stem in self._dictionary:
+                        return True
+                    # Handle e-dropping: "provoked" → "provok" → "provoke"
+                    if (stem + 'e') in self._dictionary:
+                        return True
+            # Handle doubled consonant + suffix: "letters" → "letter"
+            if len(w) > 4 and w[-1] == w[-2] and w[:-1] in self._dictionary:
+                return True
+            return False
+
+        # Function words that are almost always standalone (not OCR fragments)
+        _function_words = {'a', 'an', 'as', 'at', 'be', 'by', 'do', 'go', 'he',
+                           'if', 'in', 'is', 'it', 'me', 'my', 'no', 'of', 'on',
+                           'or', 'so', 'to', 'up', 'us', 'we', 'am', 'are', 'the',
+                           'for', 'and', 'but', 'not', 'you', 'all', 'can', 'had',
+                           'her', 'was', 'one', 'our', 'out', 'has', 'his', 'how',
+                           'its', 'may', 'new', 'now', 'old', 'see', 'way', 'who',
+                           'did', 'get', 'say', 'she', 'too', 'use'}
+
+        def fix_period_split(m):
+            before = m.group(1)
+            after = m.group(2)
+            joined = before + after
+            joined_is_word = _is_real_word(joined)
+            before_is_word = before.lower() in self._dictionary
+            after_is_word = after.lower() in self._dictionary
+
+            # If joined form isn't a real word, keep the period
+            if not joined_is_word:
+                return m.group(0)
+            # If the before-fragment is a function word, it's standalone → keep period
+            if before.lower() in _function_words:
+                return m.group(0)
+            # If before is >= 4 chars and both fragments are real words → sentence boundary
+            if len(before) >= 4 and before_is_word and after_is_word:
+                return m.group(0)
+            # Joined form is a real word → OCR split
+            return joined
+
+        text = re.sub(r'\b([A-Za-z]{1,5})\.([a-z]{2,})\b', fix_period_split, text)
+
+        # Fix OCR line-break hyphenation artifacts:
+        # "charac- teristic" → "characteristic" (OCR break mid-word)
+        # "Zionist- racialists" → "Zionist-racialists" (compound, keep hyphen)
+        # Known compound words that should keep their hyphens
+        _compound_words = {
+            'freedom-loving', 'war-mongering', 'man-hating', 'money-bags',
+            'so-called', 'new-styled', 'chauvinist-racist', 'well-known',
+            'well-being', 'hard-line', 'hard-won', 'long-standing',
+            'peace-loving', 'blood-thirsty', 'cold-blooded', 'ill-fated',
+        }
+        _compound_prefixes = ('anti', 'non', 'pre', 'post', 'semi', 'self',
+                              'co', 'ex', 'neo', 'pro', 'nazi', 'well',
+                              'counter', 'cross', 'inter', 'multi', 'over',
+                              'super', 'trans', 'under', 'vice')
+
+        def fix_hyphen_break(m):
+            word_before = m.group(1)
+            after_part = m.group(2)
+            full = (word_before + '-' + after_part).lower()
+
+            # Keep hyphen for known compound words
+            if full in _compound_words:
+                return word_before + '-' + after_part
+            # Keep hyphen for known compound prefixes
+            if word_before.lower() in _compound_prefixes:
+                return word_before + '-' + after_part
+            # Keep hyphen if both sides start with uppercase (proper noun compound: Ben-Gurion)
+            if after_part[0].isupper() and word_before[0].isupper():
+                return word_before + '-' + after_part
+            # Keep hyphen if word_before ends in a common word ending (complete word)
+            if re.search(r'(?:ist|ism|ial|ing|tion|ment|ness|ous|ive|ant|ent|tic|ler|dom|ful|less|ward|wise|like|fold)$',
+                         word_before.lower()):
+                return word_before + '-' + after_part
+            # Otherwise, join (it's an OCR line-break artifact)
+            return word_before + after_part
+        text = re.sub(r'\b(\w+)-\s*(\w+)\b', fix_hyphen_break, text)
         # Remove embedded page numbers (e.g., "con100 sequently" from OCR)
         text = re.sub(r'(\w)\d{1,3}\s+([a-z])', r'\1 \2', text)
         # Remove stray *** markers

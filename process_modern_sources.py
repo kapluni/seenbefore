@@ -25,10 +25,33 @@ def normalize_for_dedup(text):
     return t
 
 def clean_tweet_text(text):
-    """Clean tweet text for better embedding: remove @mentions, URLs, keep content."""
-    t = re.sub(r'https?://\S+', '', text)
+    """Clean tweet text for better embedding: remove @mentions, URLs, fix encoding."""
+    t = text
+    # Fix literal \n (backslash + n, 0x5c 0x6e) from JSON-escaped tweets
+    t = t.replace('\\n', ' ').replace('\n', ' ')
+    # Fix HTML entities
+    t = t.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>')
+    # Fix UTF-8 mojibake (common in tweets scraped with wrong encoding)
+    t = t.replace('\u00e2\u0080\u009c', '"').replace('\u00e2\u0080\u009d', '"')
+    t = t.replace('\u00e2\u0080\u0099', "'").replace('\u00e2\u0080\u0098', "'")
+    t = t.replace('\u00e2\u0080\u0093', '–').replace('\u00e2\u0080\u0094', '—')
+    t = t.replace('\u00e2\u0080\u00a6', '…')
+    t = re.sub(r'â€[œ"]', '"', t)
+    t = re.sub(r'â€[™˜]', "'", t)
+    t = re.sub(r'â€¦', '…', t)
+    t = re.sub(r'â€["\u0093\u0094]', '–', t)
+    t = re.sub(r'â€\S?', '', t)
+    # Remove emoji mojibake (e.g., ðŸ'ðŸ' sequences — UTF-8 emoji decoded as latin-1)
+    t = re.sub(r'\u00f0[\u0080-\u024f]{1,3}', '', t)
+    t = re.sub(r'[\xc3\xc2][\x80-\xbf]', '', t)  # broken 2-byte UTF-8 sequences
+    t = re.sub(r'Ã[^\s]*', '', t)  # Ã-prefixed mojibake
+    # Remove orphan high bytes left after mojibake cleanup (control chars, private use)
+    t = re.sub(r'[\x80-\x9f]', '', t)
+    # Remove @mentions, URLs, RT prefix
+    t = re.sub(r'https?://\S+', '', t)
     t = re.sub(r'@\w+', '', t)
     t = re.sub(r'RT\s+', '', t)
+    # Collapse whitespace
     t = re.sub(r'\s+', ' ', t).strip()
     return t
 
@@ -67,7 +90,7 @@ def process_isca_zenodo(filepath):
         total = kept = 0
         for row in reader:
             total += 1
-            text = (row.get(text_col) or "").strip()
+            text = clean_tweet_text((row.get(text_col) or "").strip())
             if not text or len(text) < 20: continue
             if bias_col:
                 v = (row.get(bias_col) or "").strip().lower()
@@ -98,7 +121,7 @@ def process_isca_huggingface(dirpath):
                 if keyword_col:
                     kw = (row.get(keyword_col) or "").strip().lower()
                     if kw not in ("jews", "jewish", "antisemitism", "zionism"): continue
-                text = (row.get(text_col) or "").strip()
+                text = clean_tweet_text((row.get(text_col) or "").strip())
                 if not text or len(text) < 20: continue
                 h = hash(text[:100])
                 if h in seen: continue
@@ -133,7 +156,7 @@ def process_conan(filepath):
             target = (row.get(col.get("target",""),"") or "").upper()
             if "JEW" not in target: continue
             jews += 1
-            text = (row.get(col["hate"],"") or "").strip()
+            text = clean_tweet_text((row.get(col["hate"],"") or "").strip())
             cn = (row.get(col.get("counter",""),"") or "").strip()
             if not text or len(text) < 10: continue
             h = hash(text[:80])
@@ -160,7 +183,7 @@ def process_conan_dialogues(filepath):
             mtype = (row.get(type_col,"") or "").upper() if type_col else ""
             if "JEW" not in target: continue
             if mtype and "HS" not in mtype and "HATE" not in mtype: continue
-            text = (row.get(text_col,"") or "").strip()
+            text = clean_tweet_text((row.get(text_col,"") or "").strip())
             if not text or len(text) < 15: continue
             h = hash(text[:80])
             if h in seen: continue
@@ -273,7 +296,7 @@ def process_hf_hate_superset(dirpath):
         with open(csv_path, "r", encoding="utf-8", errors="replace") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                text = (row.get("text") or "").strip()
+                text = clean_tweet_text((row.get("text") or "").strip())
                 if not text or len(text) < 20: continue
                 passages.append({
                     "text": text,
@@ -303,7 +326,7 @@ def process_hf_hate_superset(dirpath):
             writer.writeheader()
             for row in ds:
                 if row.get("labels") != 1: continue
-                text = (row.get("text") or "").strip()
+                text = clean_tweet_text((row.get("text") or "").strip())
                 if not text or len(text) < 20: continue
                 if not jewish_kw.search(text): continue
                 writer.writerow({"text": text, "labels": row.get("labels"), "source": row.get("source",""), "dataset": row.get("dataset","")})
@@ -351,7 +374,7 @@ def process_heat_map(filepath):
             if iz_col:
                 v = (row.get(iz_col) or "").strip()
                 if v != "1": continue
-            raw_text = (row.get(desc_col) or "").strip()
+            raw_text = clean_tweet_text((row.get(desc_col) or "").strip())
             if not raw_text or len(raw_text) < 20: continue
             # Extract quoted propaganda content from incident descriptions
             text = extract_propaganda_from_incident(raw_text)

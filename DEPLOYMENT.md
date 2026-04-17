@@ -21,36 +21,9 @@ iveseenthisbefore.org (Cloudflare Pages)
 - GitHub repo at `github.com/kapluni/seenbefore`
 - Domain `iveseenthisbefore.org` on Namecheap
 
-### Option A: Cloudflare Dashboard (Recommended)
+### Deploy via Wrangler CLI
 
-This is the simplest approach -- no CLI needed.
-
-1. **Go to** [Cloudflare Pages](https://dash.cloudflare.com/?to=/:account/pages) and sign in (or create an account).
-
-2. **Create a project:**
-   - Click "Create a project" > "Connect to Git"
-   - Authorize Cloudflare to access your GitHub account
-   - Select the `kapluni/seenbefore` repository
-
-3. **Configure build settings:**
-   - **Production branch:** `main`
-   - **Build command:** `cd frontend && npm install && npm run build`
-   - **Build output directory:** `frontend/dist`
-   - **Root directory:** `/` (leave as default)
-
-4. **Add environment variable:**
-   - Name: `VITE_API_URL`
-   - Value: `https://kapluni-ive-seen-this-before-api.hf.space`
-   - (This tells the frontend where to find the live analysis API)
-
-5. **Deploy** -- Cloudflare will build and deploy. You'll get a URL like `seenbefore.pages.dev`.
-
-6. **Set up custom domain:**
-   - In the Pages project, go to "Custom domains" > "Set up a custom domain"
-   - Enter `iveseenthisbefore.org`
-   - Cloudflare will ask you to change your domain's nameservers
-
-### Option B: Wrangler CLI
+Deploys are manual — `git push` does NOT trigger a Cloudflare build.
 
 ```bash
 # Install wrangler if not already installed
@@ -68,6 +41,14 @@ wrangler pages project create seenbefore --production-branch main
 # Deploy
 wrangler pages deploy frontend/dist --project-name seenbefore
 ```
+
+### Checking what's currently deployed
+
+```bash
+wrangler pages deployment list --project-name seenbefore | head -20
+```
+
+The topmost row is live. The `Source` column shows the short git SHA the deploy was built from.
 
 ### Connecting the Custom Domain (Namecheap DNS)
 
@@ -88,10 +69,6 @@ After the Cloudflare Pages project is created:
 3. **Wait for propagation** -- DNS changes take 1-48 hours (usually under 30 minutes).
 
 4. **Verify** -- Cloudflare will automatically provision an SSL certificate once DNS propagates.
-
-### Automatic Deployments
-
-Once connected via the dashboard (Option A), every push to `main` triggers a new build and deployment automatically. Preview deployments are created for pull requests.
 
 ---
 
@@ -173,7 +150,15 @@ Set HF Spaces secrets in: Space Settings > "Repository secrets"
 ## 4. Updating Deployments
 
 ### Frontend
-Push to `main` -- Cloudflare Pages auto-deploys.
+Rebuild and deploy manually via Wrangler, then commit and push so the repo matches what's live:
+
+```bash
+cd frontend && npm run build && cd ..
+wrangler pages deploy frontend/dist --project-name seenbefore
+git add frontend/public/ viz_data.json
+git commit -m "Redeploy frontend"
+git push
+```
 
 ### API
 Push to the HF Spaces repo. The Space will rebuild the Docker image automatically.
@@ -192,16 +177,20 @@ git add -A && git commit -m "Update API" && git push
 
 ## 5. Pre-generating viz_data.json
 
-The frontend loads `viz_data.json` for the Matches, Timeline, Tropes, and Calibration tabs. This file must be generated locally and committed to the repo:
+The frontend loads `viz_data.json` for the Matches, Timeline, Tropes, and Calibration tabs. This file must be generated locally, built into `dist/`, deployed, and committed so the repo matches what's live:
 
 ```bash
 # Generate the data (takes ~5 min on M-series Mac)
 python generate_viz_data.py --generate --max-modern 2000 --top-matches 35
 
-# Copy to frontend public directory so Vite serves it
+# Copy to frontend public directory so Vite picks it up on build
 cp viz_data.json frontend/public/viz_data.json
 
-# Commit and push
+# Rebuild and deploy (git push alone does NOT deploy)
+cd frontend && npm run build && cd ..
+wrangler pages deploy frontend/dist --project-name seenbefore
+
+# Commit and push so the repo reflects what's deployed
 git add viz_data.json frontend/public/viz_data.json
 git commit -m "Update viz_data.json"
 git push

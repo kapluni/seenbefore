@@ -25,6 +25,12 @@ from generate_viz_data import (
     load_modern_corpus,
     clean_modern_text,
     trim_passage,
+    detect_techniques,
+    compute_technique_overlap,
+    extract_claims_llm,
+    compute_claim_similarity,
+    load_claims_cache,
+    save_claims_cache,
 )
 
 
@@ -153,6 +159,7 @@ def main():
     parser.add_argument("--top-k", type=int, default=10, help="Number of cross-corpus matches per passage")
     parser.add_argument("--output", type=str, default="frontend/public/explorer_data.json", help="Output path")
     parser.add_argument("--model", type=str, default=None, help="Embedding model name")
+    parser.add_argument("--enrich", action="store_true", help="Add technique detection and claim extraction to explorer matches")
     args = parser.parse_args()
 
     model_name = args.model or CONFIG["default_model"]
@@ -286,6 +293,100 @@ def main():
             "year": mod_raw.get("year", 2024),
             "top_matches": top_matches,
         })
+
+    # --- Enrichment: technique detection + claim extraction ---
+    if args.enrich:
+        print("\n--- Enriching explorer matches with techniques ---")
+        try:
+            from transformers import pipeline as hf_pipeline
+            tech_classifier = hf_pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+
+            # Detect techniques for selected passages
+            print("  Soviet passage techniques...")
+            for sr in soviet_results:
+                sr["techniques"] = list(detect_techniques(tech_classifier, sr["textFull"]).keys())
+
+            print("  Modern passage techniques...")
+            for mr in modern_results:
+                mr["techniques"] = list(detect_techniques(tech_classifier, mr["textFull"]).keys())
+
+            # Detect techniques for top matches and compute overlap
+            print("  Match technique overlap...")
+            for sr in soviet_results:
+                sov_techs = detect_techniques(tech_classifier, sr["textFull"])
+                for match in sr["top_matches"]:
+                    mod_techs = detect_techniques(tech_classifier, match["text"])
+                    overlap, shared = compute_technique_overlap(sov_techs, mod_techs)
+                    match["sharedTechniques"] = shared
+                    match["techniqueOverlap"] = round(overlap, 4)
+
+            for mr in modern_results:
+                mod_techs = detect_techniques(tech_classifier, mr["textFull"])
+                for match in mr["top_matches"]:
+                    sov_techs = detect_techniques(tech_classifier, match["text"])
+                    overlap, shared = compute_technique_overlap(mod_techs, sov_techs)
+                    match["sharedTechniques"] = shared
+                    match["techniqueOverlap"] = round(overlap, 4)
+
+            print("  Done.")
+        except Exception as e:
+            print(f"  WARNING: Technique detection failed: {e}")
+
+        # Claim extraction for top-3 matches per passage
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            print("\n--- Enriching explorer matches with claims ---")
+            try:
+                from anthropic import Anthropic
+                client = Anthropic()
+                claims_cache = load_claims_cache()
+
+                for sr in soviet_results:
+                    sov_key = f"soviet:{sr['textFull'][:200]}"
+                    sov_claims = claims_cache.get(sov_key) or extract_claims_llm(sr["textFull"], "propaganda", client)
+                    claims_cache[sov_key] = sov_claims
+                    sr["claims"] = sov_claims
+
+                    for match in sr["top_matches"][:3]:
+                        mod_key = f"modern:{match['text'][:200]}"
+                        mod_claims = claims_cache.get(mod_key) or extract_claims_llm(match["text"], "echo", client)
+                        claims_cache[mod_key] = mod_claims
+                        if sov_claims and mod_claims:
+                            score, best_sov, best_mod = compute_claim_similarity(engine, sov_claims, mod_claims)
+                            match["claimSimilarity"] = round(score, 4)
+                            match["claimPair"] = {"sourceClaim": best_sov, "matchClaim": best_mod}
+
+                for mr in modern_results:
+                    mod_key = f"modern:{mr['textFull'][:200]}"
+                    mod_claims = claims_cache.get(mod_key) or extract_claims_llm(mr["textFull"], "echo", client)
+                    claims_cache[mod_key] = mod_claims
+                    mr["claims"] = mod_claims
+
+                    for match in mr["top_matches"][:3]:
+                        sov_key = f"soviet:{match['text'][:200]}"
+                        sov_claims = claims_cache.get(sov_key) or extract_claims_llm(match["text"], "propaganda", client)
+                        claims_cache[sov_key] = sov_claims
+                        if mod_claims and sov_claims:
+                            score, best_mod, best_sov = compute_claim_similarity(engine, mod_claims, sov_claims)
+                            match["claimSimilarity"] = round(score, 4)
+                            match["claimPair"] = {"sourceClaim": best_mod, "matchClaim": best_sov}
+
+                save_claims_cache(claims_cache)
+                print(f"  Claims cache saved ({len(claims_cache)} entries)")
+            except Exception as e:
+                print(f"  WARNING: Claim extraction failed: {e}")
+
+        # Compute ensemble scores and re-sort matches
+        print("\n--- Computing ensemble scores for explorer matches ---")
+        for results in [soviet_results, modern_results]:
+            for passage in results:
+                for match in passage["top_matches"]:
+                    claim = match.get("claimSimilarity", match["similarity"])
+                    tech = match.get("techniqueOverlap", 0.0)
+                    match["ensembleScore"] = round(claim * 0.6 + tech * 0.4, 4)
+                # Re-sort by ensemble score (highest first)
+                passage["top_matches"].sort(key=lambda m: m.get("ensembleScore", m["similarity"]), reverse=True)
+        print("  Done.")
 
     # --- Output ---
     output = {

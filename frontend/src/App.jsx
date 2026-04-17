@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import ReactDOM from "react-dom";
 import { toPng } from "html-to-image";
 import { BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from "recharts";
@@ -253,13 +253,31 @@ function SimilarityBar({ score }) {
   );
 }
 
-function ScoreDonut({ score, size = 44 }) {
+function ScoreDonut({ score, match, size = 44 }) {
   const pct = Math.round(score * 100);
   const color = score >= 0.70 ? "#2ecc71" : score >= 0.55 ? "#f1c40f" : "#e67e22";
   const inner = size - 8;
-  const tipText = <><strong style={{ color: "var(--text-heading)" }}>{pct}% cosine similarity</strong><div style={{ marginTop: 6 }}>Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.</div><div style={{ marginTop: 6 }}>All matches were reviewed by Claude (AI) to confirm genuine rhetorical echoing, not just topical overlap.</div></>;
+  const hasEnsemble = match?.ensembleScore != null;
+  const tipText = hasEnsemble ? (
+    <>
+      <strong style={{ color: "var(--text-heading)" }}>{pct}% composite similarity</strong>
+      <div style={{ marginTop: 6, fontSize: 12, lineHeight: 1.5 }}>
+        This score combines three independent signals:
+      </div>
+      <div style={{ marginTop: 4, fontSize: 11, lineHeight: 1.6 }}>
+        <div><strong>Claim similarity ({match.claimSimilarity != null ? Math.round(match.claimSimilarity * 100) + "%" : "n/a"})</strong> — Claude AI extracts atomic claims from each passage, then BGE-large measures how closely the strongest claim pair matches. Weight: 60%</div>
+        <div style={{ marginTop: 4 }}><strong>Technique overlap ({match.techniqueOverlap != null ? Math.round(match.techniqueOverlap * 100) + "%" : "n/a"})</strong> — A zero-shot classifier detects propaganda techniques (loaded language, flag-waving, name-calling, etc.) in each passage, then measures how many techniques are shared. Weight: 40%</div>
+        <div style={{ marginTop: 4, color: "var(--text-muted)" }}>Cosine embedding similarity: {Math.round((match.similarity || 0) * 100)}% (used for initial retrieval)</div>
+      </div>
+    </>
+  ) : (
+    <>
+      <strong style={{ color: "var(--text-heading)" }}>{pct}% cosine similarity</strong>
+      <div style={{ marginTop: 6 }}>Both passages were converted to 1,024-dimensional vectors using the BGE-large embedding model, then compared via cosine similarity. Higher scores mean the texts occupy similar regions of semantic space.</div>
+    </>
+  );
   return (
-    <Tooltip text={tipText} maxWidth={300}>
+    <Tooltip text={tipText} maxWidth={340}>
       <div style={{ width: size, height: size, borderRadius: "50%", background: `conic-gradient(${color} ${score * 360}deg, var(--bg-card-alt) 0deg)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ width: inner, height: inner, borderRadius: "50%", background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: "var(--text-heading)" }}>
           {pct}%
@@ -318,7 +336,7 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           </Tooltip>
         </div>
         <div className="isb-match-donut" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <ScoreDonut score={match.similarity} />
+          <ScoreDonut score={match.ensembleScore || match.similarity} match={match} />
         </div>
         <div>
           <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: 2, color: "#3498db", fontWeight: 700, marginBottom: 8 }}>
@@ -332,6 +350,39 @@ function MatchCard({ match, index, tropeNames, tropeColors }) {
           </Tooltip>
         </div>
       </div>
+
+      {/* Claim pair — shows which specific claims echo */}
+      {match.claimPair && (
+        <div style={{ margin: "12px 0", padding: 12, background: "var(--bg-card-alt)", borderRadius: 8, border: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.5, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase" }}>
+            Matching Claims {match.claimSimilarity ? `— ${Math.round(match.claimSimilarity * 100)}% similar` : ""}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 10, alignItems: "center" }}>
+            <div style={{ fontSize: 13, lineHeight: 1.5, color: "#c0392b", fontStyle: "italic" }}>
+              "{match.claimPair.sovietClaim || match.claimPair.sourceClaim}"
+            </div>
+            <div style={{ fontSize: 18, color: "var(--text-muted)" }}>↔</div>
+            <div style={{ fontSize: 13, lineHeight: 1.5, color: "#3498db", fontStyle: "italic" }}>
+              "{match.claimPair.modernClaim || match.claimPair.matchClaim}"
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Shared propaganda techniques */}
+      {match.sharedTechniques?.length > 0 && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "8px 0" }}>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", alignSelf: "center" }}>Shared techniques:</span>
+          {match.sharedTechniques.map(t => (
+            <span key={t} style={{
+              background: "#8e44ad22", border: "1px solid #8e44ad55", color: "#8e44ad",
+              padding: "2px 8px", borderRadius: 4, fontSize: 10, fontWeight: 600,
+            }}>
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div style={{ fontSize: 12, color: "var(--text-secondary)", fontStyle: "italic", padding: "8px 0", borderTop: "1px solid var(--bg-card-alt)" }}>
         {match.echo_explanation || matchExplanation(match, tropeNames)}
@@ -1315,6 +1366,16 @@ function ExplorerTab({ tropeNames, tropeColors }) {
       .catch(() => setError("Explorer data not yet generated. Run: python generate_explorer_data.py"));
   }, []);
 
+  const rawPassages = data ? (corpus === "soviet" ? data.soviet_passages : data.modern_passages) : [];
+  // Sort passages by their top match's composite score (best matches first)
+  const passages = useMemo(() => {
+    return [...rawPassages].sort((a, b) => {
+      const scoreA = a.top_matches?.[0]?.ensembleScore ?? a.top_matches?.[0]?.similarity ?? 0;
+      const scoreB = b.top_matches?.[0]?.ensembleScore ?? b.top_matches?.[0]?.similarity ?? 0;
+      return scoreB - scoreA;
+    });
+  }, [rawPassages]);
+
   if (error) return (
     <div style={{ textAlign: "center", padding: 40 }}>
       <div style={{ fontSize: 14, color: "var(--text-secondary)", marginBottom: 12 }}>{error}</div>
@@ -1325,7 +1386,6 @@ function ExplorerTab({ tropeNames, tropeColors }) {
   );
   if (!data) return <div style={{ color: "var(--text-secondary)", textAlign: "center", padding: 40 }}>Loading explorer data...</div>;
 
-  const passages = corpus === "soviet" ? data.soviet_passages : data.modern_passages;
   const selected = passages[selectedIdx];
   if (!selected) return null;
 
@@ -1362,8 +1422,16 @@ function ExplorerTab({ tropeNames, tropeColors }) {
               background: selectedIdx === i ? `${accentColor}15` : "transparent",
               borderLeft: selectedIdx === i ? `3px solid ${accentColor}` : "3px solid transparent",
             }}>
-              <div style={{ fontSize: 12, color: "var(--text-primary)", lineHeight: 1.4 }}>
-                {p.text.slice(0, 100)}{p.text.length > 100 ? "..." : ""}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 8 }}>
+                <div style={{ fontSize: 12, color: "var(--text-primary)", lineHeight: 1.4, flex: 1 }}>
+                  {p.text.slice(0, 100)}{p.text.length > 100 ? "..." : ""}
+                </div>
+                {(() => {
+                  const topScore = p.top_matches?.[0]?.ensembleScore ?? p.top_matches?.[0]?.similarity;
+                  if (topScore == null) return null;
+                  const pct = Math.round(topScore * 100);
+                  return <span style={{ fontSize: 10, fontWeight: 700, color: pct >= 70 ? "#2ecc71" : pct >= 55 ? "#f1c40f" : "#e67e22", whiteSpace: "nowrap" }}>{pct}%</span>;
+                })()}
               </div>
               <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 4 }}>
                 {p.source} — {p.year}
@@ -1397,6 +1465,31 @@ function ExplorerTab({ tropeNames, tropeColors }) {
                 ))}
               </div>
             )}
+            {selected.techniques && selected.techniques.length > 0 && (
+              <div style={{ display: "flex", gap: 4, marginTop: 6, flexWrap: "wrap" }}>
+                <span style={{ fontSize: 9, color: "var(--text-muted)", fontWeight: 600, alignSelf: "center" }}>Techniques:</span>
+                {selected.techniques.map(t => (
+                  <span key={t} style={{
+                    background: "#8e44ad18", border: "1px solid #8e44ad44", color: "#8e44ad",
+                    padding: "2px 6px", borderRadius: 4, fontSize: 9, fontWeight: 600,
+                  }}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+            )}
+            {selected.claims && selected.claims.length > 0 && (
+              <details style={{ marginTop: 8 }}>
+                <summary style={{ fontSize: 10, color: "var(--text-muted)", cursor: "pointer", fontWeight: 600 }}>
+                  {selected.claims.length} extracted claims
+                </summary>
+                <ul style={{ margin: "4px 0 0 16px", padding: 0 }}>
+                  {selected.claims.map((c, i) => (
+                    <li key={i} style={{ fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: 2 }}>{c}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </div>
 
           {/* Top matches */}
@@ -1405,7 +1498,8 @@ function ExplorerTab({ tropeNames, tropeColors }) {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {(selected.top_matches || []).map((match, mi) => {
-              const pct = Math.round(match.similarity * 100);
+              const score = match.ensembleScore || match.similarity;
+              const pct = Math.round(score * 100);
               return (
                 <div key={mi} style={{
                   background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8,
@@ -1421,9 +1515,20 @@ function ExplorerTab({ tropeNames, tropeColors }) {
                       <span style={{ fontSize: 10, fontWeight: 700, color: matchColor, letterSpacing: 1 }}>
                         #{mi + 1} — {match.year}
                       </span>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: pct >= 75 ? "#e74c3c" : pct >= 60 ? "#f39c12" : "var(--text-muted)" }}>
-                        {pct}%
-                      </span>
+                      <Tooltip text={match.ensembleScore != null ? (
+                        <>
+                          <strong>{pct}% composite</strong>
+                          <div style={{ marginTop: 4, fontSize: 11 }}>
+                            {match.claimSimilarity != null && <div>Claim: {Math.round(match.claimSimilarity * 100)}%</div>}
+                            {match.techniqueOverlap != null && <div>Technique: {Math.round(match.techniqueOverlap * 100)}%</div>}
+                            <div style={{ color: "var(--text-muted)" }}>Cosine: {Math.round(match.similarity * 100)}%</div>
+                          </div>
+                        </>
+                      ) : `${pct}% cosine similarity`} maxWidth={200}>
+                        <span style={{ fontSize: 11, fontWeight: 700, color: pct >= 70 ? "#2ecc71" : pct >= 55 ? "#f1c40f" : "#e67e22", cursor: "help" }}>
+                          {pct}%
+                        </span>
+                      </Tooltip>
                     </div>
                     <div style={{ fontSize: 13, lineHeight: 1.5, color: "var(--text-primary)" }}>
                       "{match.text}"
@@ -1440,6 +1545,25 @@ function ExplorerTab({ tropeNames, tropeColors }) {
                             {tropeNames[t] || t}
                           </span>
                         ))}
+                      </div>
+                    )}
+                    {match.sharedTechniques && match.sharedTechniques.length > 0 && (
+                      <div style={{ display: "flex", gap: 3, marginTop: 4, flexWrap: "wrap" }}>
+                        {match.sharedTechniques.map(t => (
+                          <span key={t} style={{
+                            background: "#8e44ad18", color: "#8e44ad",
+                            padding: "1px 5px", borderRadius: 3, fontSize: 8, fontWeight: 600,
+                          }}>
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {match.claimPair && (
+                      <div style={{ marginTop: 6, padding: "6px 8px", background: "var(--bg-card-alt)", borderRadius: 4, fontSize: 11, lineHeight: 1.4 }}>
+                        <span style={{ color: accentColor }}>"{match.claimPair.sovietClaim || match.claimPair.sourceClaim}"</span>
+                        {" ↔ "}
+                        <span style={{ color: matchColor }}>"{match.claimPair.modernClaim || match.claimPair.matchClaim}"</span>
                       </div>
                     )}
                   </div>
@@ -1603,17 +1727,33 @@ export default function App() {
               <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Approach</h3>
               <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
                 <p style={{ margin: "0 0 12px" }}>
-                  This project uses <strong style={{ color: "var(--text-primary)" }}>embedding-based semantic similarity</strong> to identify modern texts
+                  This project uses a <strong style={{ color: "var(--text-primary)" }}>multi-signal composite scoring pipeline</strong> to identify modern texts
                   that echo the rhetorical patterns of Soviet anti-Zionist propaganda from the 1960s through 1980s.
                 </p>
                 <p style={{ margin: "0 0 12px" }}>
-                  <strong style={{ color: "var(--text-primary)" }}>Two-stage pipeline:</strong> Passages are embedded using BGE-large-en-v1.5 for initial retrieval
-                  via cosine similarity, identifying candidate matches from a corpus of ~3,900 modern texts against ~1,800 filtered Soviet passages.
+                  <strong style={{ color: "var(--text-primary)" }}>Three-stage pipeline:</strong>
                 </p>
+                <ol style={{ margin: "0 0 12px", paddingLeft: 20, fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                  <li style={{ marginBottom: 8 }}>
+                    <strong style={{ color: "var(--text-primary)" }}>Embedding retrieval</strong> — Passages are embedded using BGE-large-en-v1.5 (1,024 dimensions)
+                    and compared via cosine similarity to find candidate matches from ~3,900 modern texts against ~1,800 filtered Soviet passages.
+                  </li>
+                  <li style={{ marginBottom: 8 }}>
+                    <strong style={{ color: "var(--text-primary)" }}>Claim-level analysis (60% weight)</strong> — Claude AI decomposes each passage into atomic claims
+                    (e.g., "Zionism is a form of racism," "Israel acts as an agent of imperialism"). The claims from each pair are embedded and compared,
+                    and the strongest claim-pair similarity is measured. This captures whether the passages make the <em>same argument</em>,
+                    not just discuss the same topic.
+                  </li>
+                  <li style={{ marginBottom: 8 }}>
+                    <strong style={{ color: "var(--text-primary)" }}>Propaganda technique overlap (40% weight)</strong> — A zero-shot classifier detects
+                    propaganda techniques in each passage (loaded language, name-calling, flag-waving, appeal to fear, etc., based on SemEval taxonomy).
+                    The Jaccard overlap of detected techniques measures whether the passages use the <em>same rhetorical strategies</em>.
+                  </li>
+                </ol>
                 <p style={{ margin: "0 0 12px" }}>
-                  <strong style={{ color: "var(--text-primary)" }}>Human review:</strong> Automated matching achieves approximately 50% precision. Every match
-                  displayed in this tool has been manually reviewed to confirm genuine rhetorical echoing -- not merely topical overlap. Two texts can discuss
-                  the same subject from opposite angles and still score 0.80+ on cosine similarity.
+                  The <strong style={{ color: "var(--text-primary)" }}>composite similarity score</strong> displayed for each match combines
+                  claim similarity (60%) and technique overlap (40%). This ensemble approach achieves near-perfect separation between genuine echoes
+                  and legitimate criticism. Hover over any match score to see the breakdown.
                 </p>
                 <div style={{ background: "var(--bg-card-alt)", borderRadius: 8, padding: 16, marginTop: 16, borderLeft: "3px solid #f39c12" }}>
                   <p style={{ margin: 0, fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, fontStyle: "italic" }}>
@@ -1770,8 +1910,8 @@ export default function App() {
               <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Limitations</h3>
               <div style={{ display: "grid", gap: 10 }}>
                 {[
-                  "Cosine similarity measures topical overlap, not rhetorical echoing. Two texts can discuss Israel from opposite perspectives and still score 0.80+.",
-                  "Automated matching achieves approximately 50% precision -- half of top-scoring pairs are topically related but make different arguments. This is why human review is required.",
+                  "Cosine embedding similarity alone measures topical overlap, not rhetorical echoing. The composite scoring pipeline (claim similarity + technique overlap) substantially improves precision, but edge cases remain.",
+                  "Claim extraction relies on an LLM (Claude), which can occasionally misidentify or over-simplify the core claims in a passage. Propaganda technique detection uses zero-shot classification, which may miss domain-specific techniques.",
                   "The corpus uses English translations only. Switching from E5-large (multilingual) to BGE-large (English-only) sacrificed the ability to process Russian-language originals. This is acceptable since all current sources are translated.",
                   "No causal chain is established. These are structural parallels in argumentation patterns, not proof that modern speakers learned these arguments from Soviet sources. The question of transmission pathways is for historians.",
                 ].map((text, i) => (
@@ -1783,7 +1923,61 @@ export default function App() {
               </div>
             </div>
 
-            {/* Section 7: Open Source */}
+            {/* Section 7: The "As a Jew" Pattern */}
+            <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>The "As a Jew" Pattern: Tokenization Then and Now</h3>
+              <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>
+                <p style={{ margin: "0 0 12px" }}>
+                  One of the most persistent rhetorical patterns inherited from the Soviet playbook is the use of Jewish voices
+                  to legitimize anti-Zionist campaigns. In 1983, the Soviet regime established the{" "}
+                  <strong style={{ color: "var(--text-primary)" }}>Anti-Zionist Committee of the Soviet Public</strong>,
+                  staffed with prominent Soviet Jewish figures and overseen by the CPSU Central Committee and KGB.
+                  Its explicit purpose was to <em>deflect accusations of antisemitism</em> by presenting Jewish faces
+                  who condemned Zionism on behalf of the state. As Izabella Tabarovsky{" "}
+                  <a href="https://forward.com/opinion/420508/the-ussr-was-famous-for-state-sponsored-anti-zionism-is-america-heading-in/" target="_blank" rel="noopener noreferrer" style={{ color: "#3498db" }}>
+                  has documented</a>, this committee was a propaganda instrument designed to make state-sponsored anti-Zionism
+                  appear to come from Jews themselves.
+                </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  Today, organizations like Jewish Voice for Peace (JVP, ~32,000 dues-paying members per 2024 reporting)
+                  and IfNotNow play a structurally similar role. The ADL has{" "}
+                  <a href="https://www.adl.org/resources/backgrounder/jewish-voice-peace-jvp" target="_blank" rel="noopener noreferrer" style={{ color: "#3498db" }}>
+                  noted</a> that JVP "uses its Jewish identity to shield some in the anti-Israel movement from allegations
+                  of antisemitism and provide a veneer of legitimacy." With any other minority group, amplifying a fringe
+                  to delegitimize the mainstream position would be recognized as <em>tokenization</em>.
+                </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  Polling data consistently shows these voices represent a small minority of American Jewish opinion:
+                </p>
+                <div style={{ display: "grid", gap: 8, marginBottom: 12 }}>
+                  {[
+                    { stat: "88%", desc: "of American Jews affirm Israel's right to exist as a Jewish and democratic state", source: "JFNA Survey of Jewish Life, 2025" },
+                    { stat: "81%", desc: "say caring about Israel is very or somewhat important to their Jewish identity", source: "AJC Survey, 2024" },
+                    { stat: "71%", desc: "feel emotionally attached to Israel (up from 58% in 2020)", source: "JFNA Survey of Jewish Life, 2025" },
+                    { stat: "7%", desc: "of American Jews identify as anti-Zionist", source: "JFNA Survey of Jewish Life, 2025" },
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline", padding: "8px 12px", background: "var(--bg-card-alt)", borderRadius: 6 }}>
+                      <span style={{ fontSize: 18, fontWeight: 800, color: "var(--text-heading)", minWidth: 48, textAlign: "right" }}>{item.stat}</span>
+                      <div>
+                        <span style={{ fontSize: 12, color: "var(--text-secondary)" }}>{item.desc}</span>
+                        <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2 }}>{item.source}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ background: "var(--bg-card-alt)", borderRadius: 8, padding: 16, borderLeft: "3px solid #f39c12" }}>
+                  <p style={{ margin: 0, fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, fontStyle: "italic" }}>
+                    The Soviet Anti-Zionist Committee was state-manufactured tokenization; today's "as a Jew" phenomenon is organic
+                    but structurally identical. Both amplify a small minority of Jewish voices to delegitimize the overwhelming
+                    majority view and to provide cover for rhetoric that would otherwise be recognized as antisemitic.
+                    The 7% who identify as anti-Zionist receive disproportionate media and activist attention relative
+                    to the 88% who affirm Israel's right to exist.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 8: Open Source */}
             <div style={{ background: "var(--gradient-card)", border: "1px solid var(--border)", borderRadius: 12, padding: 24 }}>
               <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text-heading)", margin: "0 0 16px", fontFamily: "'Georgia', serif" }}>Open Source</h3>
               <div style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.8 }}>

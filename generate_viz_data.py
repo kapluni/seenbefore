@@ -14,10 +14,115 @@ from pathlib import Path
 from datetime import datetime
 from collections import Counter
 import numpy as np
+import ftfy
 from embedding_pipeline import CONFIG, TROPE_TAXONOMY, Passage, CorpusProcessor, EmbeddingEngine, SimilarityEngine
 
 CROSS_ENCODER_MODEL = "cross-encoder/stsb-roberta-large"
-CROSS_ENCODER_THRESHOLD = 0.40  # Below this = not a genuine argument match
+CROSS_ENCODER_THRESHOLD = 0.35  # Below this = not a genuine argument match (unless claim similarity is very high)
+
+CLAIMS_CACHE_PATH = "corpus/claims_cache.json"
+
+# SemEval propaganda techniques for technique overlap detection
+PROPAGANDA_TECHNIQUES = [
+    "loaded language", "name calling or labeling", "appeal to fear or prejudice",
+    "flag waving", "whataboutism", "black and white fallacy",
+    "appeal to authority", "bandwagon or appeal to popularity",
+    "causal oversimplification", "casting doubt", "exaggeration or minimization",
+    "repetition", "slogans", "thought terminating cliches", "straw man", "red herring",
+]
+
+def load_claims_cache():
+    """Load cached claim extractions from disk."""
+    if os.path.exists(CLAIMS_CACHE_PATH):
+        with open(CLAIMS_CACHE_PATH) as f:
+            return json.load(f)
+    return {}
+
+def save_claims_cache(cache):
+    """Save claim extractions to disk."""
+    os.makedirs(os.path.dirname(CLAIMS_CACHE_PATH) or ".", exist_ok=True)
+    with open(CLAIMS_CACHE_PATH, "w") as f:
+        json.dump(cache, f, indent=2)
+
+def extract_claims_llm(text, source_type="propaganda", client=None):
+    """Use Claude to decompose a passage into atomic claims. Returns list of strings."""
+    if not client:
+        return []
+    context = {"propaganda": "Soviet anti-Zionist propaganda text",
+               "echo": "modern anti-Zionist text",
+               "criticism": "political commentary"}.get(source_type, "text")
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": f"""Extract the distinct atomic claims from this {context}. Each claim should be:
+- A single, self-contained assertion
+- Expressible in one sentence
+- Specific enough to be matched against other texts
+- ACTUALLY STATED in the text below — do NOT infer, extrapolate, or add claims from background knowledge
+
+IMPORTANT: Only extract claims that are explicitly made in the text. Do not add context, historical events, or claims from other sources. If the text says "Zionism is imperialism", extract that — do not add claims about specific events unless the text mentions them.
+
+Return ONLY a JSON array of strings, no other text. If the text contains no clear claims, return [].
+
+Text: "{text}"
+"""}])
+        content = response.content[0].text.strip()
+        if content.startswith("```"):
+            content = content.split("\n", 1)[1]
+            if content.endswith("```"):
+                content = content[:-3]
+        claims = json.loads(content)
+        return claims if isinstance(claims, list) else []
+    except Exception as e:
+        print(f"    WARNING: Claim extraction failed: {e}")
+        return []
+
+def extract_claims_batch(texts, source_type, client, cache, cache_prefix=""):
+    """Extract claims for a batch of texts, using cache where available."""
+    import time
+    all_claims = {}
+    extracted = 0
+    for i, text in enumerate(texts):
+        cache_key = f"{cache_prefix}:{text[:200]}"
+        if cache_key in cache:
+            all_claims[i] = cache[cache_key]
+        else:
+            claims = extract_claims_llm(text, source_type, client)
+            all_claims[i] = claims
+            cache[cache_key] = claims
+            extracted += 1
+            if extracted % 10 == 0:
+                print(f"    Extracted claims for {extracted} texts...")
+            time.sleep(0.3)  # Rate limiting
+    if extracted > 0:
+        print(f"    Extracted claims for {extracted} new texts ({len(texts) - extracted} from cache)")
+    return all_claims
+
+def compute_claim_similarity(engine, soviet_claims, modern_claims):
+    """Compute max claim-pair similarity between two sets of claims.
+    Returns (max_score, best_soviet_claim, best_modern_claim)."""
+    if not soviet_claims or not modern_claims:
+        return 0.0, "", ""
+    soviet_embs = engine.model.encode(soviet_claims, normalize_embeddings=True)
+    modern_embs = engine.model.encode(modern_claims, normalize_embeddings=True)
+    sim_matrix = np.dot(modern_embs, soviet_embs.T)
+    best_idx = np.unravel_index(np.argmax(sim_matrix), sim_matrix.shape)
+    best_score = float(sim_matrix[best_idx])
+    return best_score, soviet_claims[best_idx[1]], modern_claims[best_idx[0]]
+
+def detect_techniques(classifier, text, threshold=0.5):
+    """Detect propaganda techniques in a text using zero-shot classification."""
+    result = classifier(text, PROPAGANDA_TECHNIQUES, multi_label=True)
+    return {l: round(float(s), 3) for l, s in zip(result["labels"], result["scores"]) if s >= threshold}
+
+def compute_technique_overlap(techs_a, techs_b):
+    """Compute Jaccard overlap between two technique sets."""
+    set_a, set_b = set(techs_a.keys()), set(techs_b.keys())
+    if not set_a and not set_b:
+        return 0.0, []
+    shared = sorted(set_a & set_b)
+    return len(set_a & set_b) / len(set_a | set_b), shared
 
 def load_cross_encoder():
     """Load the cross-encoder for reranking. Returns None if unavailable."""
@@ -47,6 +152,9 @@ def rerank_matches(matches, cross_encoder, threshold=CROSS_ENCODER_THRESHOLD):
         m["cross_encoder_score"] = round(ce_score, 4)
         if ce_score >= threshold:
             kept.append(m)
+        elif ce_score >= threshold - 0.05 and m.get("similarity", 0) >= 0.85:
+            # Allow slightly below threshold if cosine similarity is very high
+            kept.append(m)
         else:
             rejected += 1
 
@@ -55,19 +163,18 @@ def rerank_matches(matches, cross_encoder, threshold=CROSS_ENCODER_THRESHOLD):
 
 def clean_modern_text(text):
     """Clean modern text for display: fix encoding artifacts, remove @mentions/URLs."""
-    # Fix common HTML entities
-    t = text.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>')
-    # Fix UTF-8 mojibake (â€œ â€ â€™ etc.)
-    t = t.replace('\u00e2\u0080\u009c', '"').replace('\u00e2\u0080\u009d', '"')
-    t = t.replace('\u00e2\u0080\u0099', "'").replace('\u00e2\u0080\u0098', "'")
-    t = t.replace('\u00e2\u0080\u0093', '–').replace('\u00e2\u0080\u0094', '—')
-    # Also handle the raw â€ patterns
-    t = re.sub(r'â€[œ"]', '"', t)
-    t = re.sub(r'â€[™˜]', "'", t)
-    t = re.sub(r'â€"', '–', t)
-    t = re.sub(r'â€"', '—', t)
-    # Remove remaining â€ artifacts
-    t = re.sub(r'â€\S?', '', t)
+    # Fix literal \n from JSON-escaped tweets (both escaped and actual newlines)
+    t = text.replace('\\n', ' ').replace('\n', ' ')
+    # Fix all encoding / mojibake issues with ftfy
+    t = ftfy.fix_text(t)
+    # Fix common HTML entities (in case ftfy didn't catch them)
+    t = t.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>')
+    # Remove U+FFFD replacement characters (permanently corrupted encoding)
+    t = t.replace('\ufffd', '')
+    # Remove emoji characters (they don't add value for text matching)
+    t = re.sub(r'[\U00010000-\U0010ffff]', '', t)
+    # Remove leading sequences of ? (garbled emoji/encoding)
+    t = re.sub(r'^[?]{3,}\s*', '', t)
     # Remove @mentions at the start
     t = re.sub(r'^(@\w+\s*)+', '', t).strip()
     # Remove RT prefix
@@ -98,6 +205,18 @@ def is_weak_match(match):
     # Modern text too short to be meaningful
     if len(mod.split()) < 8:
         return "TOO_SHORT"
+
+    # Modern text is mostly profanity/sarcasm with no substantive claim
+    profanity_words = sum(1 for w in mod.split() if w in ('fuck', 'fucking', 'shit', 'damn', 'hell'))
+    if profanity_words >= 2 and len(mod.split()) < 25:
+        return "PROFANITY"
+
+    # Generic white supremacist antisemitism (not anti-Zionist echo)
+    # e.g., "jews control the world", "white genocide", "great replacement"
+    generic_markers = ['white countries', 'white genocide', 'great replacement',
+                       'white race', 'race traitor', 'race mixing']
+    if any(m in mod for m in generic_markers):
+        return "GENERIC_ANTISEMITISM"
 
     return None
 
@@ -340,7 +459,7 @@ def load_soviet_corpus():
 
     return passages, processor
 
-def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern=500, top_matches=20, verify=False):
+def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern=500, top_matches=20, verify=False, enrich=False):
     if not model_name: model_name = CONFIG["default_model"]
     print("="*60+f"\nGENERATING VIZ DATA\n  Model: {model_name}\n  Max modern: {max_modern}\n"+"="*60)
 
@@ -406,7 +525,7 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
         })
 
     # --- Diversity-aware match selection ---
-    all_matches.sort(key=lambda x: x["similarity"], reverse=True)
+    all_matches.sort(key=lambda x: x.get("ensembleScore", x["similarity"]), reverse=True)
 
     # Step 1: Deduplicate near-identical modern texts
     import re as _re
@@ -470,6 +589,57 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
 
     all_matches = final[:top_matches]
 
+    # Step 3b: Trope diversity — ensure underrepresented tropes get slots
+    # Check which tropes are missing or underrepresented
+    trope_counts = {}
+    for m in all_matches:
+        for t in m.get("tropes", []):
+            trope_counts[t] = trope_counts.get(t, 0) + 1
+    all_tropes = set(TROPE_TAXONOMY.keys())
+    missing_tropes = all_tropes - set(trope_counts.keys())
+    weak_tropes = {t for t, c in trope_counts.items() if c < 2}
+    underrep = missing_tropes | weak_tropes
+    if underrep:
+        # Find candidates from the full pool that have underrepresented tropes
+        selected_ids = {id(m) for m in all_matches}
+        trope_candidates = [m for m in diverse if id(m) not in selected_ids
+                            and any(t in underrep for t in m.get("tropes", []))]
+        # Sort by ensemble score and add best candidates, replacing lowest-scored matches
+        trope_candidates.sort(key=lambda x: x.get("ensembleScore", x["similarity"]), reverse=True)
+        for tc in trope_candidates:
+            if len(all_matches) < top_matches:
+                all_matches.append(tc)
+            else:
+                # Replace the lowest-scored match that has an overrepresented trope
+                min_idx = None
+                min_score = float('inf')
+                for idx, m in enumerate(all_matches):
+                    ms = m.get("ensembleScore", m["similarity"])
+                    # Only replace if this match's tropes are all well-represented (count >= 3)
+                    m_tropes = m.get("tropes", [])
+                    if m_tropes and all(trope_counts.get(t, 0) >= 3 for t in m_tropes) and ms < min_score:
+                        min_score = ms
+                        min_idx = idx
+                if min_idx is not None:
+                    # Update trope counts
+                    removed = all_matches[min_idx]
+                    for t in removed.get("tropes", []):
+                        trope_counts[t] = trope_counts.get(t, 0) - 1
+                    all_matches[min_idx] = tc
+                    for t in tc.get("tropes", []):
+                        trope_counts[t] = trope_counts.get(t, 0) + 1
+                    underrep = {t for t in all_tropes if trope_counts.get(t, 0) < 2}
+                    if not underrep:
+                        break
+        # Re-sort by ensemble score
+        all_matches.sort(key=lambda x: x.get("ensembleScore", x["similarity"]), reverse=True)
+        # Log trope coverage
+        trope_counts = {}
+        for m in all_matches:
+            for t in m.get("tropes", []):
+                trope_counts[t] = trope_counts.get(t, 0) + 1
+        print(f"  Trope diversity: {dict(sorted(trope_counts.items()))}")
+
     # Step 4: Remove heuristically weak matches (pro-Israel, too short, etc.)
     before_filter = len(all_matches)
     filtered_out = []
@@ -484,16 +654,6 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
     if filtered_out:
         print(f"  Quality filter: removed {len(filtered_out)} weak matches: {[r for _,r in filtered_out]}")
 
-    # Step 5: Cross-encoder reranking — filters for genuine argument matches
-    print("\n--- Cross-encoder reranking ---")
-    cross_encoder = load_cross_encoder()
-    if cross_encoder:
-        all_matches = rerank_matches(all_matches, cross_encoder)
-        # Re-sort by cross-encoder score (better indicator of argument match quality)
-        all_matches.sort(key=lambda x: x.get("cross_encoder_score", 0), reverse=True)
-    else:
-        print("  Skipped (cross-encoder not available)")
-
     for i,m in enumerate(all_matches): m["id"]=i+1
 
     # LLM verification step — always attempted, gracefully skips if no API key
@@ -504,6 +664,103 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
         all_matches = verify_matches_llm(all_matches, max_matches=top_matches)
         # Re-number after filtering
         for i,m in enumerate(all_matches): m["id"]=i+1
+
+    # --- Enrichment: claim extraction + propaganda technique detection ---
+    # Ensemble scoring: claim_sim * 0.6 + technique_overlap * 0.4
+    # Based on experiments: claim similarity AUC=1.000, technique overlap gap=0.30
+    if enrich:
+        print("\n--- Propaganda technique detection ---")
+        tech_classifier = None
+        try:
+            from transformers import pipeline as hf_pipeline
+            tech_classifier = hf_pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+            print("  Detecting techniques for each match...")
+            for m in all_matches:
+                sov_text = m.get("sovietTextFull", m["sovietText"])
+                mod_text = m.get("modernTextFull", m["modernText"])
+                sov_techs = detect_techniques(tech_classifier, sov_text)
+                mod_techs = detect_techniques(tech_classifier, mod_text)
+                overlap, shared = compute_technique_overlap(sov_techs, mod_techs)
+                m["sovietTechniques"] = list(sov_techs.keys())
+                m["modernTechniques"] = list(mod_techs.keys())
+                m["sharedTechniques"] = shared
+                m["techniqueOverlap"] = round(overlap, 4)
+                print(f"    Match {m['id']}: {len(shared)} shared ({', '.join(shared[:3]) if shared else 'none'})")
+        except Exception as e:
+            print(f"  WARNING: Technique detection failed: {e}")
+
+        # Claim extraction — requires Anthropic API key
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            print("\n--- Claim extraction ---")
+            try:
+                from anthropic import Anthropic
+                client = Anthropic()
+                claims_cache = load_claims_cache()
+                print(f"  Cache has {len(claims_cache)} entries")
+
+                for m in all_matches:
+                    sov_text = m.get("sovietTextFull", m["sovietText"])
+                    mod_text = m.get("modernTextFull", m["modernText"])
+
+                    sov_cache_key = f"soviet:{sov_text[:200]}"
+                    mod_cache_key = f"modern:{mod_text[:200]}"
+
+                    sov_claims = claims_cache.get(sov_cache_key) or extract_claims_llm(sov_text, "propaganda", client)
+                    claims_cache[sov_cache_key] = sov_claims
+
+                    mod_claims = claims_cache.get(mod_cache_key) or extract_claims_llm(mod_text, "echo", client)
+                    claims_cache[mod_cache_key] = mod_claims
+
+                    if sov_claims and mod_claims:
+                        claim_score, best_sov_claim, best_mod_claim = compute_claim_similarity(engine, sov_claims, mod_claims)
+                        m["claimSimilarity"] = round(claim_score, 4)
+                        m["claimPair"] = {"sovietClaim": best_sov_claim, "modernClaim": best_mod_claim}
+                        m["sovietClaims"] = sov_claims
+                        m["modernClaims"] = mod_claims
+                    else:
+                        m["claimSimilarity"] = 0.0
+                        m["claimPair"] = None
+                        m["sovietClaims"] = sov_claims
+                        m["modernClaims"] = mod_claims
+
+                save_claims_cache(claims_cache)
+                print(f"  Claims cache saved ({len(claims_cache)} entries)")
+            except Exception as e:
+                print(f"  WARNING: Claim extraction failed: {e}")
+
+        # --- Ensemble scoring: claim_sim * 0.6 + technique_overlap * 0.4 ---
+        # Claim floor gate: when claim similarity is weak (<0.65), demote technique
+        # contribution to prevent "same style, different argument" matches ranking high
+        print("\n--- Ensemble scoring (claim 0.6 + technique 0.4, claim floor 0.65) ---")
+        ENSEMBLE_THRESHOLD = 0.55  # Minimum ensemble score — must be above legit criticism avg (0.43)
+        CLAIM_FLOOR = 0.65
+        for m in all_matches:
+            claim = m.get("claimSimilarity", m["similarity"])  # fallback to cosine
+            tech = m.get("techniqueOverlap", 0.0)
+            if claim < CLAIM_FLOOR:
+                m["ensembleScore"] = round(claim * 0.75 + tech * 0.25, 4)
+            else:
+                m["ensembleScore"] = round(claim * 0.6 + tech * 0.4, 4)
+
+        # Filter by ensemble threshold
+        before = len(all_matches)
+        all_matches = [m for m in all_matches if m["ensembleScore"] >= ENSEMBLE_THRESHOLD]
+        filtered = before - len(all_matches)
+        if filtered:
+            print(f"  Filtered {filtered} matches below threshold {ENSEMBLE_THRESHOLD}")
+
+        # Rank by ensemble score
+        all_matches.sort(key=lambda x: x["ensembleScore"], reverse=True)
+        for i, m in enumerate(all_matches): m["id"] = i + 1
+
+        for m in all_matches:
+            print(f"    Match {m['id']}: ensemble={m['ensembleScore']:.3f} (claim={m.get('claimSimilarity',0):.3f}, tech={m.get('techniqueOverlap',0):.3f}, cos={m['similarity']:.3f})")
+            if m.get("claimPair"):
+                print(f"      {m['claimPair']['sovietClaim'][:50]}... ↔ {m['claimPair']['modernClaim'][:50]}...")
+    else:
+        print("\n--- Enrichment ---")
+        print("  Skipped (use --enrich to enable claim extraction + technique detection)")
 
     # Log diversity stats
     final_sources = {}
@@ -568,7 +825,7 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
         "modern_sources": dict(Counter(p.get("source","?") for p in modern_raw)),
         "matches": all_matches, "tropeDistribution": trope_dist, "timeline": timeline,
         "calibration": {
-            "echoScores": [{"label":m["modernSource"],"score":m["similarity"],"type":"echo"} for m in all_matches[:8]],
+            "echoScores": [{"label":m["modernText"][:60] + ("..." if len(m["modernText"]) > 60 else ""),"score":m.get("ensembleScore", m["similarity"]),"type":"echo"} for m in all_matches[:8]],
             "legitimateScores": [{"label":l["label"],"score":l["similarity"],"type":"legitimate"} for l in legit_scores],
         },
         "legitimateExamples": legit_scores,
@@ -579,6 +836,13 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
         },
     }
     with open(output_path,"w") as f: json.dump(viz,f,indent=2)
+
+    # Also copy to frontend/public/ for Vite dev server
+    frontend_path = os.path.join("frontend", "public", os.path.basename(output_path))
+    if os.path.exists("frontend/public"):
+        import shutil
+        shutil.copy2(output_path, frontend_path)
+        print(f"  Copied to {frontend_path}")
 
     print(f"\n{'='*60}\nRESULTS\n{'='*60}")
     print(f"  Soviet: {len(soviet_passages)} | Modern: {len(modern_raw)} | Matches: {len(all_matches)}")
@@ -648,8 +912,9 @@ if __name__=="__main__":
     p.add_argument("--max-modern",type=int,default=500)
     p.add_argument("--top-matches",type=int,default=20)
     p.add_argument("--verify",action="store_true",help="Enable LLM verification of matches (requires anthropic package and ANTHROPIC_API_KEY)")
+    p.add_argument("--enrich",action="store_true",help="Enable claim extraction + technique detection for richer match data")
     p.add_argument("--port",type=int,default=8000,help="Port for the API server (default: 8000)")
     a=p.parse_args()
     if not a.generate and not a.serve: a.generate=True
-    if a.generate: generate_viz_data(a.output,a.model,a.max_modern,a.top_matches,a.verify)
+    if a.generate: generate_viz_data(a.output,a.model,a.max_modern,a.top_matches,a.verify,a.enrich)
     if a.serve: serve_api(a.model,a.port)
