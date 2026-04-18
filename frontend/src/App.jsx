@@ -1757,6 +1757,19 @@ export default function App() {
                   claim similarity (60%) and technique overlap (40%). This ensemble approach achieves near-perfect separation between genuine echoes
                   and legitimate criticism. Hover over any match score to see the breakdown.
                 </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>Claim-floor gate.</strong> When claim similarity falls below 0.65,
+                  the weights shift to 75% claim / 25% technique. A pair that shares rhetorical <em>style</em> without sharing the
+                  underlying <em>argument</em> cannot be rescued by technique overlap alone -- this prevents "same register, different claim"
+                  false positives from ranking high.
+                </p>
+                <p style={{ margin: "0 0 12px" }}>
+                  <strong style={{ color: "var(--text-primary)" }}>Thresholds.</strong> Candidates with a composite score below
+                  <strong style={{ color: "var(--text-primary)" }}> 0.55</strong> are dropped from the results entirely (this is
+                  well above the 0.43 average for legitimate criticism). The <em>Top Matches</em> tab shows only the strongest subset
+                  at <strong style={{ color: "var(--text-primary)" }}>≥ 0.70</strong>; the <em>Explorer</em> and aggregate tabs include
+                  the full 0.55--0.85 range so you can inspect borderline cases.
+                </p>
                 <div style={{ background: "var(--bg-card-alt)", borderRadius: 8, padding: 16, marginTop: 16, borderLeft: "3px solid #f39c12" }}>
                   <p style={{ margin: 0, fontSize: 12, color: "var(--text-secondary)", lineHeight: 1.7, fontStyle: "italic" }}>
                     These are structural parallels in argumentation, not proven causal chains. Establishing that modern speakers
