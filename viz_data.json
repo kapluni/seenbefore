@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-04-14T12:17:47.554984",
+  "generated_at": "2026-04-18T15:26:40.558327",
   "model": "BAAI/bge-large-en-v1.5",
   "soviet_corpus_size": 1943,
-  "modern_corpus_size": 1000,
+  "modern_corpus_size": 2000,
   "modern_sources": {
-    "isca_zenodo": 249,
+    "isca_zenodo": 580,
     "isca_classdata_2022_2023": 117,
-    "conan_multitarget": 204,
-    "conan_dialogue": 209,
-    "adl_heat_map": 221
+    "conan_multitarget": 401,
+    "conan_dialogue": 424,
+    "adl_heat_map": 478
   },
   "matches": [
     {
@@ -41,6 +41,8 @@
         }
       ],
       "id": 1,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts reject Israel as the legitimate homeland for Jews, but the Soviet text uses secular Communist patriotism while the modern text uses religious Jewish arguments about exile and divine conditions.",
       "sovietTechniques": [
         "appeal to fear or prejudice",
         "casting doubt",
@@ -101,6 +103,81 @@
       "ensembleScore": 0.8452
     },
     {
+      "sovietText": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+      "sovietTextFull": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose. They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis). (* Gentile.) The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+      "modernTextFull": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.8055,
+      "tropes": [
+        "ZIONISM_RACISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "The Zionist concept of a \u201chistorical homeland\u201d and, con sequently, of a Palestine \u201cfree of Arabs\u201d led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \u201cconquerors.\u201d The analogous concept of a \u201cGermany free of Jews\u201d took a toll of millions of lives.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.7727
+        },
+        {
+          "sovietText": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7714
+        }
+      ],
+      "id": 2,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts frame Israel as operating systematic racial discrimination, but the Soviet text focuses on internal Zionist elite manipulation hindering Israeli nation-formation while the modern text emphasizes indigenous Palestinian dispossession with different strategic framing.",
+      "sovietTechniques": [
+        "repetition",
+        "name calling or labeling",
+        "appeal to fear or prejudice",
+        "loaded language",
+        "casting doubt"
+      ],
+      "modernTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "repetition",
+        "name calling or labeling",
+        "appeal to authority",
+        "loaded language"
+      ],
+      "sharedTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
+      ],
+      "techniqueOverlap": 0.8333,
+      "claimSimilarity": 0.8083,
+      "claimPair": {
+        "sovietClaim": "Israel has an elaborate system of brutal racial discrimination against the Arabs",
+        "modernClaim": "Israel operates a regime of systematic racial discrimination across all parts of the Occupied Palestinian Territories"
+      },
+      "sovietClaims": [
+        "The Israeli version of apartheid consists of Ashkenazim-Sephardim-goy-Arab divisions",
+        "Israel has an elaborate system of brutal racial discrimination against the Arabs",
+        "Israeli apartheid and racial discrimination serve as a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel",
+        "The Zionist elite policy aims at the formation of a so-called centre of influence\u2014a Jewish centre",
+        "The Zionist elite seeks to create a Jewish centre rather than the State of Israel inhabited by Israelis",
+        "The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation"
+      ],
+      "modernClaims": [
+        "Israel operates a regime of systematic racial discrimination across all parts of the Occupied Palestinian Territories",
+        "Israel's regime facilitates the continued ethnic cleansing of the indigenous Palestinian population",
+        "Palestinians are the indigenous population"
+      ],
+      "ensembleScore": 0.8183
+    },
+    {
       "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
       "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
       "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
@@ -129,7 +206,9 @@
           "similarity": 0.8189
         }
       ],
-      "id": 2,
+      "id": 3,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts draw Nazi analogies about Israel, but the Soviet text is actually questioning this comparison's logical inconsistency with Israel's right to exist, while the modern text straightforwardly asserts the Nazi comparison without such nuance.",
       "sovietTechniques": [
         "casting doubt",
         "loaded language",
@@ -172,104 +251,102 @@
       "ensembleScore": 0.8085
     },
     {
-      "sovietText": "9 55 The Zionists at the helm of Israel are preaching a policy of misanthropy and racial superiority. This is no different from nazi theories. The nazis killed my sister, her two small children, and all the Jews in our village. I hate nazism and Zionism as do all Soviet citizens.",
-      "sovietTextFull": "MOLIVER, director, Chapayeusk school No. 9 55 The Zionists at the helm of Israel are preaching a policy of misanthropy and racial superiority. This is no different from nazi theories. The nazis killed my sister, her two small children, and all the Jews in our village. I hate nazism and Zionism as do all Soviet citizens. .",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-      "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": "Zionists are basically Nazis&not really Jews at all, one needs merely to read what Herzl,Jabotinsky&later Rabbi Kahane to understand Jews who went wrong&destroyed the best that is from Jews,empathy, That alone sets Jews up to get along everywhere with others,Zionists'= destroyers",
-      "modernTextFull": "Zionists are basically Nazis&not really Jews at all, one needs merely to read what Herzl,Jabotinsky&later Rabbi Kahane to understand Jews who went wrong&destroyed the best that is from Jews,empathy, That alone sets Jews up to get along everywhere with others,Zionists'= destroyers",
-      "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
-      "modernYear": 2023,
-      "similarity": 0.7775,
+      "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+      "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
+      "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+      "sovietYear": 1983,
+      "sovietAuthor": "CPSU / KGB",
+      "modernText": "1388.just bc nazi israelis pretend they'r jews it doesn't mean they get to violate humanrights.&just bc some cover countries have jews in power positions&feel that isr is exempt bc of the holocaust,it also doesn't mean they get to abuse humanrights. from oppression to oppressor g",
+      "modernTextFull": "1388.just bc nazi israelis pretend they'r jews it doesn't mean they get to violate humanrights.&just bc some cover countries have jews in power positions&feel that isr is exempt bc of the holocaust,it also doesn't mean they get to abuse humanrights. from oppression to oppressor g",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.838,
       "tropes": [
         "ZIONISM_NAZISM"
       ],
       "confidence": "medium",
       "alternateMatches": [
         {
-          "sovietText": "In connection with some details made public when the case of the nazi butcher Barbie was investigated, I would like to ask whether the facts of contacts between nazi criminals and Zionists are known io you.",
+          "sovietText": "But if Israel is a nazi state, it should not have such a right. Have | understood you correctly? Let us separate the two aspects of the question.",
           "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
           "sovietYear": 1983,
-          "similarity": 0.7767
+          "similarity": 0.8212
         },
         {
-          "sovietText": "We are well aware of the disgraceful part played by Zionist leaders in the years of the Civil War when they collaborated with Denikin and Petlyura, with Pilsudski and Wrangel, with the organisers of the bloody Jewish pogroms.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7708
+          "sovietText": "Moreover, the official opinion of the Soviet government, which is repeatedly expressed, is that the state of Israel does have the right to exist, but that, if it is a Nazi state, it does not enjoy this right. However, let us split up the two parts of the question.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.8208
         }
       ],
-      "id": 3,
+      "id": 4,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts employ Nazi comparisons against Israel, but the Soviet text presents this as a logical contradiction requiring resolution, while the modern text uses it as a straightforward delegitimization argument without the dialectical framing.",
       "sovietTechniques": [
-        "appeal to fear or prejudice",
-        "repetition",
         "casting doubt",
-        "name calling or labeling",
         "loaded language",
-        "thought terminating cliches",
+        "name calling or labeling",
+        "repetition",
+        "appeal to fear or prejudice",
         "appeal to authority",
-        "bandwagon or appeal to popularity",
-        "causal oversimplification",
-        "slogans",
         "exaggeration or minimization"
       ],
       "modernTechniques": [
         "casting doubt",
-        "name calling or labeling",
         "loaded language",
-        "repetition",
         "appeal to fear or prejudice",
-        "bandwagon or appeal to popularity",
         "thought terminating cliches",
+        "appeal to authority",
+        "name calling or labeling",
+        "repetition",
         "exaggeration or minimization",
+        "bandwagon or appeal to popularity",
         "causal oversimplification"
       ],
       "sharedTechniques": [
+        "appeal to authority",
         "appeal to fear or prejudice",
-        "bandwagon or appeal to popularity",
         "casting doubt",
-        "causal oversimplification",
         "exaggeration or minimization",
         "loaded language",
         "name calling or labeling",
-        "repetition",
-        "thought terminating cliches"
+        "repetition"
       ],
-      "techniqueOverlap": 0.8182,
-      "claimSimilarity": 0.7606,
+      "techniqueOverlap": 0.7,
+      "claimSimilarity": 0.8188,
       "claimPair": {
-        "sovietClaim": "The Zionists at the helm of Israel are preaching a policy of misanthropy and racial superiority",
-        "modernClaim": "Zionists are basically Nazis"
+        "sovietClaim": "The Israeli government is employing methods used by the nazis",
+        "modernClaim": "Nazi Israelis pretend they are Jews"
       },
       "sovietClaims": [
-        "The Zionists at the helm of Israel are preaching a policy of misanthropy and racial superiority",
-        "This is no different from nazi theories",
-        "The nazis killed my sister, her two small children, and all the Jews in our village",
-        "I hate nazism and Zionism as do all Soviet citizens"
+        "The Israeli government is employing methods used by the nazis",
+        "The official and repeatedly expressed view of the Soviet government is that Israel has a right to exist",
+        "If Israel is a nazi state, it should not have such a right"
       ],
       "modernClaims": [
-        "Zionists are basically Nazis",
-        "Zionists are not really Jews at all",
-        "Jews who went wrong destroyed the best that is from Jews",
-        "Empathy is the best quality from Jews",
-        "Empathy sets Jews up to get along everywhere with others",
-        "Zionists are destroyers"
+        "Nazi Israelis pretend they are Jews",
+        "Israelis do not get to violate human rights just because they pretend to be Jews",
+        "Some cover countries have Jews in power positions",
+        "Some countries feel that Israel is exempt because of the Holocaust",
+        "Israel does not get to abuse human rights just because some countries feel they are exempt due to the Holocaust",
+        "There has been a transformation from oppression to oppressor"
       ],
-      "ensembleScore": 0.7836
+      "ensembleScore": 0.7713
     },
     {
-      "sovietText": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes.",
-      "sovietTextFull": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes. As for the aspersions the world Zionist organization is casting on our country and your own statement on the position of Jews in the Soviet Union, I\u2019d like to tell you this: spare your energy, no one will go to your paradise!",
+      "sovietText": "We, who have lived through the horrors of fascist barbarism in the years of the Great Patriotic War, cannot keep silent when Zionist-racialists, following in the footsteps of the nazi-butchers, are persecuting and terrorising the Arab population in Israeloccupied Arab territories wiping their homes off the face of the earth, depriving them of their land and their possessions.",
+      "sovietTextFull": "We Jewish workers in the Hero-City of Kiev, the capital of the Soviet Ukraine, wrathfully condemn the unceasing aggressive actions of the Israeli military against Arab countries and indignantly protest the air raids on peaceful towns and villages of the UAR, Syria and Jordan. We, who have lived through the horrors of fascist barbarism in the years of the Great Patriotic War, cannot keep silent when Zionist-racialists, following in the footsteps of the nazi-butchers, are persecuting and terrorising the Arab population in Israeloccupied Arab territories wiping their homes off the face of the earth, depriving them of their land and their possessions.",
       "sovietSource": "Zionism: Instrument of Imperialist Reaction",
       "sovietYear": 1970,
       "sovietAuthor": "Novosti Press Agency",
-      "modernText": "Quit evil occupation go back to Europe where they so called had gas chamber's n killed innocent jews make them accomodate you not go occupy and kill Palestinians and expect a smile in return! Evil occupying colonial tactics",
-      "modernTextFull": "Quit evil occupation go back to Europe where they so called had gas chamber's n killed innocent jews make them accomodate you not go occupy and kill Palestinians and expect a smile in return! Evil occupying colonial tactics",
-      "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
-      "modernYear": 2023,
-      "similarity": 0.7677,
+      "modernText": "Israel's attacks on the Palestinian people are intolerable and follow threats of forced evictions and violence in #SaveSheikhJarrah and #AlAqsa.The EU must condemn this barbarism and press for an end to the occupation, blockade, apartheid and human rights violations in #Palestine",
+      "modernTextFull": "Israel's attacks on the Palestinian people are intolerable and follow threats of forced evictions and violence in #SaveSheikhJarrah and #AlAqsa.The EU must condemn this barbarism and press for an end to the occupation, blockade, apartheid and human rights violations in #Palestine",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.7895,
       "tropes": [
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM",
         "ZIONISM_NAZISM"
       ],
       "confidence": "medium",
@@ -278,151 +355,66 @@
           "sovietText": "We cannot even imagine living in a country that commits aggression against the neighbouring peoples and makes a living from the sops it receives from the imperialist sharks, the leaders of international Zionism.",
           "sovietSource": "Zionism: Instrument of Imperialist Reaction",
           "sovietYear": 1970,
-          "similarity": 0.7577
+          "similarity": 0.7808
         },
         {
-          "sovietText": "It is with excruciating pain that we hear about the crimes of the Israeli aggressors who shoot at women and children, raze towns and burn down villages: we in Byelorussia lived through these horrors during the nazi invasion.",
+          "sovietText": "We proclaim solidarity with this struggle and demand the immediate cessation of aggression and implementation of the Security Council resolution on peaceful settlement of the conflict.",
           "sovietSource": "Zionism: Instrument of Imperialist Reaction",
           "sovietYear": 1970,
-          "similarity": 0.754
-        }
-      ],
-      "id": 4,
-      "sovietTechniques": [
-        "casting doubt",
-        "repetition",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "loaded language",
-        "appeal to authority",
-        "thought terminating cliches",
-        "exaggeration or minimization",
-        "bandwagon or appeal to popularity",
-        "causal oversimplification",
-        "whataboutism"
-      ],
-      "modernTechniques": [
-        "thought terminating cliches",
-        "casting doubt",
-        "name calling or labeling",
-        "loaded language",
-        "slogans",
-        "bandwagon or appeal to popularity",
-        "appeal to fear or prejudice",
-        "appeal to authority",
-        "whataboutism",
-        "repetition",
-        "causal oversimplification",
-        "exaggeration or minimization"
-      ],
-      "sharedTechniques": [
-        "appeal to authority",
-        "appeal to fear or prejudice",
-        "bandwagon or appeal to popularity",
-        "casting doubt",
-        "causal oversimplification",
-        "exaggeration or minimization",
-        "loaded language",
-        "name calling or labeling",
-        "repetition",
-        "thought terminating cliches",
-        "whataboutism"
-      ],
-      "techniqueOverlap": 0.9167,
-      "claimSimilarity": 0.6668,
-      "claimPair": {
-        "sovietClaim": "The world Zionist organization is engaging in barbarous practices",
-        "modernClaim": "The occupation uses evil occupying colonial tactics"
-      },
-      "sovietClaims": [
-        "Meir and the leadership of the world Zionist organization have made a deal with the imperialists",
-        "The world Zionist organization is fanning the flames of war",
-        "The world Zionist organization is engaging in barbarous practices",
-        "The world Zionist organization is repeating nazi crimes",
-        "The world Zionist organization is casting aspersions on our country",
-        "No one will go to your paradise"
-      ],
-      "modernClaims": [
-        "Zionists should quit evil occupation and go back to Europe",
-        "Gas chambers existed in Europe where innocent Jews were killed",
-        "Europeans should accommodate Jews rather than Jews occupying Palestinian land",
-        "Occupiers kill Palestinians and expect a smile in return",
-        "The occupation uses evil occupying colonial tactics"
-      ],
-      "ensembleScore": 0.7668
-    },
-    {
-      "sovietText": "They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis).",
-      "sovietTextFull": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose. They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis). (* Gentile.) The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation.",
-      "sovietSource": "Caution: Zionism!",
-      "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "Jews are are racist: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
-      "modernTextFull": "Jews are are racist: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
-      "modernSource": "CONAN Counter-Narrative Dataset",
-      "modernYear": 2022,
-      "similarity": 0.7917,
-      "tropes": [
-        "ZIONISM_RACISM"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people.",
-          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
-          "sovietYear": 1985,
-          "similarity": 0.7835
-        },
-        {
-          "sovietText": "in vain we are endeavouring to glorify our respective countries in arts and science and to augment their riches by commerce and exchange.\" [38] Herzl is clearly proposing that citizens of Jewish origin residing in different countries should drop their patriotism and further the Zionist cause by acting according to the antiSemitic thesis that Jews are an \"alien element\" in every state.",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.7777
+          "similarity": 0.7781
         }
       ],
       "id": 5,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use identical framing of portraying Israeli actions as barbaric aggression against defenseless populations, with the modern text's call to 'condemn this barbarism' directly echoing the Soviet text's condemnation of 'aggressive actions' and 'barbarism.'",
       "sovietTechniques": [
         "repetition",
-        "name calling or labeling",
+        "casting doubt",
         "appeal to fear or prejudice",
         "loaded language",
-        "casting doubt"
+        "appeal to authority",
+        "name calling or labeling"
       ],
       "modernTechniques": [
+        "repetition",
         "casting doubt",
+        "appeal to authority",
         "loaded language",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "thought terminating cliches",
-        "repetition"
+        "appeal to fear or prejudice"
       ],
       "sharedTechniques": [
+        "appeal to authority",
         "appeal to fear or prejudice",
         "casting doubt",
         "loaded language",
-        "name calling or labeling",
         "repetition"
       ],
       "techniqueOverlap": 0.8333,
-      "claimSimilarity": 0.6892,
+      "claimSimilarity": 0.6836,
       "claimPair": {
-        "sovietClaim": "The Zionist elite seeks to create a Jewish centre rather than the State of Israel inhabited by Israelis",
-        "modernClaim": "Jews want to preserve their own race and purity of their own blood"
+        "sovietClaim": "Zionist-racialists are persecuting and terrorising the Arab population in Israeli-occupied Arab territories",
+        "modernClaim": "Israel's attacks follow threats of forced evictions and violence in Sheikh Jarrah"
       },
       "sovietClaims": [
-        "The Israeli version of apartheid consists of Ashkenazim-Sephardim-goy-Arab divisions",
-        "Israel has an elaborate system of brutal racial discrimination against the Arabs",
-        "Israeli apartheid and racial discrimination serve as a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel",
-        "The Zionist elite policy aims at the formation of a so-called centre of influence\u2014a Jewish centre",
-        "The Zionist elite seeks to create a Jewish centre rather than the State of Israel inhabited by Israelis",
-        "The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation"
+        "Jewish workers in the Hero-City of Kiev, the capital of the Soviet Ukraine, wrathfully condemn the unceasing aggressive actions of the Israeli military against Arab countries",
+        "Jewish workers in Kiev indignantly protest the air raids on peaceful towns and villages of the UAR, Syria and Jordan",
+        "The Jewish workers have lived through the horrors of fascist barbarism in the years of the Great Patriotic War",
+        "Zionist-racialists are following in the footsteps of the nazi-butchers",
+        "Zionist-racialists are persecuting and terrorising the Arab population in Israeli-occupied Arab territories",
+        "Zionist-racialists are wiping Arab homes off the face of the earth",
+        "Zionist-racialists are depriving Arabs of their land and their possessions"
       ],
       "modernClaims": [
-        "Jews are racist",
-        "Jews want to preserve their own race and purity of their own blood",
-        "Many people are banned from entering Israel"
+        "Israel's attacks on the Palestinian people are intolerable",
+        "Israel's attacks follow threats of forced evictions and violence in Sheikh Jarrah",
+        "Israel's attacks follow threats of forced evictions and violence at Al Aqsa",
+        "The EU must condemn this barbarism",
+        "The EU must press for an end to the occupation",
+        "The EU must press for an end to the blockade",
+        "The EU must press for an end to apartheid",
+        "The EU must press for an end to human rights violations in Palestine"
       ],
-      "ensembleScore": 0.7468
+      "ensembleScore": 0.7435
     },
     {
       "sovietText": "The policy of Zionism\u2014which is responsible for the aggressive wars and the genocide at Sabra and Shatila\u2014with its pathological hatred of everything Soviet, has become utterly revolting.",
@@ -455,6 +447,8 @@
         }
       ],
       "id": 6,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts frame Zionism as an inherently criminal ideology responsible for genocide and oppression, using identical delegitimization strategies despite different specific terminologies (Soviet anti-imperialism vs. modern decolonization language).",
       "sovietTechniques": [
         "casting doubt",
         "repetition",
@@ -520,9 +514,9 @@
       "modernYear": 2021,
       "similarity": 0.789,
       "tropes": [
-        "DUAL_LOYALTY",
+        "ZIONISM_RACISM",
         "ANTI_ZIONISM_PROGRESSIVE",
-        "ZIONISM_RACISM"
+        "DUAL_LOYALTY"
       ],
       "confidence": "medium",
       "alternateMatches": [
@@ -540,6 +534,8 @@
         }
       ],
       "id": 7,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use the identical argumentative strategy of distinguishing between 'good Jews' who oppose Zionism and 'bad Jews' who support it, with the modern text directly echoing the Soviet framing that Jews can be virtuous by rejecting Zionist ideology.",
       "sovietTechniques": [
         "name calling or labeling",
         "casting doubt",
@@ -605,78 +601,6 @@
       "ensembleScore": 0.7391
     },
     {
-      "sovietText": "in our opinion the Israeli nation when fully formed would be a natural amalgam of the communities and peoples of modern Israel. The main purpose of the Israeli version of apartheid is to help the Zionists practise the old policy of the ruling class of colonial England.",
-      "sovietTextFull": "In this connection the views of Zeromski's interlocutor about the future of the Israeli nation in the conversation we quoted earlier are somewhat incomplete (making allowance for the affected tone of superiority). in our opinion the Israeli nation when fully formed would be a natural amalgam of the communities and peoples of modern Israel. The main purpose of the Israeli version of apartheid is to help the Zionists practise the old policy of the ruling class of colonial England.",
-      "sovietSource": "Caution: Zionism!",
-      "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "\"Israel has created a permanent reality in which there are two peoples, #Jews and #Palestinians, sharing the same territorial space, but a regime of #JewishSupremacy has been imposed by the stronger side. This unequivocally qualifies as #Apartheid\"",
-      "modernTextFull": "\"Israel has created a permanent reality in which there are two peoples, #Jews and #Palestinians, sharing the same territorial space, but a regime of #JewishSupremacy has been imposed by the stronger side. This unequivocally qualifies as #Apartheid\"",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "similarity": 0.7818,
-      "tropes": [
-        "ZIONISM_RACISM"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis).",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.7768
-        },
-        {
-          "sovietText": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.751
-        }
-      ],
-      "id": 8,
-      "sovietTechniques": [
-        "loaded language",
-        "casting doubt",
-        "causal oversimplification",
-        "exaggeration or minimization",
-        "appeal to authority",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "whataboutism"
-      ],
-      "modernTechniques": [
-        "loaded language",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "casting doubt",
-        "appeal to authority"
-      ],
-      "sharedTechniques": [
-        "appeal to authority",
-        "appeal to fear or prejudice",
-        "casting doubt",
-        "loaded language",
-        "name calling or labeling"
-      ],
-      "techniqueOverlap": 0.625,
-      "claimSimilarity": 0.7607,
-      "claimPair": {
-        "sovietClaim": "The Israeli nation when fully formed would be a natural amalgam of the communities and peoples of modern Israel",
-        "modernClaim": "Israel has created a permanent reality in which there are two peoples, Jews and Palestinians, sharing the same territorial space"
-      },
-      "sovietClaims": [
-        "The views of Zeromski's interlocutor about the future of the Israeli nation are somewhat incomplete",
-        "The Israeli nation when fully formed would be a natural amalgam of the communities and peoples of modern Israel",
-        "The main purpose of the Israeli version of apartheid is to help the Zionists practise the old policy of the ruling class of colonial England"
-      ],
-      "modernClaims": [
-        "Israel has created a permanent reality in which there are two peoples, Jews and Palestinians, sharing the same territorial space",
-        "A regime of Jewish supremacy has been imposed by the stronger side",
-        "This unequivocally qualifies as Apartheid"
-      ],
-      "ensembleScore": 0.7064
-    },
-    {
       "sovietText": "Are your provocations against the Arabs, the seizure of their land and property and the killing of civilians any different from nazi atrocities in the occupied territories?",
       "sovietTextFull": "But it has never been and never will be my homeland. Are your provocations against the Arabs, the seizure of their land and property and the killing of civilians any different from nazi atrocities in the occupied territories? It is the Arab people who fight for a righteous cause and they will win out, giving Israeli pro-vocateurs a fitting rebuff.",
       "sovietSource": "Zionism: Instrument of Imperialist Reaction",
@@ -706,7 +630,9 @@
           "similarity": 0.7663
         }
       ],
-      "id": 9,
+      "id": 8,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use the identical argumentative strategy of inverting the aggressor-victim narrative by portraying Israel as the illegitimate occupier/invader while positioning Palestinians/Arabs as the righteous defenders of their own land.",
       "sovietTechniques": [
         "casting doubt",
         "appeal to fear or prejudice",
@@ -756,73 +682,88 @@
       "ensembleScore": 0.7048
     },
     {
-      "sovietText": "I want to point out here that during the war the Soviet command concentrated on rescuing people of any nationality and religion, including Jews, from the death threatening them in nazi captivity.",
-      "sovietTextFull": "It should be noted that the nazi cutthroats carried out the Fuehrer\u2019s diabolic order efficiently, methodically and punctually. I want to point out here that during the war the Soviet command concentrated on rescuing people of any nationality and religion, including Jews, from the death threatening them in nazi captivity.",
+      "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+      "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
       "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
       "sovietYear": 1983,
       "sovietAuthor": "CPSU / KGB",
-      "modernText": "When Bolshevik Jews got complete control in the Soviet Union they made \"anti-semitism\" a crime punishable by death. The Russian people ended the Soviet Union Hell on Earth Nightmare and Christianity is now being restored. Article from Jewish publication:",
-      "modernTextFull": "When Bolshevik Jews got complete control in the Soviet Union they made \"anti-semitism\" a crime punishable by death. The Russian people ended the Soviet Union Hell on Earth Nightmare and Christianity is now being restored. Article from Jewish publication:",
+      "modernText": "Germany tries to atone for its attempted extermination of European Jews by backing Israel's latest attack on Gaza. The millions murdered by the Nazis never gave Israel permission to bomb Palestinians. Stop using the Holocaust to excuse Israel's crimes.",
+      "modernTextFull": "Germany tries to atone for its attempted extermination of European Jews by backing Israel's latest attack on Gaza. The millions murdered by the Nazis never gave Israel permission to bomb Palestinians. Stop using the Holocaust to excuse Israel's crimes.",
       "modernSource": "ISCA Twitter Dataset (Zenodo)",
       "modernYear": 2021,
-      "similarity": 0.7816,
+      "similarity": 0.8068,
       "tropes": [
-        "JEWISH_CONSPIRACY",
         "ZIONISM_NAZISM"
       ],
       "confidence": "medium",
       "alternateMatches": [
         {
-          "sovietText": "In fact, the deeply shocked reaction to \"Judaism Without Embellishment\", which has been compared to the literature published by the Nazi journal Der Stuermer, makes it necessary to reject irresponsible analogies between the Soviet Union and Nazi Germany.",
-          "sovietSource": "Judaism Without Embellishment (analysis)",
-          "sovietYear": 1963,
-          "similarity": 0.7694
+          "sovietText": "His book can in no way be qualified as an indictment of nazi outrages. In reply to a query of the Palestine Royal Commission about the possibility of transferring 6,000,000 West European Jews to Palestine, he said: \"No, the old will go.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7979
         },
         {
-          "sovietText": "Talk of this kind is particularly dangerous for mankind when it becomes the official ideology of a reactionary regime which relies on the support of international imperialism and seeks to achieve its aims by force of arms, shedding the blood of innocent people.",
-          "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
-          "sovietYear": 1983,
-          "similarity": 0.7672
+          "sovietText": "For the Israel of today it is more than a historical document\u2014it is a direct warning: All those Germans who saw in the armament policy 'the greatness of Germany' and who accepted the wild militarism, marches and military drill as the greatest boon for the nation bear the blame.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7951
         }
       ],
-      "id": 10,
+      "id": 9,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts invoke Nazi comparisons against Israel, but the Soviet text focuses on the logical contradiction of a 'Nazi state' having a right to exist, while the modern text argues that Holocaust memory is being misused to justify Israeli actions - related anti-Israel rhetoric but different argumentative frameworks.",
       "sovietTechniques": [
         "casting doubt",
-        "appeal to fear or prejudice",
         "loaded language",
-        "appeal to authority"
+        "name calling or labeling",
+        "repetition",
+        "appeal to fear or prejudice",
+        "appeal to authority",
+        "exaggeration or minimization"
       ],
       "modernTechniques": [
-        "casting doubt",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "thought terminating cliches",
         "loaded language",
-        "appeal to authority"
+        "casting doubt",
+        "whataboutism",
+        "causal oversimplification",
+        "red herring",
+        "repetition",
+        "appeal to authority",
+        "appeal to fear or prejudice",
+        "exaggeration or minimization",
+        "bandwagon or appeal to popularity",
+        "straw man",
+        "thought terminating cliches",
+        "name calling or labeling",
+        "black and white fallacy"
       ],
       "sharedTechniques": [
         "appeal to authority",
         "appeal to fear or prejudice",
         "casting doubt",
-        "loaded language"
+        "exaggeration or minimization",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
       ],
-      "techniqueOverlap": 0.6667,
-      "claimSimilarity": 0.6669,
+      "techniqueOverlap": 0.5,
+      "claimSimilarity": 0.7939,
       "claimPair": {
-        "sovietClaim": "During the war the Soviet command concentrated on rescuing people of any nationality and religion, including Jews, from the death threatening them in nazi captivity",
-        "modernClaim": "Bolshevik Jews got complete control in the Soviet Union"
+        "sovietClaim": "The Israeli government is employing methods used by the nazis",
+        "modernClaim": "The Holocaust is being used to excuse Israel's crimes"
       },
       "sovietClaims": [
-        "The nazi cutthroats carried out the Fuehrer's diabolic order efficiently, methodically and punctually",
-        "During the war the Soviet command concentrated on rescuing people of any nationality and religion, including Jews, from the death threatening them in nazi captivity"
+        "The Israeli government is employing methods used by the nazis",
+        "The official and repeatedly expressed view of the Soviet government is that Israel has a right to exist",
+        "If Israel is a nazi state, it should not have such a right"
       ],
       "modernClaims": [
-        "Bolshevik Jews got complete control in the Soviet Union",
-        "When Bolshevik Jews got complete control in the Soviet Union they made \"anti-semitism\" a crime punishable by death",
-        "The Russian people ended the Soviet Union Hell on Earth Nightmare",
-        "Christianity is now being restored"
+        "Germany tries to atone for its attempted extermination of European Jews by backing Israel's latest attack on Gaza",
+        "The millions murdered by the Nazis never gave Israel permission to bomb Palestinians",
+        "The Holocaust is being used to excuse Israel's crimes"
       ],
-      "ensembleScore": 0.6668
+      "ensembleScore": 0.6763
     },
     {
       "sovietText": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes.",
@@ -836,9 +777,9 @@
       "modernYear": 2023,
       "similarity": 0.771,
       "tropes": [
-        "JEWISH_CONSPIRACY",
         "ZIONISM_NAZISM",
-        "DELEGITIMIZATION"
+        "DELEGITIMIZATION",
+        "JEWISH_CONSPIRACY"
       ],
       "confidence": "medium",
       "alternateMatches": [
@@ -849,13 +790,15 @@
           "similarity": 0.7575
         },
         {
-          "sovietText": "What is your attitude to the just struggle of the Palestinian people under PLO leadership for the establishment of a democratic Palestinian Arab state? In our opinion, this agreement is merely a smokescreen designed to conceal the real aims of Israeli policy.",
+          "sovietText": "In our opinion, this agreement is merely a smokescreen designed to conceal the real aims of Israeli policy. What is your attitude to the just struggle of the Palestinian people under PLO leadership for the establishment of a democratic Palestinian Arab state?",
           "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
           "sovietYear": 1983,
           "similarity": 0.7494
         }
       ],
-      "id": 11,
+      "id": 10,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts warn against aligning with Zionist/Jewish leadership and predict negative consequences, but the Soviet text uses secular anti-imperialist framing while the modern text uses religious framing with divine punishment.",
       "sovietTechniques": [
         "casting doubt",
         "repetition",
@@ -914,82 +857,166 @@
       "ensembleScore": 0.6659
     },
     {
-      "sovietText": "The Hitlerites acted in the same way when they exterminated the inferior Jewish race. His ugly statements about man-hating Zionism and his equation, Zionism-Fascism-Hitlerism.",
-      "sovietTextFull": "The Hitlerites acted in the same way when they exterminated the inferior Jewish race. His ugly statements about man-hating Zionism and his equation, Zionism-Fascism-Hitlerism.",
-      "sovietSource": "Leningradskaya Pravda (via Novick)",
+      "sovietText": "You know quite well that Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism.",
+      "sovietTextFull": "You know quite well that Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism. \u2018\u201cKomsomolskaya Pravda\u201d correspondent. In connection with some details made public when the case of the nazi butcher Barbie was investigated, I would like to ask whether the facts of contacts between nazi criminals and Zionists are known io you.",
+      "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
       "sovietYear": 1983,
-      "sovietAuthor": "Kravtsov / Dragunsky",
-      "modernText": "His true nature comes out in this line: \"I understand how the Holocaust happened. German Jews were busy insulting each other, drunk on the wine of pride.\" So it *was* the fault of the Jews. May your tongue be stopped before it causes another Holocaust.",
-      "modernTextFull": "His true nature comes out in this line: \"I understand how the Holocaust happened. German Jews were busy insulting each other, drunk on the wine of pride.\" So it *was* the fault of the Jews. May your tongue be stopped before it causes another Holocaust.",
-      "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
-      "modernYear": 2023,
-      "similarity": 0.7981,
+      "sovietAuthor": "CPSU / KGB",
+      "modernText": "Even Polish Jews condemned the extortion attempts that you call \"antisemitic conspiracy theories\". So the real question is - why are you lying to your readers? Out of ignorance or hateful prejudice?",
+      "modernTextFull": "Even Polish Jews condemned the extortion attempts that you call \"antisemitic conspiracy theories\". So the real question is - why are you lying to your readers? Out of ignorance or hateful prejudice?",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.814,
       "tropes": [
-        "ZIONISM_NAZISM"
+        "BLOOD_LIBEL",
+        "ZIONISM_NAZISM",
+        "JEWISH_CONSPIRACY"
       ],
       "confidence": "medium",
       "alternateMatches": [
         {
-          "sovietText": "During the war I happened to be stationed deep in the rear of 1 the Nazi troops, whither I had been sent by the Soviet command. Adolf Hitler sent his SS gruppenfuehrers, gauleiters, generals and other butchers a laconic but meaningful directive: Only one Jew must remain...",
-          "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
-          "sovietYear": 1983,
-          "similarity": 0.7815
-        },
-        {
-          "sovietText": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems.",
+          "sovietText": "The myth of \u201cuniversal anti-Semitism,\u201d and one version of it known as \u201cofficial and universal anti-Semitism in the USSR\u201d feature prominently in the Zionist ideological struggle against socialism. Zionist propaganda does not need any.",
           "sovietSource": "Zionism: Instrument of Imperialist Reaction",
           "sovietYear": 1970,
-          "similarity": 0.7749
+          "similarity": 0.793
+        },
+        {
+          "sovietText": "The writers express their certainty that \u201cthe Anti-Zionist Committee will defend Soviet Jews from the intrigues of Zionism and imperialism in general, and work in all fairness not to let people go, condemning them to misery.\u201d You see, the question is one of permission to leave the Soviet Union being a condemnation of people to misery.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.7901
         }
       ],
-      "id": 12,
+      "id": 11,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts deflect antisemitism accusations by claiming critics are lying or misrepresenting facts, but the modern text lacks the Soviet text's specific strategy of reframing anti-Zionist criticism as legitimate while invoking Nazi collaboration themes.",
       "sovietTechniques": [
-        "repetition",
-        "loaded language",
         "name calling or labeling",
-        "appeal to fear or prejudice",
         "casting doubt",
-        "thought terminating cliches",
-        "causal oversimplification",
-        "appeal to authority"
+        "appeal to fear or prejudice",
+        "loaded language",
+        "appeal to authority",
+        "repetition",
+        "exaggeration or minimization",
+        "bandwagon or appeal to popularity"
       ],
       "modernTechniques": [
-        "loaded language",
-        "name calling or labeling",
-        "appeal to fear or prejudice",
-        "causal oversimplification",
-        "bandwagon or appeal to popularity",
         "casting doubt",
-        "black and white fallacy",
+        "appeal to fear or prejudice",
+        "name calling or labeling",
+        "loaded language",
         "exaggeration or minimization",
-        "thought terminating cliches",
-        "whataboutism"
+        "causal oversimplification",
+        "repetition"
       ],
       "sharedTechniques": [
         "appeal to fear or prejudice",
         "casting doubt",
-        "causal oversimplification",
+        "exaggeration or minimization",
         "loaded language",
         "name calling or labeling",
-        "thought terminating cliches"
+        "repetition"
       ],
-      "techniqueOverlap": 0.5,
-      "claimSimilarity": 0.7545,
+      "techniqueOverlap": 0.6667,
+      "claimSimilarity": 0.6556,
       "claimPair": {
-        "sovietClaim": "The Hitlerites exterminated the inferior Jewish race",
-        "modernClaim": "It was the fault of the Jews"
+        "sovietClaim": "Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism",
+        "modernClaim": "Polish Jews condemned the extortion attempts that you call 'antisemitic conspiracy theories'"
       },
       "sovietClaims": [
-        "The Hitlerites exterminated the inferior Jewish race",
-        "There are ugly statements about man-hating Zionism",
-        "There is an equation of Zionism-Fascism-Hitlerism"
+        "Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism",
+        "Details were made public when the case of the nazi butcher Barbie was investigated"
       ],
       "modernClaims": [
-        "German Jews were busy insulting each other, drunk on the wine of pride",
-        "It was the fault of the Jews",
-        "His true nature comes out in this line"
+        "Polish Jews condemned the extortion attempts that you call 'antisemitic conspiracy theories'",
+        "You are lying to your readers",
+        "The real question is why are you lying to your readers",
+        "You are lying either out of ignorance or hateful prejudice"
       ],
-      "ensembleScore": 0.6527
+      "ensembleScore": 0.66
+    },
+    {
+      "sovietText": "This is why the intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses such hostility in the more aggressive circles of imperialism, to say nothing of the Zionist rulers themselves.",
+      "sovietTextFull": "There is nothing accidental about the fact that in its global strategic offensive against socialism and the national liberation movements, against the forces fighting for peace and social pro-gress, the imperialists, headed by the United States, are making the widest possible use of international Zionism as a striking force. This is why the intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses such hostility in the more aggressive circles of imperialism, to say nothing of the Zionist rulers themselves.",
+      "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+      "sovietYear": 1983,
+      "sovietAuthor": "CPSU / KGB",
+      "modernText": "Israel and American Zionist activists, using basically their overpowering influence in the media, ceaselessly bombard and 'sting' Americans with tales of Nazi Holocaust horrors, heaping guilt upon their alleged perpetrators, whom they characterize essentially as 'Christian white men.' They continually portray us as a race cursed with ingrained anti-Semitism.",
+      "modernTextFull": "Israel and American Zionist activists, using basically their overpowering influence in the media, ceaselessly bombard and 'sting' Americans with tales of Nazi Holocaust horrors, heaping guilt upon their alleged perpetrators, whom they characterize essentially as 'Christian white men.' They continually portray us as a race cursed with ingrained anti-Semitism. And they work tirelessly and assiduously to force the U.S. Congress to enact legislation which protects them from perceived anti-Semitic acts and Jew hatred. They get away with it too.",
+      "modernSource": "ADL H.E.A.T. Map",
+      "modernYear": 2025,
+      "similarity": 0.8083,
+      "tropes": [
+        "ANTI_ZIONISM_PROGRESSIVE",
+        "ZIONISM_NAZISM",
+        "ZIONISM_IMPERIALISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "One must not underestimate the danger of this characteristic tactic of Zionism: any action against the Zionist movement, against the Zionist leaders in Israel and other countries is invariably dubbed \u201canti-Semitism.\u201d As the French writer Andre Wurmser has said \u201canyone who does not applaud the Israeli aggression against the Arabs is considered an anti-Semite.\u201d 4* 99 World Zionism serves imperialist reaction and the forces of anti-communism.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.8068
+        },
+        {
+          "sovietText": "It is common knowledge that Zionism holds no threat for US imperialism and since this is the case it is all the more useful to examine how Zionist agents operate even in the citadel of their allies.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.8034
+        }
+      ],
+      "id": 12,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts portray Zionism as a manipulative force using media/ideological influence to advance its agenda against opposing groups, but the Soviet text frames this as part of anti-socialist imperialism while the modern text focuses on racial guilt manipulation and legislative protection.",
+      "sovietTechniques": [
+        "appeal to fear or prejudice",
+        "appeal to authority",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
+      ],
+      "modernTechniques": [
+        "appeal to fear or prejudice",
+        "name calling or labeling",
+        "repetition",
+        "loaded language",
+        "casting doubt",
+        "appeal to authority",
+        "exaggeration or minimization",
+        "bandwagon or appeal to popularity",
+        "causal oversimplification"
+      ],
+      "sharedTechniques": [
+        "appeal to authority",
+        "appeal to fear or prejudice",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
+      ],
+      "techniqueOverlap": 0.5556,
+      "claimSimilarity": 0.7095,
+      "claimPair": {
+        "sovietClaim": "Zionism engages in criminal practices",
+        "modernClaim": "Israel and American Zionist activists heap guilt upon alleged perpetrators of Nazi Holocaust horrors"
+      },
+      "sovietClaims": [
+        "In its global strategic offensive against socialism and the national liberation movements, against the forces fighting for peace and social progress, the imperialists, headed by the United States, are making the widest possible use of international Zionism as a striking force",
+        "The intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses hostility in the more aggressive circles of imperialism",
+        "The intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses hostility in the Zionist rulers themselves",
+        "Zionism has reactionary ideology",
+        "Zionism engages in criminal practices"
+      ],
+      "modernClaims": [
+        "Israel and American Zionist activists use their overpowering influence in the media",
+        "Israel and American Zionist activists ceaselessly bombard and 'sting' Americans with tales of Nazi Holocaust horrors",
+        "Israel and American Zionist activists heap guilt upon alleged perpetrators of Nazi Holocaust horrors",
+        "Israel and American Zionist activists characterize alleged perpetrators essentially as 'Christian white men'",
+        "Israel and American Zionist activists continually portray us as a race cursed with ingrained anti-Semitism",
+        "Israel and American Zionist activists work tirelessly and assiduously to force the U.S. Congress to enact legislation which protects them from perceived anti-Semitic acts and Jew hatred",
+        "They get away with it too"
+      ],
+      "ensembleScore": 0.6479
     },
     {
       "sovietText": "Proclaiming the Jews\u2019 \u201chistorical\u201d and even \u201cdivine\u201d right to Palestine and posing as \u201cfighters against anti-Semitism\u201d and \u201csaviours of the Jewish people\u201d, Zionists proceeded to lay a chauvinist-racist foundation of their state in \u201cthe Holy Land\u201d.",
@@ -1003,8 +1030,8 @@
       "modernYear": 2021,
       "similarity": 0.806,
       "tropes": [
-        "ZIONISM_IMPERIALISM",
-        "ZIONISM_RACISM"
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM"
       ],
       "confidence": "medium",
       "alternateMatches": [
@@ -1022,6 +1049,8 @@
         }
       ],
       "id": 13,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts frame the Balfour Declaration as a British colonial imposition that illegitimately established Israel on Palestinian land, using nearly identical anti-colonial and anti-imperialist argumentative strategies.",
       "sovietTechniques": [
         "appeal to fear or prejudice",
         "loaded language",
@@ -1066,6 +1095,162 @@
       "ensembleScore": 0.6457
     },
     {
+      "sovietText": "and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops.",
+      "sovietTextFull": "The overwhelming majority of the Jewish working people who settled down in Palestine had only one \"job\": they were refugees seeking haven from a real or imaginary danger; and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops. We should bear all this in mind also in judging the degree of responsibility for all sorts of injustices and crimes which the Zionists and their followers are still perpetrating in that part of the world.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians. They only want Lebensraum for new settlers and I think it must be obvious that they do not see the Palestinians as human beings at all.",
+      "modernTextFull": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians. They only want Lebensraum for new settlers and I think it must be obvious that they do not see the Palestinians as human beings at all.",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.827,
+      "tropes": [
+        "ZIONISM_NAZISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "Incidentally, something of the sort was about to happen The exterminated people of various nationalities from many countries, including Soviet citizens, and, of course, prisoners of war murdered in the Nazi camps are all on the conscience of this Hitlerite butcher.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.8118
+        },
+        {
+          "sovietText": "It is also characteristic that the Zionist leaders 1 of Israel have not yet added their voice to the demand for the extradition and punishment of the nazi criminals who have found refuge in the United States.",
+          "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+          "sovietYear": 1983,
+          "similarity": 0.8022
+        }
+      ],
+      "id": 14,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use the core Soviet rhetorical strategy of equating Zionists with Nazis, with the modern text directly employing the portmanteau 'Zionazis' and explicit Holocaust references ('gas chambers,' 'Lebensraum') that mirror the Soviet text's 'nazi-type shock troops' framing.",
+      "sovietTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "repetition",
+        "loaded language",
+        "name calling or labeling"
+      ],
+      "modernTechniques": [
+        "casting doubt",
+        "appeal to fear or prejudice",
+        "loaded language",
+        "repetition",
+        "name calling or labeling",
+        "appeal to authority",
+        "exaggeration or minimization",
+        "thought terminating cliches"
+      ],
+      "sharedTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
+      ],
+      "techniqueOverlap": 0.625,
+      "claimSimilarity": 0.6561,
+      "claimPair": {
+        "sovietClaim": "Zionist leaders had to put in a great deal of effort to turn some of these people into nazi-type shock troops",
+        "modernClaim": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians"
+      },
+      "sovietClaims": [
+        "The overwhelming majority of the Jewish working people who settled down in Palestine were refugees seeking haven from a real or imaginary danger",
+        "The Jewish working people who settled in Palestine had only one job as refugees seeking haven",
+        "Zionist leaders had to put in a great deal of effort to turn some of these people into nazi-type shock troops",
+        "Zionist leaders had to put in a great deal of effort to turn some of the children of these refugees into nazi-type shock troops",
+        "The Zionists and their followers are still perpetrating all sorts of injustices and crimes in that part of the world"
+      ],
+      "modernClaims": [
+        "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians",
+        "They only want Lebensraum for new settlers",
+        "They do not see the Palestinians as human beings at all"
+      ],
+      "ensembleScore": 0.6437
+    },
+    {
+      "sovietText": "The archreactionary nature of the Jewish faith has long been no secret\u2014one has only to open the Bible for one's eyes to fall on numerous racist sentences. Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from.",
+      "sovietTextFull": "Partly yes, but the heart of the matter lies elsewhere. The archreactionary nature of the Jewish faith has long been no secret\u2014one has only to open the Bible for one's eyes to fall on numerous racist sentences. Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "The current Jewish community & the original Hebrews are two different things. The modern white Jews are so far removed from Christ as God & biblical truth. The biblical Hebrews non-white ethnicity is truth. Not correct about the melanin stuff & them being less but still.",
+      "modernTextFull": "The current Jewish community & the original Hebrews are two different things. The modern white Jews are so far removed from Christ as God & biblical truth. The biblical Hebrews non-white ethnicity is truth. Not correct about the melanin stuff & them being less but still.",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.7909,
+      "tropes": [
+        "ZIONISM_RACISM",
+        "JEWISH_CONSPIRACY"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "The very same discrimination for which the Jews paid such a high price in the black days of Fascism when about seven million of them were exterminated.",
+          "sovietSource": "Judaism Without Embellishment (analysis)",
+          "sovietYear": 1963,
+          "similarity": 0.7623
+        },
+        {
+          "sovietText": "It is clear that such books, pamphlets and articles are no more written for Jews than were \"The Protocols of the Elders of Zion\" and the racetheories of the Nazi philosopher Rosenberg;",
+          "sovietSource": "Judaism Without Embellishment (analysis)",
+          "sovietYear": 1963,
+          "similarity": 0.7392
+        }
+      ],
+      "id": 15,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts delegitimize modern Jewish identity by claiming it deviates from authentic ancient origins, though the Soviet text focuses on reactionary religious racism while the modern text uses racial replacement theory framing.",
+      "sovietTechniques": [
+        "causal oversimplification",
+        "red herring",
+        "casting doubt",
+        "loaded language",
+        "appeal to fear or prejudice",
+        "exaggeration or minimization",
+        "repetition",
+        "thought terminating cliches"
+      ],
+      "modernTechniques": [
+        "casting doubt",
+        "loaded language",
+        "causal oversimplification",
+        "exaggeration or minimization",
+        "appeal to authority",
+        "name calling or labeling",
+        "thought terminating cliches",
+        "appeal to fear or prejudice"
+      ],
+      "sharedTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "causal oversimplification",
+        "exaggeration or minimization",
+        "loaded language",
+        "thought terminating cliches"
+      ],
+      "techniqueOverlap": 0.6,
+      "claimSimilarity": 0.664,
+      "claimPair": {
+        "sovietClaim": "The Bible contains numerous racist sentences",
+        "modernClaim": "The biblical Hebrews non-white ethnicity is truth"
+      },
+      "sovietClaims": [
+        "The archreactionary nature of the Jewish faith has long been no secret",
+        "The Bible contains numerous racist sentences",
+        "The racism of the Zionist leaders is no secret",
+        "Zionist leaders started from racism"
+      ],
+      "modernClaims": [
+        "The current Jewish community and the original Hebrews are two different things",
+        "The modern white Jews are so far removed from Christ as God and biblical truth",
+        "The biblical Hebrews non-white ethnicity is truth"
+      ],
+      "ensembleScore": 0.6384
+    },
+    {
       "sovietText": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people.",
       "sovietTextFull": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people. The Zionists do not like the fact that all Soviet citizens, \u2018ncluding Soviet Jews love their Motherland and the Soviet system, which was attained in October 1 and defended during the Great Patriotic War at the price of the lives of 2 million of the sons and daughters of our peoples.",
       "sovietSource": "Zionism: Enemy of Peace and Social Progress",
@@ -1077,8 +1262,8 @@
       "modernYear": 2022,
       "similarity": 0.7885,
       "tropes": [
-        "BLOOD_LIBEL",
-        "ZIONISM_RACISM"
+        "ZIONISM_RACISM",
+        "BLOOD_LIBEL"
       ],
       "confidence": "medium",
       "alternateMatches": [
@@ -1089,13 +1274,15 @@
           "similarity": 0.7861
         },
         {
-          "sovietText": "Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from. The archreactionary nature of the Jewish faith has long been no secret\u2014one has only to open the Bible for one's eyes to fall on numerous racist sentences.",
+          "sovietText": "The archreactionary nature of the Jewish faith has long been no secret\u2014one has only to open the Bible for one's eyes to fall on numerous racist sentences. Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from.",
           "sovietSource": "Caution: Zionism!",
           "sovietYear": 1970,
           "similarity": 0.7839
         }
       ],
-      "id": 14,
+      "id": 16,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use identical framing that characterizes Jews/Zionists as racial supremacists, with the modern text directly echoing the Soviet strategy of accusing Jews of racist ideology about racial purity and superiority.",
       "sovietTechniques": [
         "loaded language",
         "casting doubt",
@@ -1142,79 +1329,169 @@
       "ensembleScore": 0.6342
     },
     {
-      "sovietText": "\"The Jewish people are a unique historical phenomenon.",
-      "sovietTextFull": "It will be they who will make up the new society, already an integral, no longer Jewish [emphasis added\u2014Y.I.], but an Israeli society.\" [16] At this point it will be appropriate to quote the words of Nahum Goldmann, one of the architects of the present system in Israel. \"The Jewish people are a unique historical phenomenon. They are simultaneously a nation, a religious entity, a race and bearer of a specific civilisation.",
-      "sovietSource": "Caution: Zionism!",
+      "sovietText": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes.",
+      "sovietTextFull": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes. As for the aspersions the world Zionist organization is casting on our country and your own statement on the position of Jews in the Soviet Union, I\u2019d like to tell you this: spare your energy, no one will go to your paradise!",
+      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
       "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "You cannot integrate shit, because Jews are literally pieces of shit. There must be laws prohibiting their religion from our land.",
-      "modernTextFull": "You cannot integrate shit, because Jews are literally pieces of shit. There must be laws prohibiting their religion from our land.",
-      "modernSource": "CONAN Dialogue Dataset",
-      "modernYear": 2022,
-      "similarity": 0.7166,
+      "sovietAuthor": "Novosti Press Agency",
+      "modernText": "Please Cease and desist and reflect deeply on the immoral cesspit that has taken a hold of many your compatriots [sic]. Stop the holocaust happening in Gaza... May they get a taste of their own medicine. They are an odious, diaboloical [sic], sadistic, bloodthirsty bunch.",
+      "modernTextFull": "Please Cease and desist and reflect deeply on the immoral cesspit that has taken a hold of many your compatriots [sic]. Stop the holocaust happening in Gaza... You are greatly deluded beyond repair... May they get a taste of their own medicine. They are an odious, diaboloical [sic], sadistic, bloodthirsty bunch.",
+      "modernSource": "ADL H.E.A.T. Map",
+      "modernYear": 2025,
+      "similarity": 0.8191,
       "tropes": [
-        "DELEGITIMIZATION"
+        "ZIONISM_NAZISM"
       ],
       "confidence": "medium",
       "alternateMatches": [
         {
-          "sovietText": "They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence\u2014a \"Jewish centre\" (and not the State of Israel inhabited by Israelis).",
-          "sovietSource": "Caution: Zionism!",
+          "sovietText": "We cannot remain silent as the Israeli cutthroats commit outrages in the Middle East, killing peaceful inhabitants\u2014old people, women and children, as the rulers of Israel resort to outright political subversion by slandering our Soviet 1 homeland, the Leninist national policy and the brotherly friendship of the peoples of our country.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
           "sovietYear": 1970,
-          "similarity": 0.7147
+          "similarity": 0.8009
         },
         {
-          "sovietText": "In effect he calls for assimilation, since hostility towards the Jews 'will be eliminated only if and when the Jewish sections of the population cease to be alien and blend with the mass of the population.' That is precisely what the Jewish problem amounts to: assimilation or isolation?\u2014and the idea of Jewish 'nationality' is definitely reactionary not only when expounded by its consistent advocates (the Zionists), but likewise on the lips of those who try to combine it with the ideas of Social-Democracy (the Bundists).",
-          "sovietSource": "Caution: Zionism!",
+          "sovietText": "I have heard about the atrocities committed by Israeli extremists against the Arab people and [ join in the pro-test voiced by the Soviet people and all progressive humanity. The time will come when the aggressors will get due punishment for their crimes.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
           "sovietYear": 1970,
-          "similarity": 0.714
+          "similarity": 0.7927
         }
       ],
-      "id": 15,
+      "id": 17,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts use dehumanizing language and Nazi comparisons against Zionists/Israelis, but the Soviet text focuses on geopolitical conspiracy with imperialists while the modern text centers on moral condemnation of specific military actions.",
       "sovietTechniques": [
-        "appeal to authority",
-        "loaded language",
-        "name calling or labeling",
         "casting doubt",
+        "repetition",
+        "appeal to fear or prejudice",
+        "name calling or labeling",
+        "loaded language",
+        "appeal to authority",
+        "thought terminating cliches",
         "exaggeration or minimization",
-        "repetition"
+        "bandwagon or appeal to popularity",
+        "causal oversimplification",
+        "whataboutism"
       ],
       "modernTechniques": [
-        "name calling or labeling",
         "casting doubt",
-        "loaded language",
-        "appeal to fear or prejudice",
-        "appeal to authority",
-        "exaggeration or minimization",
         "thought terminating cliches",
-        "repetition"
+        "name calling or labeling",
+        "loaded language",
+        "appeal to authority",
+        "appeal to fear or prejudice",
+        "slogans",
+        "exaggeration or minimization"
       ],
       "sharedTechniques": [
         "appeal to authority",
+        "appeal to fear or prejudice",
         "casting doubt",
         "exaggeration or minimization",
         "loaded language",
         "name calling or labeling",
-        "repetition"
+        "thought terminating cliches"
       ],
-      "techniqueOverlap": 0.75,
-      "claimSimilarity": 0.5938,
+      "techniqueOverlap": 0.5833,
+      "claimSimilarity": 0.6596,
       "claimPair": {
-        "sovietClaim": "The Jewish people are a unique historical phenomenon",
-        "modernClaim": "Jews are literally pieces of shit"
+        "sovietClaim": "The world Zionist organization is repeating nazi crimes",
+        "modernClaim": "A holocaust is happening in Gaza"
       },
       "sovietClaims": [
-        "They will make up the new society, already an integral, no longer Jewish, but an Israeli society",
-        "Nahum Goldmann is one of the architects of the present system in Israel",
-        "The Jewish people are a unique historical phenomenon",
-        "The Jewish people are simultaneously a nation, a religious entity, a race and bearer of a specific civilisation"
+        "Meir and the leadership of the world Zionist organization have made a deal with the imperialists",
+        "The world Zionist organization is fanning the flames of war",
+        "The world Zionist organization is engaging in barbarous practices",
+        "The world Zionist organization is repeating nazi crimes",
+        "The world Zionist organization is casting aspersions on our country",
+        "No one will go to your paradise"
       ],
       "modernClaims": [
-        "Jews are literally pieces of shit",
-        "You cannot integrate shit",
-        "There must be laws prohibiting their religion from our land"
+        "An immoral cesspit has taken hold of many of your compatriots",
+        "A holocaust is happening in Gaza",
+        "You are greatly deluded beyond repair",
+        "They are an odious, diabolical, sadistic, bloodthirsty bunch"
       ],
-      "ensembleScore": 0.6329
+      "ensembleScore": 0.6291
+    },
+    {
+      "sovietText": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+      "sovietTextFull": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets. The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+      "sovietSource": "Caution: Zionism!",
+      "sovietYear": 1970,
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "What White Jews and MENA Jews driven to Palestine by Mossad efforts are doing is COLONIZATION. Ariel Sharon admitted it and what \"Israel\" is doing is genocide against Palestinians.",
+      "modernTextFull": "What White Jews and MENA Jews driven to Palestine by Mossad efforts are doing is COLONIZATION. Ariel Sharon admitted it and what \"Israel\" is doing is genocide against Palestinians.",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.808,
+      "tropes": [
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM",
+        "ZIONISM_NAZISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "The Zionist concept of a \u201chistorical homeland\u201d and, con sequently, of a Palestine \u201cfree of Arabs\u201d led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \u201cconquerors.\u201d The analogous concept of a \u201cGermany free of Jews\u201d took a toll of millions of lives.",
+          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+          "sovietYear": 1970,
+          "similarity": 0.7879
+        },
+        {
+          "sovietText": "and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops.",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7855
+        }
+      ],
+      "id": 18,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts frame Israel as an illegitimate colonial project serving broader imperial interests and emphasize racial/ethnic hierarchies, but the modern text focuses more on direct genocide accusations while the Soviet text emphasizes economic manipulation and systematic apartheid structures.",
+      "sovietTechniques": [
+        "repetition",
+        "appeal to fear or prejudice",
+        "name calling or labeling",
+        "loaded language",
+        "casting doubt",
+        "bandwagon or appeal to popularity",
+        "appeal to authority",
+        "exaggeration or minimization"
+      ],
+      "modernTechniques": [
+        "loaded language",
+        "casting doubt",
+        "name calling or labeling",
+        "repetition",
+        "appeal to fear or prejudice",
+        "causal oversimplification"
+      ],
+      "sharedTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "loaded language",
+        "name calling or labeling",
+        "repetition"
+      ],
+      "techniqueOverlap": 0.5556,
+      "claimSimilarity": 0.6743,
+      "claimPair": {
+        "sovietClaim": "There is an Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"-Arab)",
+        "modernClaim": "White Jews and MENA Jews driven to Palestine by Mossad efforts are doing colonization"
+      },
+      "sovietClaims": [
+        "Imperialism is vitally interested in the activity of the Israeli propagandists",
+        "A large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets",
+        "There is an Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"-Arab)",
+        "There is an elaborate system of brutal racial discrimination against the Arabs",
+        "The Israeli version of apartheid and system of racial discrimination serve the same purpose"
+      ],
+      "modernClaims": [
+        "White Jews and MENA Jews driven to Palestine by Mossad efforts are doing colonization",
+        "Ariel Sharon admitted it",
+        "What Israel is doing is genocide against Palestinians"
+      ],
+      "ensembleScore": 0.6268
     },
     {
       "sovietText": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems.",
@@ -1245,7 +1522,9 @@
           "similarity": 0.7985
         }
       ],
-      "id": 16,
+      "id": 19,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts use the rhetorical strategy of appearing to acknowledge Jewish/Israeli rights while immediately undermining them with accusations of supremacism, but the modern text lacks the Soviet's explicit Nazi analogy and ideological framework.",
       "sovietTechniques": [
         "casting doubt",
         "loaded language",
@@ -1291,133 +1570,60 @@
       "ensembleScore": 0.6223
     },
     {
-      "sovietText": "For us Israel has never been and will never be the \u201cnative land of all Jews.\u201d We are true to our Soviet people, our native Soviet country and the Communist Party which has reared and educated us, and we shall never fail to carry out our patriotic duty to our real native country contrary to all Zionist expectations.",
-      "sovietTextFull": "For us Israel has never been and will never be the \u201cnative land of all Jews.\u201d We are true to our Soviet people, our native Soviet country and the Communist Party which has reared and educated us, and we shall never fail to carry out our patriotic duty to our real native country contrary to all Zionist expectations. We abhor all forms of racism and nationalism, all pro-pagation of one\u2019s exclusiveness or superiority.",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+      "sovietText": "It is common knowledge that Zionism holds no threat for US imperialism and since this is the case it is all the more useful to examine how Zionist agents operate even in the citadel of their allies.",
+      "sovietTextFull": "Better still they know that any noble idea which contradicts their views can be discredited through endless mechanical repetition until people will stop taking it seriously, or by lauding it with honeyed phrases which can easily be explained away by claims that this was done \"with the best of intentions. It is common knowledge that Zionism holds no threat for US imperialism and since this is the case it is all the more useful to examine how Zionist agents operate even in the citadel of their allies.",
+      "sovietSource": "Caution: Zionism!",
       "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": "Very funny, but I don't think you want to be as racist as Jews: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
-      "modernTextFull": "Very funny, but I don't think you want to be as racist as Jews: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
-      "modernSource": "CONAN Dialogue Dataset",
-      "modernYear": 2022,
-      "similarity": 0.768,
-      "tropes": [
-        "ZIONISM_RACISM"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "in vain we are endeavouring to glorify our respective countries in arts and science and to augment their riches by commerce and exchange.\" [38] Herzl is clearly proposing that citizens of Jewish origin residing in different countries should drop their patriotism and further the Zionist cause by acting according to the antiSemitic thesis that Jews are an \"alien element\" in every state.",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.7657
-        },
-        {
-          "sovietText": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people.",
-          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
-          "sovietYear": 1985,
-          "similarity": 0.7648
-        }
-      ],
-      "id": 17,
-      "sovietTechniques": [
-        "appeal to fear or prejudice",
-        "casting doubt",
-        "thought terminating cliches",
-        "loaded language",
-        "bandwagon or appeal to popularity",
-        "name calling or labeling",
-        "causal oversimplification",
-        "appeal to authority",
-        "exaggeration or minimization",
-        "repetition",
-        "red herring"
-      ],
-      "modernTechniques": [
-        "casting doubt",
-        "loaded language",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "thought terminating cliches",
-        "exaggeration or minimization"
-      ],
-      "sharedTechniques": [
-        "appeal to fear or prejudice",
-        "casting doubt",
-        "exaggeration or minimization",
-        "loaded language",
-        "name calling or labeling",
-        "thought terminating cliches"
-      ],
-      "techniqueOverlap": 0.5455,
-      "claimSimilarity": 0.6405,
-      "claimPair": {
-        "sovietClaim": "Israel has never been and will never be the native land of all Jews",
-        "modernClaim": "Jews want to preserve their own race and purity of their own blood"
-      },
-      "sovietClaims": [
-        "Israel has never been and will never be the native land of all Jews",
-        "We are true to our Soviet people, our native Soviet country and the Communist Party which has reared and educated us",
-        "We shall never fail to carry out our patriotic duty to our real native country contrary to all Zionist expectations",
-        "We abhor all forms of racism and nationalism",
-        "We abhor all propagation of one's exclusiveness or superiority"
-      ],
-      "modernClaims": [
-        "Jews want to preserve their own race and purity of their own blood",
-        "Many people are banned from entering Israel"
-      ],
-      "ensembleScore": 0.6168
-    },
-    {
-      "sovietText": "Thus the Israeli Communists are right when they say that the pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position.",
-      "sovietTextFull": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems. Thus the Israeli Communists are right when they say that the pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position.",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-      "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": "The threat to the Jews isn't nazis or jihadis but zionists like you who despise us and call us 'Batshit crazy.' If you hate me so much, how much more so 6 million? We are more useful to you as a statistic. That's how the holocaust happened. Now you know.",
-      "modernTextFull": "The threat to the Jews isn't nazis or jihadis but zionists like you who despise us and call us 'Batshit crazy.' If you hate me so much, how much more so 6 million? We are more useful to you as a statistic. That's how the holocaust happened. Now you know.",
+      "sovietAuthor": "Yuri Ivanov",
+      "modernText": "The Israelis and, to be sure, many diaspora Jews know exactly what to weaponize when they want to win the debate. Former Israeli Minister Shulamit Aloni once explained how it is done: \"Anti-Semitic\"\u2026\"it's a trick, we always use it.\"",
+      "modernTextFull": "The Israelis and, to be sure, many diaspora Jews know exactly what to weaponize when they want to win the debate. Former Israeli Minister Shulamit Aloni once explained how it is done: \"Anti-Semitic\"\u2026\"it's a trick, we always use it.\"",
       "modernSource": "ISCA Twitter Dataset (Zenodo)",
       "modernYear": 2021,
-      "similarity": 0.7834,
+      "similarity": 0.7758,
       "tropes": [
-        "ZIONISM_NAZISM"
+        "ZIONISM_IMPERIALISM",
+        "WEAPONIZED_ANTISEMITISM"
       ],
       "confidence": "medium",
       "alternateMatches": [
         {
-          "sovietText": "and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops.",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.782
+          "sovietText": "We know that 3 in Israel itself there are forces that oppose Zionism, its ultrareactionary, aggressive policy. The recent 100,000strong demonstration in Tel Aviv is the best proof of this, not to speak of the courageous struggle waged by the Israeli Communists.",
+          "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+          "sovietYear": 1983,
+          "similarity": 0.769
         },
         {
-          "sovietText": "For the Israel of today it is more than a historical document\u2014it is a direct warning: All those Germans who saw in the armament policy 'the greatness of Germany' and who accepted the wild militarism, marches and military drill as the greatest boon for the nation bear the blame.",
+          "sovietText": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets.",
           "sovietSource": "Caution: Zionism!",
           "sovietYear": 1970,
-          "similarity": 0.7718
+          "similarity": 0.7606
         }
       ],
-      "id": 18,
+      "id": 20,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts use identical framing that accuses Jews/Zionists of deliberately manipulating noble concepts and language as calculated rhetorical weapons to deceive and control discourse.",
       "sovietTechniques": [
-        "casting doubt",
-        "loaded language",
-        "appeal to authority",
-        "appeal to fear or prejudice",
-        "repetition",
-        "exaggeration or minimization"
-      ],
-      "modernTechniques": [
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "casting doubt",
+        "exaggeration or minimization",
         "loaded language",
         "bandwagon or appeal to popularity",
+        "casting doubt",
         "repetition",
-        "exaggeration or minimization",
-        "appeal to authority",
-        "causal oversimplification",
+        "thought terminating cliches",
+        "appeal to fear or prejudice",
         "whataboutism",
-        "thought terminating cliches"
+        "appeal to authority",
+        "slogans",
+        "causal oversimplification"
+      ],
+      "modernTechniques": [
+        "appeal to fear or prejudice",
+        "name calling or labeling",
+        "loaded language",
+        "exaggeration or minimization",
+        "casting doubt",
+        "thought terminating cliches",
+        "repetition",
+        "appeal to authority"
       ],
       "sharedTechniques": [
         "appeal to authority",
@@ -1425,96 +1631,27 @@
         "casting doubt",
         "exaggeration or minimization",
         "loaded language",
-        "repetition"
-      ],
-      "techniqueOverlap": 0.5455,
-      "claimSimilarity": 0.6614,
-      "claimPair": {
-        "sovietClaim": "The pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position",
-        "modernClaim": "Zionists despise Jews"
-      },
-      "sovietClaims": [
-        "When Hitler counterposed all that is German to all that is human there arose national socialism with all its implications",
-        "When Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people",
-        "A protracted conflict erupted whose outcome is hard to foresee",
-        "The conflict has already given rise to a whole series of complex problems",
-        "The pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position"
-      ],
-      "modernClaims": [
-        "The threat to the Jews isn't nazis or jihadis but zionists",
-        "Zionists despise Jews",
-        "Zionists call Jews 'Batshit crazy'",
-        "Jews are more useful to zionists as a statistic",
-        "That's how the holocaust happened"
-      ],
-      "ensembleScore": 0.615
-    },
-    {
-      "sovietText": "It was no coincidence that the mass slaughter of Arabs on April 9, 1948, by terrorists from the Zionist organization Irgun Zwai Leumi occurred in the village of Deir Yassin, which lies three kilometres to the west of Jerusalem.",
-      "sovietTextFull": "It was no coincidence that the mass slaughter of Arabs on April 9, 1948, by terrorists from the Zionist organization Irgun Zwai Leumi occurred in the village of Deir Yassin, which lies three kilometres to the west of Jerusalem. The objective here was to sow panic among the Arab population and to force them to flee not only Jerusalem but the whole of Palestine.",
-      "sovietSource": "Zionism: Enemy of Peace and Social Progress",
-      "sovietYear": 1985,
-      "sovietAuthor": "Progress Publishers",
-      "modernText": "On the first days of 2014 aggression, \"Israel committed a heinous massacre in Khan Younis city, southern the Gaza Strip, claiming the lives of 11 Palestinians. #PalestinianMartyrDay #IsraeliCrimes #16theOctoberGroup",
-      "modernTextFull": "On the first days of 2014 aggression, \"Israel committed a heinous massacre in Khan Younis city, southern the Gaza Strip, claiming the lives of 11 Palestinians. #PalestinianMartyrDay #IsraeliCrimes #16theOctoberGroup",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "similarity": 0.7677,
-      "tropes": [
-        "BLOOD_LIBEL"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "Only recently the world public wrathfully condemned the barbarous bombing of a steel mill in the suburbs of Cairo by Israeli aircraft, killing many workers.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7466
-        },
-        {
-          "sovietText": "In broadening the scope of their aggression against the peaceful population of the Arab countries Israeli military fliers, acting on orders of the criminal ruling clique in Tel Aviv, made a barbarous raid on an elementary school in Bahr elBakr, killing and wounding many children.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7453
-        }
-      ],
-      "id": 19,
-      "sovietTechniques": [
-        "appeal to fear or prejudice",
         "repetition",
-        "loaded language",
-        "name calling or labeling",
-        "causal oversimplification",
-        "casting doubt"
+        "thought terminating cliches"
       ],
-      "modernTechniques": [
-        "name calling or labeling",
-        "casting doubt",
-        "loaded language"
-      ],
-      "sharedTechniques": [
-        "casting doubt",
-        "loaded language",
-        "name calling or labeling"
-      ],
-      "techniqueOverlap": 0.5,
-      "claimSimilarity": 0.6612,
+      "techniqueOverlap": 0.5833,
+      "claimSimilarity": 0.6044,
       "claimPair": {
-        "sovietClaim": "The mass slaughter of Arabs on April 9, 1948, by terrorists from the Zionist organization Irgun Zwai Leumi occurred in the village of Deir Yassin.",
-        "modernClaim": "Israel committed a heinous massacre in Khan Younis city, southern the Gaza Strip, claiming the lives of 11 Palestinians"
+        "sovietClaim": "Zionist agents operate even in the citadel of their allies.",
+        "modernClaim": "The Israelis and many diaspora Jews know exactly what to weaponize when they want to win the debate"
       },
       "sovietClaims": [
-        "The mass slaughter of Arabs on April 9, 1948, by terrorists from the Zionist organization Irgun Zwai Leumi occurred in the village of Deir Yassin.",
-        "Deir Yassin lies three kilometres to the west of Jerusalem.",
-        "The objective of the mass slaughter was to sow panic among the Arab population.",
-        "The objective of the mass slaughter was to force Arabs to flee not only Jerusalem but the whole of Palestine.",
-        "It was no coincidence that the mass slaughter occurred in Deir Yassin."
+        "Any noble idea which contradicts their views can be discredited through endless mechanical repetition until people will stop taking it seriously.",
+        "Noble ideas can be discredited by lauding them with honeyed phrases which can easily be explained away by claims that this was done with the best of intentions.",
+        "Zionism holds no threat for US imperialism.",
+        "Zionist agents operate even in the citadel of their allies."
       ],
       "modernClaims": [
-        "Israel committed a heinous massacre in Khan Younis city, southern the Gaza Strip, claiming the lives of 11 Palestinians",
-        "This massacre occurred on the first days of 2014 aggression"
+        "The Israelis and many diaspora Jews know exactly what to weaponize when they want to win the debate",
+        "Former Israeli Minister Shulamit Aloni once explained how it is done",
+        "According to Shulamit Aloni, calling something 'Anti-Semitic' is a trick that is always used"
       ],
-      "ensembleScore": 0.5967
+      "ensembleScore": 0.5991
     },
     {
       "sovietText": "In Israel, as a matter of fact, it is possible. Most Israelis believe that Nazism means only gas chambers. Those horrible ones that smoked in Majdanek, Treblinka and other Nazi death camps.",
@@ -1545,7 +1682,9 @@
           "similarity": 0.7769
         }
       ],
-      "id": 20,
+      "id": 21,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "Both texts draw Nazi comparisons to Israel, but the Soviet text focuses on limiting Holocaust understanding while the modern text directly equates Israel with Nazi Germany - related inflammatory rhetoric but different argumentative strategies.",
       "sovietTechniques": [
         "appeal to fear or prejudice",
         "loaded language",
@@ -1592,231 +1731,6 @@
       "ensembleScore": 0.5951
     },
     {
-      "sovietText": "The situation in the Middle East has been strained for more than two years now. The aggressive war unleashed by the Tel Aviv war-mongering quarters against the Arab states has aroused the wrath and indignation of all progressive mankind.",
-      "sovietTextFull": "The situation in the Middle East has been strained for more than two years now. The aggressive war unleashed by the Tel Aviv war-mongering quarters against the Arab states has aroused the wrath and indignation of all progressive mankind. Those who cherish peace and tranquillity and engage in peaceful endeavours cannot remain silent.",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-      "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": "Now, the Middle East is complete disarray because of some injustice from the Balfour Declaration. All of it will stop. You are the terrorist... Truly the Synagogue of Satan. NYC just keeps producing Jew Monsters.",
-      "modernTextFull": "Now, the Middle East is complete disarray because of some injustice from the Balfour Declaration. All of it will stop. You are the terrorist... Truly the Synagogue of Satan. NYC just keeps producing Jew Monsters.",
-      "modernSource": "ADL H.E.A.T. Map",
-      "modernYear": 2025,
-      "similarity": 0.7852,
-      "tropes": [
-        "ANTI_ZIONISM_PROGRESSIVE"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "As for the aspersions the world Zionist organization is casting on our country and your own statement on the position of Jews in the Soviet Union, I\u2019d like to tell you this: spare your energy, no one will go to your paradise!",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7681
-        },
-        {
-          "sovietText": "In reply to this, the persecution of democratic forces is becoming increasingly severe and merciless. The growth of progressive, democratic moods frightens Washington and Tel Aviv, as does the protest movement against the expansionist rulers of Israel.",
-          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
-          "sovietYear": 1985,
-          "similarity": 0.7647
-        }
-      ],
-      "id": 21,
-      "sovietTechniques": [
-        "casting doubt",
-        "loaded language",
-        "appeal to authority",
-        "bandwagon or appeal to popularity"
-      ],
-      "modernTechniques": [
-        "name calling or labeling",
-        "casting doubt",
-        "appeal to fear or prejudice",
-        "loaded language",
-        "thought terminating cliches",
-        "bandwagon or appeal to popularity",
-        "appeal to authority",
-        "exaggeration or minimization",
-        "causal oversimplification"
-      ],
-      "sharedTechniques": [
-        "appeal to authority",
-        "bandwagon or appeal to popularity",
-        "casting doubt",
-        "loaded language"
-      ],
-      "techniqueOverlap": 0.4444,
-      "claimSimilarity": 0.6884,
-      "claimPair": {
-        "sovietClaim": "The situation in the Middle East has been strained for more than two years now.",
-        "modernClaim": "The Middle East is in complete disarray because of some injustice from the Balfour Declaration"
-      },
-      "sovietClaims": [
-        "The situation in the Middle East has been strained for more than two years now.",
-        "The Tel Aviv war-mongering quarters unleashed an aggressive war against the Arab states.",
-        "The aggressive war unleashed by the Tel Aviv war-mongering quarters against the Arab states has aroused the wrath and indignation of all progressive mankind.",
-        "Those who cherish peace and tranquillity and engage in peaceful endeavours cannot remain silent."
-      ],
-      "modernClaims": [
-        "The Middle East is in complete disarray because of some injustice from the Balfour Declaration",
-        "All of it will stop",
-        "You are the terrorist",
-        "Truly the Synagogue of Satan",
-        "NYC just keeps producing Jew Monsters"
-      ],
-      "ensembleScore": 0.5908
-    },
-    {
-      "sovietText": "Therefore, the Israelites acted well in conquering the cities and killing the inhabitants.",
-      "sovietTextFull": "Therefore, the Israelites acted well in conquering the cities and killing the inhabitants. It is undesirable to have a foreign enclave in Israel: The people of the different religion could have influenced the Israelis. . . .\" [2] Joshua acted well in killing the people of Jericho,\" wrote a schoolgirl from the kibbutz Meuchad, \"since he still had the whole country to conquer, and did not have time to spend on prisoners of war.\" [3] From 6 to 9 per cent of the answers, depending on the given school, kibbutz or town, were in the same vein.",
-      "sovietSource": "Caution: Zionism!",
-      "sovietYear": 1970,
-      "sovietAuthor": "Yuri Ivanov",
-      "modernText": "Murder requires intent. Jews at Babi Yar were murdered. Jews who caught diseases and died were not \"murdered.\" Distinctions matter.",
-      "modernTextFull": "Murder requires intent. Jews at Babi Yar were murdered. Jews who caught diseases and died were not \"murdered.\" Distinctions matter.",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "similarity": 0.7687,
-      "tropes": [
-        "DUAL_LOYALTY",
-        "BLOOD_LIBEL"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "The tragedy of Babi Yar will always remain a symbol not only of the cannibalism of the nazis, but also of the disgraceful activity of the Zionists, their accomplices and followers.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7628
-        },
-        {
-          "sovietText": "\"To many Zionists,\" he went on, \"it appeared that some sinister force, possibly anti-Semitic, had invented the Arabs in order to make difficulties for the Jews.\" [71] Colonialists rarely keep a statistical account of their crimes, leaving, as a rule, no documentary evidence of what they perpetrate.",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.7555
-        }
-      ],
-      "id": 22,
-      "sovietTechniques": [
-        "appeal to fear or prejudice",
-        "repetition",
-        "bandwagon or appeal to popularity",
-        "thought terminating cliches",
-        "appeal to authority",
-        "exaggeration or minimization",
-        "loaded language",
-        "name calling or labeling",
-        "casting doubt",
-        "causal oversimplification",
-        "whataboutism"
-      ],
-      "modernTechniques": [
-        "loaded language",
-        "casting doubt",
-        "name calling or labeling",
-        "causal oversimplification",
-        "exaggeration or minimization"
-      ],
-      "sharedTechniques": [
-        "casting doubt",
-        "causal oversimplification",
-        "exaggeration or minimization",
-        "loaded language",
-        "name calling or labeling"
-      ],
-      "techniqueOverlap": 0.4545,
-      "claimSimilarity": 0.6692,
-      "claimPair": {
-        "sovietClaim": "The Israelites acted well in conquering the cities and killing the inhabitants",
-        "modernClaim": "Jews at Babi Yar were murdered."
-      },
-      "sovietClaims": [
-        "The Israelites acted well in conquering the cities and killing the inhabitants",
-        "It is undesirable to have a foreign enclave in Israel",
-        "The people of the different religion could have influenced the Israelis",
-        "Joshua acted well in killing the people of Jericho since he still had the whole country to conquer, and did not have time to spend on prisoners of war",
-        "From 6 to 9 per cent of the answers, depending on the given school, kibbutz or town, were in the same vein"
-      ],
-      "modernClaims": [
-        "Murder requires intent.",
-        "Jews at Babi Yar were murdered.",
-        "Jews who caught diseases and died were not murdered.",
-        "Distinctions matter."
-      ],
-      "ensembleScore": 0.5833
-    },
-    {
-      "sovietText": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems.",
-      "sovietTextFull": "I would like to quote the following words from a recent issue of a magazine: \u201cNobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.\u201d In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems. Thus the Israeli Communists are right when they say that the pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position.",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-      "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": "jews came form all over the world to invade the palestinians land, how should i accept that someone was born in Europe has rights in other country outside Europe more than that country's citizens themselves because he is a zionism. #FreePalestine \u2021\u00b5\u2021\u00b8",
-      "modernTextFull": "jews came form all over the world to invade the palestinians land, how should i accept that someone was born in Europe has rights in other country outside Europe more than that country's citizens themselves because he is a zionism. #FreePalestine \u2021\u00b5\u2021\u00b8",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "similarity": 0.786,
-      "tropes": [
-        "ZIONISM_NAZISM"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "Are your provocations against the Arabs, the seizure of their land and property and the killing of civilians any different from nazi atrocities in the occupied territories?",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7701
-        },
-        {
-          "sovietText": "Is not the whole world well aware that it was my country, the Soviet Union, that saved mankind from the fascist vandals? [ am ashamed and pained that the Israeli state is following in the footsteps of fascist Germany.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.763
-        }
-      ],
-      "id": 23,
-      "sovietTechniques": [
-        "casting doubt",
-        "loaded language",
-        "appeal to authority",
-        "appeal to fear or prejudice",
-        "repetition",
-        "exaggeration or minimization"
-      ],
-      "modernTechniques": [
-        "casting doubt",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "loaded language",
-        "thought terminating cliches",
-        "bandwagon or appeal to popularity",
-        "exaggeration or minimization"
-      ],
-      "sharedTechniques": [
-        "appeal to fear or prejudice",
-        "casting doubt",
-        "exaggeration or minimization",
-        "loaded language"
-      ],
-      "techniqueOverlap": 0.4444,
-      "claimSimilarity": 0.6679,
-      "claimPair": {
-        "sovietClaim": "When Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people",
-        "modernClaim": "Jews came from all over the world to invade the Palestinians' land"
-      },
-      "sovietClaims": [
-        "When Hitler counterposed all that is German to all that is human there arose national socialism with all its implications",
-        "When Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people",
-        "A protracted conflict erupted whose outcome is hard to foresee",
-        "The conflict has already given rise to a whole series of complex problems",
-        "The pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position"
-      ],
-      "modernClaims": [
-        "Jews came from all over the world to invade the Palestinians' land",
-        "Someone born in Europe should not have more rights in a country outside Europe than that country's citizens themselves because he is a Zionist"
-      ],
-      "ensembleScore": 0.5785
-    },
-    {
       "sovietText": "\u201cKibush Haaretz,\u201d which means, seizure of land, from the Arabs, of course (furthermore, within the \u201cbiblical\u201d borders, from the Nile to the Euphrates).",
       "sovietTextFull": "I can say from my personal experience that even at that time when the Jews and the Arabs had no rights under British rule, the Zionists were hostile towards the Arab population. All the Zionist parties, beginning with the Achdut Haavoda and ending with the ultraRight Herut, followed, and continue to follow, two reactionary slogans: {. \u201cKibush Haaretz,\u201d which means, seizure of land, from the Arabs, of course (furthermore, within the \u201cbiblical\u201d borders, from the Nile to the Euphrates). 2. \u201cKibush Haavoda\u201d\u2014taking away of work, from the Arabs, of course.",
       "sovietSource": "Zionism: Instrument of Imperialist Reaction",
@@ -1846,7 +1760,9 @@
           "similarity": 0.7905
         }
       ],
-      "id": 24,
+      "id": 22,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "While both texts condemn Zionism, the Soviet text provides systematic ideological analysis of Zionist policies toward Arabs, whereas the modern text uses more emotional rhetoric focused on terrorism accusations and Palestinian solidarity.",
       "sovietTechniques": [
         "repetition",
         "appeal to fear or prejudice",
@@ -1907,6 +1823,87 @@
       "ensembleScore": 0.5769
     },
     {
+      "sovietText": "The Zionist concept of a \u201chistorical homeland\u201d and, con sequently, of a Palestine \u201cfree of Arabs\u201d led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \u201cconquerors.\u201d The analogous concept of a \u201cGermany free of Jews\u201d took a toll of millions of lives.",
+      "sovietTextFull": "The Zionist concept of a \u201chistorical homeland\u201d and, con sequently, of a Palestine \u201cfree of Arabs\u201d led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \u201cconquerors.\u201d The analogous concept of a \u201cGermany free of Jews\u201d took a toll of millions of lives. Evidently, the new-styled racialists have too short a memory. During the last two decades the rulers of Israel did everything to strengthen their close alliance with imperial-ism, sought to turn the country into a major arsenal, bridgehead and strong bastion of the West in the Arab East where colonialism was losing one position after another.",
+      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+      "sovietYear": 1970,
+      "sovietAuthor": "Novosti Press Agency",
+      "modernText": "Zionism is an ideology not an ethnicity or religion. Many Jews are not Zionists, most Zionist are not Jews and some of the most famous Zionists in history were white supremacist antisemites. Btw Israel is about to illegally annexe another country because they feel emboldened.",
+      "modernTextFull": "Zionism is an ideology not an ethnicity or religion. Many Jews are not Zionists, most Zionist are not Jews and some of the most famous Zionists in history were white supremacist antisemites. Btw Israel is about to illegally annexe another country because they feel emboldened.",
+      "modernSource": "ISCA Twitter Dataset (Zenodo)",
+      "modernYear": 2021,
+      "similarity": 0.799,
+      "tropes": [
+        "ZIONISM_RACISM",
+        "ZIONISM_IMPERIALISM"
+      ],
+      "confidence": "medium",
+      "alternateMatches": [
+        {
+          "sovietText": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people.",
+          "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+          "sovietYear": 1985,
+          "similarity": 0.798
+        },
+        {
+          "sovietText": "The concept of a \"world Jewish nation,\" which the Zionists have used and are still using today to impose their ideological and political control over people in different countries, should not be confused with the problem of the Israeli nation (examined in later chapters).",
+          "sovietSource": "Caution: Zionism!",
+          "sovietYear": 1970,
+          "similarity": 0.7977
+        }
+      ],
+      "id": 23,
+      "echo_rating": "WEAK_ECHO",
+      "echo_explanation": "While both texts criticize Zionism and Israel's actions, the modern text focuses on ideological distinctions and illegal annexation rather than employing the Soviet text's specific framing of racial analogies, historical homeland critique, and anti-imperialist rhetoric.",
+      "sovietTechniques": [
+        "casting doubt",
+        "repetition",
+        "loaded language",
+        "appeal to fear or prejudice",
+        "thought terminating cliches",
+        "name calling or labeling"
+      ],
+      "modernTechniques": [
+        "name calling or labeling",
+        "casting doubt",
+        "loaded language",
+        "causal oversimplification",
+        "appeal to fear or prejudice",
+        "exaggeration or minimization",
+        "bandwagon or appeal to popularity"
+      ],
+      "sharedTechniques": [
+        "appeal to fear or prejudice",
+        "casting doubt",
+        "loaded language",
+        "name calling or labeling"
+      ],
+      "techniqueOverlap": 0.4444,
+      "claimSimilarity": 0.6601,
+      "claimPair": {
+        "sovietClaim": "The Zionist concept of a \"historical homeland\" led to the first Arab-Israeli war",
+        "modernClaim": "Zionism is an ideology not an ethnicity or religion"
+      },
+      "sovietClaims": [
+        "The Zionist concept of a \"historical homeland\" led to the first Arab-Israeli war",
+        "The Zionist concept of a Palestine \"free of Arabs\" led to the first Arab-Israeli war",
+        "The first Arab-Israeli war ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the \"conquerors\"",
+        "The analogous concept of a \"Germany free of Jews\" took a toll of millions of lives",
+        "The new-styled racialists have too short a memory",
+        "During the last two decades the rulers of Israel did everything to strengthen their close alliance with imperialism",
+        "The rulers of Israel sought to turn the country into a major arsenal, bridgehead and strong bastion of the West in the Arab East",
+        "Colonialism was losing one position after another in the Arab East"
+      ],
+      "modernClaims": [
+        "Zionism is an ideology not an ethnicity or religion",
+        "Many Jews are not Zionists",
+        "Most Zionists are not Jews",
+        "Some of the most famous Zionists in history were white supremacist antisemites",
+        "Israel is about to illegally annexe another country because they feel emboldened"
+      ],
+      "ensembleScore": 0.5738
+    },
+    {
       "sovietText": "Modern Zionism is the ideology, the political practice, a whole network of organizations of the big Jewish bourgeoisie which has associated itself with the monopoly circles in the USA and other imperialist powers.",
       "sovietTextFull": "Modern Zionism is the ideology, the political practice, a whole network of organizations of the big Jewish bourgeoisie which has associated itself with the monopoly circles in the USA and other imperialist powers. A Sinister Consortium The influential Paris newspaper La Nation recently made an interesting observation. \u201cAt times one gets the impression\u2019, it says, \u201cthat the state of Israel has in all Western countries where there are large Jewish communities unconditional allies ready to bring pressure to bear on the government of their country, to make it support Israeli politics in all cases, and denounce any government not yielding to this pressure.\u201d There is much truth in this observation.",
       "sovietSource": "Zionism: Instrument of Imperialist Reaction",
@@ -1935,7 +1932,9 @@
           "similarity": 0.7809
         }
       ],
-      "id": 25,
+      "id": 24,
+      "echo_rating": "STRONG_ECHO",
+      "echo_explanation": "Both texts employ the identical argumentative strategy of portraying Zionism as a coordinated international conspiracy that controls or manipulates governments through organized Jewish influence networks.",
       "sovietTechniques": [
         "appeal to authority",
         "loaded language"
@@ -1972,87 +1971,6 @@
         "Zionists persecuted Jews to force them to colonise Palestine for them"
       ],
       "ensembleScore": 0.5681
-    },
-    {
-      "sovietText": "We wrathfully protest against the declarations made by Israeli Prime Minister Golda Meir and other Israeli rulers that Soviet citizens of Jewish nationality should go and live in Israel, their alleged native land.",
-      "sovietTextFull": "We wrathfully protest against the declarations made by Israeli Prime Minister Golda Meir and other Israeli rulers that Soviet citizens of Jewish nationality should go and live in Israel, their alleged native land. We regard such declara tions as lies and slander. Translated from the Pharisaical language of the Zionist this means: \u201cBetray your socialist country; betray the fraternal peoples of your country, with whom hand in hand you had accomplished the October Revolution, fought against fascism, built towns and cities, and plants and factories and tilled the land.",
-      "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-      "sovietYear": 1970,
-      "sovietAuthor": "Novosti Press Agency",
-      "modernText": ": The world is awakening to harsh realities of the brutal Israeli occupation of Palestinian Territories. If thinks running a smear campaign in the Toronto Sun against us will cause us turn a blind eye to the Apartheid regime in Israel they are sorely mistaken.",
-      "modernTextFull": ": The world is awakening to harsh realities of the brutal Israeli occupation of Palestinian Territories. If thinks running a smear campaign in the Toronto Sun against us will cause us turn a blind eye to the Apartheid regime in Israel they are sorely mistaken.",
-      "modernSource": "ISCA Twitter Dataset (Zenodo)",
-      "modernYear": 2021,
-      "similarity": 0.7031,
-      "tropes": [
-        "ZIONISM_IMPERIALISM",
-        "WEAPONIZED_ANTISEMITISM",
-        "ZIONISM_NAZISM"
-      ],
-      "confidence": "medium",
-      "alternateMatches": [
-        {
-          "sovietText": "The main purpose of the Israeli version of apartheid is to help the Zionists practise the old policy of the ruling class of colonial England.",
-          "sovietSource": "Caution: Zionism!",
-          "sovietYear": 1970,
-          "similarity": 0.7027
-        },
-        {
-          "sovietText": "I can say from my personal experience that even at that time when the Jews and the Arabs had no rights under British rule, the Zionists were hostile towards the Arab population.",
-          "sovietSource": "Zionism: Instrument of Imperialist Reaction",
-          "sovietYear": 1970,
-          "similarity": 0.7016
-        }
-      ],
-      "id": 26,
-      "sovietTechniques": [
-        "casting doubt",
-        "loaded language",
-        "appeal to fear or prejudice",
-        "name calling or labeling",
-        "appeal to authority",
-        "thought terminating cliches",
-        "causal oversimplification",
-        "black and white fallacy",
-        "exaggeration or minimization",
-        "slogans",
-        "repetition",
-        "whataboutism",
-        "straw man"
-      ],
-      "modernTechniques": [
-        "casting doubt",
-        "name calling or labeling",
-        "appeal to fear or prejudice",
-        "red herring",
-        "causal oversimplification",
-        "loaded language"
-      ],
-      "sharedTechniques": [
-        "appeal to fear or prejudice",
-        "casting doubt",
-        "causal oversimplification",
-        "loaded language",
-        "name calling or labeling"
-      ],
-      "techniqueOverlap": 0.3571,
-      "claimSimilarity": 0.683,
-      "claimPair": {
-        "sovietClaim": "Israeli Prime Minister Golda Meir and other Israeli rulers have made declarations that Soviet citizens of Jewish nationality should go and live in Israel, their alleged native land",
-        "modernClaim": "There is an Apartheid regime in Israel"
-      },
-      "sovietClaims": [
-        "Israeli Prime Minister Golda Meir and other Israeli rulers have made declarations that Soviet citizens of Jewish nationality should go and live in Israel, their alleged native land",
-        "Such declarations are lies and slander",
-        "The Zionist declarations translated from Pharisaical language mean 'Betray your socialist country'",
-        "The Zionist declarations mean 'Betray the fraternal peoples of your country, with whom hand in hand you had accomplished the October Revolution, fought against fascism, built towns and cities, and plants and factories and tilled the land'"
-      ],
-      "modernClaims": [
-        "The world is awakening to harsh realities of the brutal Israeli occupation of Palestinian Territories",
-        "There is a smear campaign running in the Toronto Sun",
-        "There is an Apartheid regime in Israel"
-      ],
-      "ensembleScore": 0.5526
     }
   ],
   "tropeDistribution": [
@@ -2068,49 +1986,49 @@
       "name": "Zionism = Imperialism/Colonialism",
       "description": "Israel as tool of Western imperialism; settler-colonial framing",
       "sovietCount": 626,
-      "modernCount": 5
+      "modernCount": 9
     },
     {
       "id": "JEWISH_CONSPIRACY",
       "name": "Jewish/Zionist Conspiracy",
       "description": "Zionist control of media, finance, governments",
       "sovietCount": 435,
-      "modernCount": 2
+      "modernCount": 3
     },
     {
       "id": "ZIONISM_NAZISM",
       "name": "Zionism = Nazism/Fascism",
       "description": "Zionist-Nazi collaboration; Israel employs Nazi methods",
       "sovietCount": 382,
-      "modernCount": 13
+      "modernCount": 14
     },
     {
       "id": "DUAL_LOYALTY",
       "name": "Dual Loyalty",
       "description": "Jews as agents of foreign power; conflation with Israel",
       "sovietCount": 276,
-      "modernCount": 2
+      "modernCount": 1
     },
     {
       "id": "ZIONISM_RACISM",
       "name": "Zionism = Racism",
       "description": "Zionism as inherently racist ideology; apartheid comparisons",
       "sovietCount": 124,
-      "modernCount": 7
+      "modernCount": 9
     },
     {
       "id": "BLOOD_LIBEL",
       "name": "Blood Libel / Atrocity Propaganda",
       "description": "Accusations of deliberate child killing; dehumanization",
       "sovietCount": 95,
-      "modernCount": 3
+      "modernCount": 2
     },
     {
       "id": "DELEGITIMIZATION",
       "name": "Delegitimization of Jewish Self-Determination",
       "description": "Denial of Jewish nationhood; 'Zionist entity'",
       "sovietCount": 25,
-      "modernCount": 2
+      "modernCount": 1
     },
     {
       "id": "WEAPONIZED_ANTISEMITISM",
@@ -2180,23 +2098,23 @@
         "type": "echo"
       },
       {
+        "label": "Across all parts of the Occupied Palestinian Territories, Is...",
+        "score": 0.8183,
+        "type": "echo"
+      },
+      {
         "label": "The policies of Israeli governments are analogous to Nazism....",
         "score": 0.8085,
         "type": "echo"
       },
       {
-        "label": "Zionists are basically Nazis&not really Jews at all, one nee...",
-        "score": 0.7836,
+        "label": "1388.just bc nazi israelis pretend they'r jews it doesn't me...",
+        "score": 0.7713,
         "type": "echo"
       },
       {
-        "label": "Quit evil occupation go back to Europe where they so called ...",
-        "score": 0.7668,
-        "type": "echo"
-      },
-      {
-        "label": "Jews are are racist: they want to preserve their own race an...",
-        "score": 0.7468,
+        "label": "Israel's attacks on the Palestinian people are intolerable a...",
+        "score": 0.7435,
         "type": "echo"
       },
       {
@@ -2210,8 +2128,8 @@
         "type": "echo"
       },
       {
-        "label": "\"Israel has created a permanent reality in which there are t...",
-        "score": 0.7064,
+        "label": "Israel isn't defending itself, it's defending its illegal oc...",
+        "score": 0.7048,
         "type": "echo"
       }
     ],
