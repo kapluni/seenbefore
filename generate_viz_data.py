@@ -185,6 +185,108 @@ def clean_modern_text(text):
     t = re.sub(r'\s+', ' ', t).strip()
     return t
 
+def _sentence_is_quoted(sentence, full_text):
+    """True if `sentence` sits entirely inside a pair of quotation marks in `full_text`.
+
+    Handles curly/straight double and single quotes. Used to detect passages where
+    the claim-matched sentence is actually a quotation the Soviet author is citing
+    (e.g. Ivanov quoting Nahum Goldmann, or quoting a Nazi slogan to critique it),
+    rather than the author's own propaganda claim.
+    """
+    if not sentence or not full_text:
+        return False
+    idx = full_text.find(sentence)
+    if idx < 0:
+        # Normalize whitespace and try again
+        norm_full = re.sub(r'\s+', ' ', full_text)
+        norm_sent = re.sub(r'\s+', ' ', sentence)
+        idx = norm_full.find(norm_sent)
+        if idx < 0:
+            return False
+        full_text = norm_full
+    # Count unclosed quote marks before the sentence start.
+    # If any quote pair is still open when the sentence begins AND closes after it ends,
+    # the sentence is inside that quotation.
+    end_idx = idx + len(sentence)
+    before = full_text[:idx]
+    after = full_text[end_idx:]
+    quote_chars = [('"', '"'), ("\u201c", "\u201d"), ("\u2018", "\u2019"), ("'", "'")]
+    for open_q, close_q in quote_chars:
+        if open_q == close_q:
+            # Straight quotes — count odd number before means we're inside
+            if before.count(open_q) % 2 == 1 and after.count(close_q) >= 1:
+                return True
+        else:
+            # Curly quotes — count opens minus closes before the sentence
+            opens_before = before.count(open_q)
+            closes_before = before.count(close_q)
+            if opens_before > closes_before and after.find(close_q) >= 0:
+                return True
+    return False
+
+
+def _find_claim_sentence(claim, full_text):
+    """Return the sentence in full_text with the largest token overlap with claim."""
+    if not claim or not full_text:
+        return ""
+    sentences = re.split(r'(?<=[.!?;])\s+', full_text)
+    claim_tokens = set(re.findall(r'\w+', claim.lower()))
+    claim_tokens -= {'the','a','an','is','are','of','to','and','in','that','this','it','for','on'}
+    best_overlap = 0
+    best_sent = ""
+    for s in sentences:
+        s_tokens = set(re.findall(r'\w+', s.lower()))
+        overlap = len(claim_tokens & s_tokens)
+        if overlap > best_overlap:
+            best_overlap = overlap
+            best_sent = s
+    return best_sent
+
+
+def semantic_dedup_matches(engine, matches, claim_sim_threshold=0.85):
+    """Cluster matches whose modernClaim strings are near-paraphrases and keep
+    only the highest-scoring match per cluster.
+
+    The exact-text dedup earlier in the pipeline catches identical strings but
+    misses templated passages that share the same core assertion with different
+    framing prefixes (e.g. the CONAN 'preserve their own race' template that
+    appears with three different prologues across the match list).
+    """
+    if not matches:
+        return matches
+    claims = []
+    for m in matches:
+        pair = m.get("claimPair") or {}
+        c = pair.get("modernClaim") or ""
+        if not c:
+            c = m.get("modernText", "")[:160]
+        claims.append(c)
+    if not any(claims):
+        return matches
+    embs = engine.model.encode(claims, normalize_embeddings=True)
+    sims = np.dot(embs, embs.T)
+    # Rank matches by ensemble so we pick the best as the cluster representative
+    order = sorted(range(len(matches)), key=lambda i: -(matches[i].get("ensembleScore") or matches[i].get("similarity") or 0))
+    kept = []
+    claimed = set()
+    for i in order:
+        if i in claimed:
+            continue
+        kept.append(i)
+        claimed.add(i)
+        for j in range(len(matches)):
+            if j == i or j in claimed:
+                continue
+            if sims[i][j] >= claim_sim_threshold:
+                claimed.add(j)
+    kept_set = set(kept)
+    filtered = [matches[i] for i in range(len(matches)) if i in kept_set]
+    dropped = len(matches) - len(filtered)
+    if dropped:
+        print(f"  Semantic dedup on modernClaim (>= {claim_sim_threshold}): dropped {dropped}")
+    return filtered
+
+
 def is_weak_match(match):
     """Heuristic filter to detect weak matches that should be excluded."""
     sov = match.get("sovietTextFull", match["sovietText"]).lower()
@@ -747,6 +849,31 @@ def generate_viz_data(output_path="./viz_data.json", model_name=None, max_modern
                 print(f"  Claims cache saved ({len(claims_cache)} entries)")
             except Exception as e:
                 print(f"  WARNING: Claim extraction failed: {e}")
+
+        # --- Quoted-content filter ---
+        # Drop matches where the best-matched Soviet claim sentence sits inside
+        # quotation marks in the source text — the author is quoting, not asserting.
+        print("\n--- Quoted-content filter ---")
+        before_q = len(all_matches)
+        kept_matches = []
+        for m in all_matches:
+            pair = m.get("claimPair") or {}
+            sov_claim = pair.get("sovietClaim") or ""
+            sov_full = m.get("sovietTextFull") or m.get("sovietText") or ""
+            sent = _find_claim_sentence(sov_claim, sov_full) if sov_claim else ""
+            if sent and _sentence_is_quoted(sent, sov_full):
+                print(f"  Filtered (quoted source): {sov_claim[:80]}")
+                continue
+            kept_matches.append(m)
+        all_matches = kept_matches
+        if before_q != len(all_matches):
+            print(f"  Quoted-content filter: removed {before_q - len(all_matches)}")
+
+        # --- Semantic dedup on modernClaim ---
+        # The exact-text dedup earlier catches identical strings but not
+        # template paraphrases. Cluster matches by modernClaim embedding and
+        # keep only the highest-ensemble representative per cluster.
+        all_matches = semantic_dedup_matches(engine, all_matches, claim_sim_threshold=0.85)
 
         # --- Ensemble scoring: claim_sim * 0.6 + technique_overlap * 0.4 ---
         # Claim floor gate: when claim similarity is weak (<0.65), demote technique
