@@ -4,13 +4,26 @@ Standalone prototypes of corpus-level visualizations and statistical
 validation artifacts. **Not wired into the UI** — these are reference
 outputs produced from the same data the site uses.
 
+## Second round (after research critique — these are the ones worth pursuing)
+
+| File | What it is | Source data |
+|---|---|---|
+| `match_gallery.html` | **Hero prototype.** Single self-contained HTML file rendering all 24 matches as side-by-side cards with shared phrases highlighted in yellow. Trope filter buttons, STRONG/WEAK echo badges, ensemble/claim/technique score pills. Opens directly in a browser; no server needed. The NYT/Newsweek Melania/Michelle template applied to our data. | `viz_data.json` (embedded inline) |
+| `match_gallery_preview.png` | Headless-Chrome screenshot of the gallery (first ~5 cards) for reviewing without opening the HTML. | renders the HTML |
+| `permutation_null.py` → `permutation_null.png` | Single-chart credibility visual. Histogram of 1,000 random Soviet–modern pair cosines (gray), red vertical line at observed match mean (0.803), tinted tail region labeled "0 of 10,000 permutations reached this value," tick strips for the 8 legit-criticism and 10 known-echo scores. This is `p < 10⁻⁴` rendered in one image. | `stats_data.json` |
+| `heatmap.py` → `heatmap.png` | 9×9 Soviet-trope × modern-trope confusion matrix, side-by-side subplots (multi-label vs top-1). Modern side classified via the LLM-extracted `modernClaim` rather than the full passage, which cleanly avoids the keyword fan-out that killed the Sankey. Diagonal dominates as expected. | `viz_data.json` + `TROPE_TAXONOMY` |
+| `fingerprint.py` → `fingerprint.png` | Stacked "rhetorical fingerprint" bars: one row per source (5 Soviet pamphlets + 5 modern datasets), each bar normalized to 100% of its trope-occurrence mix. Strong visual punch: Ivanov 1970 and ISCA Twitter 2021 carry near-identical color mixes. | `viz_data.json` |
+| `dumbbell.py` → `dumbbell.png` | 24 rows, one per match, dot-line-dot spanning Soviet year to modern year, grouped by trope. Handles the bimodal (1970/2021) data honestly: every match gets its own y-position, so bunching is decomposed. | `viz_data.json` |
+
+## First round (superseded — kept for reference)
+
 | File | What it is | Source data |
 |---|---|---|
 | `run_stats.py` | Computes permutation test, Cohen's d, bootstrap CI, ROC/AUC, Mann-Whitney on 24 curated matches vs. 8 legitimate-criticism texts, 10 known echoes, and 1,000 random Soviet–modern pairs | embeds full Soviet (1,943 filtered passages) + modern (2,000 sampled) corpora via BGE-large |
 | `stats_data.json` | Raw score arrays + all derived statistics (committed so downstream scripts don't need to re-run the full embedding pipeline) | output of `run_stats.py` |
-| `ridgeline.py` → `ridgeline.png` | KDE ridgeline of cosine-similarity distributions across the four reference groups, with Youden threshold line and calibration overlay | `stats_data.json` |
-| `arc_diagram.py` → `arc_diagram.png` | Decade-gap arc diagram of the 24 matches, Soviet years on the left axis, modern on the right, arcs colored by shared trope and weighted by ensemble score | `viz_data.json` |
-| `sankey.py` → `sankey.html` | Trope-flow Sankey: Soviet trope → modern trope, re-classified per match. Interactive Plotly; loads plotly.js from CDN so the file stays ~10 KB | `viz_data.json` + `embedding_pipeline.TROPE_TAXONOMY` |
+| `ridgeline.py` → `ridgeline.png` | KDE ridgeline of cosine-similarity distributions across the four reference groups. **Superseded by `permutation_null.png`** — known-echo and legit-criticism KDEs overlap too much at small n; random-pair curve dominates visually. | `stats_data.json` |
+| `arc_diagram.py` → `arc_diagram.png` | Decade-gap arc diagram. **Superseded by `dumbbell.png`** — data clusters at 1970/2021, so all arcs bunched between two x-coordinates and the "persistence across decades" visual collapsed. | `viz_data.json` |
+| `sankey.py` → `sankey.html` | Trope-flow Sankey. **Superseded by `heatmap.png` + `fingerprint.png`** — keyword classifier on full passage created fan-out noise (24 matches → 27 distinct flows). Using the LLM-extracted claim as the classifier input (in the heatmap) fixes the root cause. | `viz_data.json` + `TROPE_TAXONOMY` |
 
 ## Running
 

@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>I've Seen This Before — Match Gallery Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --red: #c0392b;
+    --blue: #2980b9;
+    --ink: #1c1c1c;
+    --muted: #6b6b6b;
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --divider: rgba(0,0,0,0.08);
+    --highlight: rgba(246, 204, 74, 0.55);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  header {
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 24px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  h1 .then { color: var(--red); }
+  h1 .now  { color: var(--blue); }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .stat b { color: var(--ink); font-weight: 700; }
+  .note {
+    font-size: 12.5px;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--divider);
+    border-left: 3px solid #999;
+    padding: 10px 14px;
+    border-radius: 6px;
+    line-height: 1.55;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 24px 0 16px;
+    align-items: center;
+  }
+  .filters .filter-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+  .filter-btn {
+    font: inherit;
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border: 1px solid var(--divider);
+    background: #fff;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.12s ease;
+  }
+  .filter-btn:hover { border-color: #999; }
+  .filter-btn.active {
+    color: #fff;
+    border-color: transparent;
+  }
+  .filter-btn[data-trope="ALL"].active {
+    background: #222;
+  }
+
+  .cards { display: flex; flex-direction: column; gap: 20px; }
+
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .card.hidden { display: none; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .match-num {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: -0.01em;
+  }
+  .score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--muted);
+    background: #f3efe7;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .score b {
+    color: #111;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+  }
+  .echo-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+  }
+  .echo-STRONG { color: #8b5a00; background: rgba(246, 204, 74, 0.18); }
+  .echo-WEAK   { color: #555; background: #f3f3f3; border-color: #ddd; }
+
+  .trope-chip {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: var(--divider);
+  }
+  .col {
+    padding: 0 22px;
+  }
+  .col:first-child { padding-left: 0; }
+  .col:last-child  { padding-right: 0; }
+
+  .pillar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .pillar-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .pillar-label {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .col.soviet .pillar-label { color: var(--red); }
+  .col.soviet .pillar-dot   { background: var(--red); }
+  .col.modern .pillar-label { color: var(--blue); }
+  .col.modern .pillar-dot   { background: var(--blue); }
+
+  .meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+  .meta .src {
+    font-weight: 600;
+    color: #444;
+  }
+  .meta .year {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .passage {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #202020;
+    padding-left: 12px;
+    border-left: 3px solid;
+  }
+  .col.soviet .passage { border-color: var(--red); }
+  .col.modern .passage { border-color: var(--blue); }
+
+  .passage mark {
+    background: var(--highlight);
+    color: inherit;
+    padding: 0 1px;
+    border-radius: 2px;
+  }
+
+  .claim {
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #5a5a5a;
+  }
+  .claim .claim-label {
+    display: block;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+
+  .footer {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .footer-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #999;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tech-chip {
+    font-size: 11px;
+    color: #555;
+    background: #f3f3f3;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid #eaeaea;
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 720px) {
+    .body { grid-template-columns: 1fr; }
+    .body::before { display: none; }
+    .col { padding: 0; }
+    .col.modern { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--divider); }
+    h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>I've Seen <span class="then">This</span> <span class="now">Before</span> — Match Gallery Prototype</h1>
+    <div class="subtitle">
+      Side-by-side comparisons of Soviet anti-Zionist propaganda (1970 – 1985) and modern antisemitic rhetoric,
+      with shared phrases highlighted. Sorted by ensemble score.
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stat-n">24</b> matches</div>
+      <div class="stat"><b id="stat-tropes">9</b> tropes</div>
+      <div class="stat"><b id="stat-sov">4</b> Soviet sources</div>
+      <div class="stat"><b id="stat-mod">4</b> modern datasets</div>
+    </div>
+    <div class="note">
+      This is a standalone rendering experiment exploring a NYT/Newsweek side-by-side layout with phrase-level
+      highlighting. It is <em>not</em> the production UI, and it is not wired into the React app. Data loaded
+      inline from <code>viz_data.json</code>.
+    </div>
+  </header>
+
+  <div class="filters" id="filters">
+    <span class="filter-label">Filter by trope:</span>
+    <button class="filter-btn active" data-trope="ALL">All</button>
+  </div>
+
+  <div class="cards" id="cards"></div>
+</div>
+
+<script id="match-data" type="application/json">[
+  {
+    "id": 1,
+    "ensembleScore": 0.8452,
+    "claimSimilarity": 0.8531,
+    "techniqueOverlap": 0.8333,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "For us Israel has never been and will never be the “native land of all Jews.” We are true to our Soviet people, our native Soviet country and the Communist Party which has reared and educated us, and we shall never fail to carry out our patriotic duty to our real native country contrary to all Zionist expectations.",
+    "sovietTextFull": "For us Israel has never been and will never be the “native land of all Jews.” We are true to our Soviet people, our native Soviet country and the Communist Party which has reared and educated us, and we shall never fail to carry out our patriotic duty to our real native country contrary to all Zionist expectations. We abhor all forms of racism and nationalism, all pro-pagation of one’s exclusiveness or superiority.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "The land of #Israel was never the nationalist home of the Jews. In Judaism it's a Holy Land given to Jews with conditions. We are in exile and forbidden to have an independent Sovereign State. For our religion can be twisted and turned all to suit his PR needs..",
+    "modernTextFull": "The land of #Israel was never the nationalist home of the Jews. In Judaism it's a Holy Land given to Jews with conditions. We are in exile and forbidden to have an independent Sovereign State. For our religion can be twisted and turned all to suit his PR needs..",
+    "tropes": [
+      "ZIONISM_RACISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Israel has never been and will never be the native land of all Jews",
+      "modernClaim": "The land of Israel was never the nationalist home of the Jews"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "bandwagon or appeal to popularity",
+      "casting doubt",
+      "causal oversimplification",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "red herring",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 2,
+    "ensembleScore": 0.8183,
+    "claimSimilarity": 0.8083,
+    "techniqueOverlap": 0.8333,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Caution: Zionism!",
+    "sovietYear": 1970,
+    "sovietText": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+    "sovietTextFull": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose. They are a component part of the policy pursued by the Zionist elite of the World Zionist Organisation and Israel in the formation of a so-called centre of influence—a \"Jewish centre\" (and not the State of Israel inhabited by Israelis). (* Gentile.) The Zionists are doing their best to hinder the natural process of the formation of the Israeli nation.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+    "modernTextFull": "Across all parts of the Occupied Palestinian Territories, Israel operates a regime of systematic racial discrimination, which facilitates the continued ethnic cleansing of the indigenous Palestinian population. #PalestineWillBeFree ???",
+    "tropes": [
+      "ZIONISM_RACISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Israel has an elaborate system of brutal racial discrimination against the Arabs",
+      "modernClaim": "Israel operates a regime of systematic racial discrimination across all parts of the Occupied Palestinian Territories"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 3,
+    "ensembleScore": 0.8085,
+    "claimSimilarity": 0.8713,
+    "techniqueOverlap": 0.7143,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+    "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
+    "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+    "modernYear": 2023,
+    "modernText": "The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews. #NAZIONISM",
+    "modernTextFull": "The policies of Israeli governments are analogous to Nazism. They aim at the systematic extermination of the Palestinian people, in the way Nazism sought the annihilation of the Jews. #NAZIONISM",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Israeli government is employing methods used by the nazis",
+      "modernClaim": "The policies of Israeli governments are analogous to Nazism"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 4,
+    "ensembleScore": 0.7713,
+    "claimSimilarity": 0.8188,
+    "techniqueOverlap": 0.7,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+    "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "1388.just bc nazi israelis pretend they'r jews it doesn't mean they get to violate humanrights.&just bc some cover countries have jews in power positions&feel that isr is exempt bc of the holocaust,it also doesn't mean they get to abuse humanrights. from oppression to oppressor g",
+    "modernTextFull": "1388.just bc nazi israelis pretend they'r jews it doesn't mean they get to violate humanrights.&just bc some cover countries have jews in power positions&feel that isr is exempt bc of the holocaust,it also doesn't mean they get to abuse humanrights. from oppression to oppressor g",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Israeli government is employing methods used by the nazis",
+      "modernClaim": "Nazi Israelis pretend they are Jews"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 5,
+    "ensembleScore": 0.7435,
+    "claimSimilarity": 0.6836,
+    "techniqueOverlap": 0.8333,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "We, who have lived through the horrors of fascist barbarism in the years of the Great Patriotic War, cannot keep silent when Zionist-racialists, following in the footsteps of the nazi-butchers, are persecuting and terrorising the Arab population in Israeloccupied Arab territories wiping their homes off the face of the earth, depriving them of their land and their possessions.",
+    "sovietTextFull": "We Jewish workers in the Hero-City of Kiev, the capital of the Soviet Ukraine, wrathfully condemn the unceasing aggressive actions of the Israeli military against Arab countries and indignantly protest the air raids on peaceful towns and villages of the UAR, Syria and Jordan. We, who have lived through the horrors of fascist barbarism in the years of the Great Patriotic War, cannot keep silent when Zionist-racialists, following in the footsteps of the nazi-butchers, are persecuting and terrorising the Arab population in Israeloccupied Arab territories wiping their homes off the face of the earth, depriving them of their land and their possessions.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Israel's attacks on the Palestinian people are intolerable and follow threats of forced evictions and violence in #SaveSheikhJarrah and #AlAqsa.The EU must condemn this barbarism and press for an end to the occupation, blockade, apartheid and human rights violations in #Palestine",
+    "modernTextFull": "Israel's attacks on the Palestinian people are intolerable and follow threats of forced evictions and violence in #SaveSheikhJarrah and #AlAqsa.The EU must condemn this barbarism and press for an end to the occupation, blockade, apartheid and human rights violations in #Palestine",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "ZIONISM_IMPERIALISM",
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionist-racialists are persecuting and terrorising the Arab population in Israeli-occupied Arab territories",
+      "modernClaim": "Israel's attacks follow threats of forced evictions and violence in Sheikh Jarrah"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "repetition"
+    ]
+  },
+  {
+    "id": 6,
+    "ensembleScore": 0.7435,
+    "claimSimilarity": 0.8391,
+    "techniqueOverlap": 0.6,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "The policy of Zionism—which is responsible for the aggressive wars and the genocide at Sabra and Shatila—with its pathological hatred of everything Soviet, has become utterly revolting.",
+    "sovietTextFull": "Zionism emerged at the end of the last century as the ideology of the big Jewish bourgeoisie, and is today the official doctrine of the state of Israel, determining its aggressive expansionist policy in the Middle Kast in the interests of US imperialism. The policy of Zionism—which is responsible for the aggressive wars and the genocide at Sabra and Shatila—with its pathological hatred of everything Soviet, has become utterly revolting.",
+    "modernSource": "ADL H.E.A.T. Map",
+    "modernYear": 2025,
+    "modernText": "Zionism is a racist, settler colonialist movement, which opportunistically co-opts aspects of Judaism in an attempt to justify its criminal practices of apartheid & genocide of indigenous Palestinians.",
+    "modernTextFull": "Zionism is a racist, settler colonialist movement, which opportunistically co-opts aspects of Judaism in an attempt to justify its criminal practices of apartheid & genocide of indigenous Palestinians.",
+    "tropes": [
+      "ZIONISM_IMPERIALISM",
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionism is responsible for the genocide at Sabra and Shatila",
+      "modernClaim": "Zionism practices genocide of indigenous Palestinians"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 7,
+    "ensembleScore": 0.7391,
+    "claimSimilarity": 0.7429,
+    "techniqueOverlap": 0.7333,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "The Zionists do not disdain to label as anti-Semitic anyone who disagrees with their sinister plans. Let the Zionist gentlemen not indulge in lies claiming that the Jews consider their “activity” as a blessing.",
+    "sovietTextFull": "It is sufficient for a Jew not to participate in your movement, and not to support it to be declared a traitor. The Zionists do not disdain to label as anti-Semitic anyone who disagrees with their sinister plans. Let the Zionist gentlemen not indulge in lies claiming that the Jews consider their “activity” as a blessing.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "jews don't have to be pro israel sweetie you do know that. i'm aware that ur probably a zionist but jews can be good people. wait unless u live in israel and are forced to do 2 years of military service in order to live in that disgusting, stolen apartheid state.",
+    "modernTextFull": "jews don't have to be pro israel sweetie you do know that. i'm aware that ur probably a zionist but jews can be good people. wait unless u live in israel and are forced to do 2 years of military service in order to live in that disgusting, stolen apartheid state.",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "ANTI_ZIONISM_PROGRESSIVE",
+      "DUAL_LOYALTY"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Zionists do not disdain to label as anti-Semitic anyone who disagrees with their sinister plans.",
+      "modernClaim": "Jews don't have to be pro-Israel"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "bandwagon or appeal to popularity",
+      "casting doubt",
+      "causal oversimplification",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "repetition",
+      "thought terminating cliches",
+      "whataboutism"
+    ]
+  },
+  {
+    "id": 8,
+    "ensembleScore": 0.7048,
+    "claimSimilarity": 0.6747,
+    "techniqueOverlap": 0.75,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "Are your provocations against the Arabs, the seizure of their land and property and the killing of civilians any different from nazi atrocities in the occupied territories?",
+    "sovietTextFull": "But it has never been and never will be my homeland. Are your provocations against the Arabs, the seizure of their land and property and the killing of civilians any different from nazi atrocities in the occupied territories? It is the Arab people who fight for a righteous cause and they will win out, giving Israeli pro-vocateurs a fitting rebuff.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Israel isn't defending itself, it's defending its illegal occupation of Palestinian land. Armed home intruders engaged in violence against a family living in the home they're robbing aren't entitled to \"self-defense during their crime. Even axioms can be disproved in context!",
+    "modernTextFull": "Israel isn't defending itself, it's defending its illegal occupation of Palestinian land. Armed home intruders engaged in violence against a family living in the home they're robbing aren't entitled to \"self-defense during their crime. Even axioms can be disproved in context!",
+    "tropes": [
+      "ZIONISM_IMPERIALISM",
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionists have seized Arab land and property",
+      "modernClaim": "Israel isn't defending itself, it's defending its illegal occupation of Palestinian land"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "causal oversimplification",
+      "exaggeration or minimization",
+      "loaded language",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 9,
+    "ensembleScore": 0.6763,
+    "claimSimilarity": 0.7939,
+    "techniqueOverlap": 0.5,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right.",
+    "sovietTextFull": "We say that the Israeli government is employing methods used by the nazis: At the same time the official and repeatedly expressed view of the Soviet government is that Israel has a right to exist. But if Israel is a nazi state, it should not have such a right. Have | understood you correctly?",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Germany tries to atone for its attempted extermination of European Jews by backing Israel's latest attack on Gaza. The millions murdered by the Nazis never gave Israel permission to bomb Palestinians. Stop using the Holocaust to excuse Israel's crimes.",
+    "modernTextFull": "Germany tries to atone for its attempted extermination of European Jews by backing Israel's latest attack on Gaza. The millions murdered by the Nazis never gave Israel permission to bomb Palestinians. Stop using the Holocaust to excuse Israel's crimes.",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Israeli government is employing methods used by the nazis",
+      "modernClaim": "The Holocaust is being used to excuse Israel's crimes"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 10,
+    "ensembleScore": 0.6659,
+    "claimSimilarity": 0.6379,
+    "techniqueOverlap": 0.75,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes.",
+    "sovietTextFull": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes. As for the aspersions the world Zionist organization is casting on our country and your own statement on the position of Jews in the Soviet Union, I’d like to tell you this: spare your energy, no one will go to your paradise!",
+    "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+    "modernYear": 2023,
+    "modernText": "Dear Arabs ! Making ties with an illegitimate Jewish state won't bring any blessings for you but destruction, as it's promised by ALMIGHTY!! Be the puppet of Jews and watch them ruining Arab world like a slow poison \"¥ #الامارات",
+    "modernTextFull": "Dear Arabs ! Making ties with an illegitimate Jewish state won't bring any blessings for you but destruction, as it's promised by ALMIGHTY!! Be the puppet of Jews and watch them ruining Arab world like a slow poison \"¥ #الامارات",
+    "tropes": [
+      "ZIONISM_NAZISM",
+      "DELEGITIMIZATION",
+      "JEWISH_CONSPIRACY"
+    ],
+    "claimPair": {
+      "sovietClaim": "The world Zionist organization is engaging in barbarous practices",
+      "modernClaim": "Jews will ruin the Arab world like a slow poison if Arabs become their puppet"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "bandwagon or appeal to popularity",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "repetition",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 11,
+    "ensembleScore": 0.66,
+    "claimSimilarity": 0.6556,
+    "techniqueOverlap": 0.6667,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "You know quite well that Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism.",
+    "sovietTextFull": "You know quite well that Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism. ‘“Komsomolskaya Pravda” correspondent. In connection with some details made public when the case of the nazi butcher Barbie was investigated, I would like to ask whether the facts of contacts between nazi criminals and Zionists are known io you.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Even Polish Jews condemned the extortion attempts that you call \"antisemitic conspiracy theories\". So the real question is - why are you lying to your readers? Out of ignorance or hateful prejudice?",
+    "modernTextFull": "Even Polish Jews condemned the extortion attempts that you call \"antisemitic conspiracy theories\". So the real question is - why are you lying to your readers? Out of ignorance or hateful prejudice?",
+    "tropes": [
+      "BLOOD_LIBEL",
+      "ZIONISM_NAZISM",
+      "JEWISH_CONSPIRACY"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionist propaganda tries to label as anti-Semitism any criticism of the ideology and political practices of Zionism",
+      "modernClaim": "Polish Jews condemned the extortion attempts that you call 'antisemitic conspiracy theories'"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 12,
+    "ensembleScore": 0.6479,
+    "claimSimilarity": 0.7095,
+    "techniqueOverlap": 0.5556,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Anti-Zionist Committee: Aims and Tasks",
+    "sovietYear": 1983,
+    "sovietText": "This is why the intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses such hostility in the more aggressive circles of imperialism, to say nothing of the Zionist rulers themselves.",
+    "sovietTextFull": "There is nothing accidental about the fact that in its global strategic offensive against socialism and the national liberation movements, against the forces fighting for peace and social pro-gress, the imperialists, headed by the United States, are making the widest possible use of international Zionism as a striking force. This is why the intensification of our struggle against Zionism and against its reactionary ideology and criminal practices arouses such hostility in the more aggressive circles of imperialism, to say nothing of the Zionist rulers themselves.",
+    "modernSource": "ADL H.E.A.T. Map",
+    "modernYear": 2025,
+    "modernText": "Israel and American Zionist activists, using basically their overpowering influence in the media, ceaselessly bombard and 'sting' Americans with tales of Nazi Holocaust horrors, heaping guilt upon their alleged perpetrators, whom they characterize essentially as 'Christian white men.' They continually portray us as a race cursed with ingrained anti-Semitism.",
+    "modernTextFull": "Israel and American Zionist activists, using basically their overpowering influence in the media, ceaselessly bombard and 'sting' Americans with tales of Nazi Holocaust horrors, heaping guilt upon their alleged perpetrators, whom they characterize essentially as 'Christian white men.' They continually portray us as a race cursed with ingrained anti-Semitism. And they work tirelessly and assiduously to force the U.S. Congress to enact legislation which protects them from perceived anti-Semitic acts and Jew hatred. They get away with it too.",
+    "tropes": [
+      "ANTI_ZIONISM_PROGRESSIVE",
+      "ZIONISM_NAZISM",
+      "ZIONISM_IMPERIALISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionism engages in criminal practices",
+      "modernClaim": "Israel and American Zionist activists heap guilt upon alleged perpetrators of Nazi Holocaust horrors"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 13,
+    "ensembleScore": 0.6457,
+    "claimSimilarity": 0.7428,
+    "techniqueOverlap": 0.5,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+    "sovietYear": 1985,
+    "sovietText": "Proclaiming the Jews’ “historical” and even “divine” right to Palestine and posing as “fighters against anti-Semitism” and “saviours of the Jewish people”, Zionists proceeded to lay a chauvinist-racist foundation of their state in “the Holy Land”.",
+    "sovietTextFull": "For example, a 9 December 1 memorandum of the British General Staff stressed: “The creation of a buffer Jewish state in Palestine, though this State will be weak in itself, 1s strategically desirable for Great Britain.”?° After the British Cabinet’s Balfour Declaration’! (2 November 1917) and the League of Nation’s mandate to Britain to govern Palestine (24 July 1922) the Zion- ‘st colonization of the country entered a new stage. Proclaiming the Jews’ “historical” and even “divine” right to Palestine and posing as “fighters against anti-Semitism” and “saviours of the Jewish people”, Zionists proceeded to lay a chauvinist-racist foundation of their state in “the Holy Land”.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "One hundred years from the day Balfour, a British colonial official, sent a letter to Rothschild declaring that a state for the Jews would be established on the land of Palestine, called Israel. At the mercy of oppression #RightsOfKashmir_Palestine",
+    "modernTextFull": "One hundred years from the day Balfour, a British colonial official, sent a letter to Rothschild declaring that a state for the Jews would be established on the land of Palestine, called Israel. At the mercy of oppression #RightsOfKashmir_Palestine",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "ZIONISM_IMPERIALISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionists proclaimed the Jews' 'historical' and even 'divine' right to Palestine.",
+      "modernClaim": "Balfour declared that a state for the Jews would be established on the land of Palestine"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language"
+    ]
+  },
+  {
+    "id": 14,
+    "ensembleScore": 0.6437,
+    "claimSimilarity": 0.6561,
+    "techniqueOverlap": 0.625,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Caution: Zionism!",
+    "sovietYear": 1970,
+    "sovietText": "and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops.",
+    "sovietTextFull": "The overwhelming majority of the Jewish working people who settled down in Palestine had only one \"job\": they were refugees seeking haven from a real or imaginary danger; and the Zionist leaders had yet to put in a great deal of effort in order to turn some of these people, or rather some of the children of these refugees into nazi-type shock troops. We should bear all this in mind also in judging the degree of responsibility for all sorts of injustices and crimes which the Zionists and their followers are still perpetrating in that part of the world.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians. They only want Lebensraum for new settlers and I think it must be obvious that they do not see the Palestinians as human beings at all.",
+    "modernTextFull": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians. They only want Lebensraum for new settlers and I think it must be obvious that they do not see the Palestinians as human beings at all.",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionist leaders had to put in a great deal of effort to turn some of these people into nazi-type shock troops",
+      "modernClaim": "If the Zionazis thought they would get away with it, they would have gas chambers for the Palestinians"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 15,
+    "ensembleScore": 0.6384,
+    "claimSimilarity": 0.664,
+    "techniqueOverlap": 0.6,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Caution: Zionism!",
+    "sovietYear": 1970,
+    "sovietText": "The archreactionary nature of the Jewish faith has long been no secret—one has only to open the Bible for one's eyes to fall on numerous racist sentences. Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from.",
+    "sovietTextFull": "Partly yes, but the heart of the matter lies elsewhere. The archreactionary nature of the Jewish faith has long been no secret—one has only to open the Bible for one's eyes to fall on numerous racist sentences. Even less of a secret is the racism of the Zionist leaders, for after all that was what they started from.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "The current Jewish community & the original Hebrews are two different things. The modern white Jews are so far removed from Christ as God & biblical truth. The biblical Hebrews non-white ethnicity is truth. Not correct about the melanin stuff & them being less but still.",
+    "modernTextFull": "The current Jewish community & the original Hebrews are two different things. The modern white Jews are so far removed from Christ as God & biblical truth. The biblical Hebrews non-white ethnicity is truth. Not correct about the melanin stuff & them being less but still.",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "JEWISH_CONSPIRACY"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Bible contains numerous racist sentences",
+      "modernClaim": "The biblical Hebrews non-white ethnicity is truth"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "causal oversimplification",
+      "exaggeration or minimization",
+      "loaded language",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 16,
+    "ensembleScore": 0.6342,
+    "claimSimilarity": 0.6866,
+    "techniqueOverlap": 0.5556,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+    "sovietYear": 1985,
+    "sovietText": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people.",
+    "sovietTextFull": "Any talk of the superiority of white, black and yellow peoples over all others is criminal, but it is particularly dangerous for humanity when it becomes the official ideology of a racist regime which draws on the support of international imperialism and achieves its aims by force of arms, spilling the blood of innocent people. The Zionists do not like the fact that all Soviet citizens, ‘ncluding Soviet Jews love their Motherland and the Soviet system, which was attained in October 1 and defended during the Great Patriotic War at the price of the lives of 2 million of the sons and daughters of our peoples.",
+    "modernSource": "CONAN Dialogue Dataset",
+    "modernYear": 2022,
+    "modernText": "This doesn't change the fact that Jews are racist: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
+    "modernTextFull": "This doesn't change the fact that Jews are racist: they want to preserve their own race and purity of their own blood. This is why many people are banned from entering Israel.",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "BLOOD_LIBEL"
+    ],
+    "claimPair": {
+      "sovietClaim": "Any talk of the superiority of white, black and yellow peoples over all others is criminal",
+      "modernClaim": "Jews are racist"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 17,
+    "ensembleScore": 0.6291,
+    "claimSimilarity": 0.6596,
+    "techniqueOverlap": 0.5833,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes.",
+    "sovietTextFull": "Meir, and the leadership of the world Zionist organization have made a deal with the imperialists and are again fanning the flames of war, engaging in barbarous practices and repeating nazi crimes. As for the aspersions the world Zionist organization is casting on our country and your own statement on the position of Jews in the Soviet Union, I’d like to tell you this: spare your energy, no one will go to your paradise!",
+    "modernSource": "ADL H.E.A.T. Map",
+    "modernYear": 2025,
+    "modernText": "Please Cease and desist and reflect deeply on the immoral cesspit that has taken a hold of many your compatriots [sic]. Stop the holocaust happening in Gaza... May they get a taste of their own medicine. They are an odious, diaboloical [sic], sadistic, bloodthirsty bunch.",
+    "modernTextFull": "Please Cease and desist and reflect deeply on the immoral cesspit that has taken a hold of many your compatriots [sic]. Stop the holocaust happening in Gaza... You are greatly deluded beyond repair... May they get a taste of their own medicine. They are an odious, diaboloical [sic], sadistic, bloodthirsty bunch.",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "The world Zionist organization is repeating nazi crimes",
+      "modernClaim": "A holocaust is happening in Gaza"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 18,
+    "ensembleScore": 0.6268,
+    "claimSimilarity": 0.6743,
+    "techniqueOverlap": 0.5556,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Caution: Zionism!",
+    "sovietYear": 1970,
+    "sovietText": "The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+    "sovietTextFull": "And since imperialism is vitally interested in the activity of the Israeli propagandists, a large part of the billions of dollars flowing into the \"promised land\" finds its way into the latters' pockets. The Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"*-Arab) plus an elaborate system of brutal racial discrimination against the Arabs serve the same purpose.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "What White Jews and MENA Jews driven to Palestine by Mossad efforts are doing is COLONIZATION. Ariel Sharon admitted it and what \"Israel\" is doing is genocide against Palestinians.",
+    "modernTextFull": "What White Jews and MENA Jews driven to Palestine by Mossad efforts are doing is COLONIZATION. Ariel Sharon admitted it and what \"Israel\" is doing is genocide against Palestinians.",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "ZIONISM_IMPERIALISM",
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "There is an Israeli version of apartheid (Ashkenazim-Sephardim-\"goy\"-Arab)",
+      "modernClaim": "White Jews and MENA Jews driven to Palestine by Mossad efforts are doing colonization"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition"
+    ]
+  },
+  {
+    "id": 19,
+    "ensembleScore": 0.6223,
+    "claimSimilarity": 0.7039,
+    "techniqueOverlap": 0.5,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "I would like to quote the following words from a recent issue of a magazine: “Nobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.” In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems.",
+    "sovietTextFull": "I would like to quote the following words from a recent issue of a magazine: “Nobody can deny a German the right to be a German, but when Hitler counterposed all that is German to all that is human there arose national socialism with all its implications.” In exactly the same way, no one can deny the right of an Israeli Jew to be a Jew, but when Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people, and a protracted conflict erupted whose outcome is hard to foresee and which has already given rise to a whole series of complex problems. Thus the Israeli Communists are right when they say that the pathological nationalistic egoism of Zionist chauvinists represents the most dangerous aspect of their position.",
+    "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+    "modernYear": 2023,
+    "modernText": "Jews can have their own country, but they don't get the right to colonize anyone. You don't get more human rights than others. And unfortunately there was already a people in Palestine, and they deserve equal rights.",
+    "modernTextFull": "Jews can have their own country, but they don't get the right to colonize anyone. You don't get more human rights than others. And unfortunately there was already a people in Palestine, and they deserve equal rights.",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "When Zionism counterposed all that is Jewish to all that is human, there arose the tragedy of the Palestinian people",
+      "modernClaim": "There was already a people in Palestine"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language"
+    ]
+  },
+  {
+    "id": 20,
+    "ensembleScore": 0.5991,
+    "claimSimilarity": 0.6044,
+    "techniqueOverlap": 0.5833,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Caution: Zionism!",
+    "sovietYear": 1970,
+    "sovietText": "It is common knowledge that Zionism holds no threat for US imperialism and since this is the case it is all the more useful to examine how Zionist agents operate even in the citadel of their allies.",
+    "sovietTextFull": "Better still they know that any noble idea which contradicts their views can be discredited through endless mechanical repetition until people will stop taking it seriously, or by lauding it with honeyed phrases which can easily be explained away by claims that this was done \"with the best of intentions. It is common knowledge that Zionism holds no threat for US imperialism and since this is the case it is all the more useful to examine how Zionist agents operate even in the citadel of their allies.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "The Israelis and, to be sure, many diaspora Jews know exactly what to weaponize when they want to win the debate. Former Israeli Minister Shulamit Aloni once explained how it is done: \"Anti-Semitic\"…\"it's a trick, we always use it.\"",
+    "modernTextFull": "The Israelis and, to be sure, many diaspora Jews know exactly what to weaponize when they want to win the debate. Former Israeli Minister Shulamit Aloni once explained how it is done: \"Anti-Semitic\"…\"it's a trick, we always use it.\"",
+    "tropes": [
+      "ZIONISM_IMPERIALISM",
+      "WEAPONIZED_ANTISEMITISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Zionist agents operate even in the citadel of their allies.",
+      "modernClaim": "The Israelis and many diaspora Jews know exactly what to weaponize when they want to win the debate"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "exaggeration or minimization",
+      "loaded language",
+      "repetition",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 21,
+    "ensembleScore": 0.5951,
+    "claimSimilarity": 0.6956,
+    "techniqueOverlap": 0.4444,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Enemy of Peace and Social Progress",
+    "sovietYear": 1985,
+    "sovietText": "In Israel, as a matter of fact, it is possible. Most Israelis believe that Nazism means only gas chambers. Those horrible ones that smoked in Majdanek, Treblinka and other Nazi death camps.",
+    "sovietTextFull": "In Israel, as a matter of fact, it is possible. Most Israelis believe that Nazism means only gas chambers. Those horrible ones that smoked in Majdanek, Treblinka and other Nazi death camps.",
+    "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+    "modernYear": 2023,
+    "modernText": "Wondering if someone said to Jews tone down-rhetoric - nazis crimes \" in the the 1940's Nazi Germany. #IsraelApartheidstate is as Nazis Germany. The high tone of nazis crimes is still going on & so should high tone of Israelis crimes. #savepalestinians",
+    "modernTextFull": "Wondering if someone said to Jews tone down-rhetoric - nazis crimes \" in the the 1940's Nazi Germany. #IsraelApartheidstate is as Nazis Germany. The high tone of nazis crimes is still going on & so should high tone of Israelis crimes. #savepalestinians",
+    "tropes": [
+      "ZIONISM_NAZISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "In Israel, it is possible for most Israelis to believe that Nazism means only gas chambers",
+      "modernClaim": "#IsraelApartheidstate is as Nazis Germany"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "exaggeration or minimization",
+      "loaded language",
+      "name calling or labeling"
+    ]
+  },
+  {
+    "id": 22,
+    "ensembleScore": 0.5769,
+    "claimSimilarity": 0.6025,
+    "techniqueOverlap": 0.5,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "“Kibush Haaretz,” which means, seizure of land, from the Arabs, of course (furthermore, within the “biblical” borders, from the Nile to the Euphrates).",
+    "sovietTextFull": "I can say from my personal experience that even at that time when the Jews and the Arabs had no rights under British rule, the Zionists were hostile towards the Arab population. All the Zionist parties, beginning with the Achdut Haavoda and ending with the ultraRight Herut, followed, and continue to follow, two reactionary slogans: {. “Kibush Haaretz,” which means, seizure of land, from the Arabs, of course (furthermore, within the “biblical” borders, from the Nile to the Euphrates). 2. “Kibush Haavoda”—taking away of work, from the Arabs, of course.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Really? The Israeli Zionists hasbara is meaningless! We all know the truth: Israel was born out of Jewish terrorism! ( Sir Gerald Kaufman, former Labour MP, raised as a Zionist & Orthodox Jew). Long live Palestine!?",
+    "modernTextFull": "Really? The Israeli Zionists hasbara is meaningless! We all know the truth: Israel was born out of Jewish terrorism! ( Sir Gerald Kaufman, former Labour MP, raised as a Zionist & Orthodox Jew). Long live Palestine!?",
+    "tropes": [
+      "WEAPONIZED_ANTISEMITISM",
+      "ANTI_ZIONISM_PROGRESSIVE"
+    ],
+    "claimPair": {
+      "sovietClaim": "Kibush Haaretz means seizure of land, from the Arabs",
+      "modernClaim": "Israel was born out of Jewish terrorism"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "bandwagon or appeal to popularity",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling",
+      "repetition",
+      "slogans",
+      "thought terminating cliches"
+    ]
+  },
+  {
+    "id": 23,
+    "ensembleScore": 0.5738,
+    "claimSimilarity": 0.6601,
+    "techniqueOverlap": 0.4444,
+    "echo_rating": "WEAK_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "The Zionist concept of a “historical homeland” and, con sequently, of a Palestine “free of Arabs” led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the “conquerors.” The analogous concept of a “Germany free of Jews” took a toll of millions of lives.",
+    "sovietTextFull": "The Zionist concept of a “historical homeland” and, con sequently, of a Palestine “free of Arabs” led to the first Arab-Israeli war which ended in disaster for more than 900,000 Palestinian Arabs driven from their lands by the “conquerors.” The analogous concept of a “Germany free of Jews” took a toll of millions of lives. Evidently, the new-styled racialists have too short a memory. During the last two decades the rulers of Israel did everything to strengthen their close alliance with imperial-ism, sought to turn the country into a major arsenal, bridgehead and strong bastion of the West in the Arab East where colonialism was losing one position after another.",
+    "modernSource": "ISCA Twitter Dataset (Zenodo)",
+    "modernYear": 2021,
+    "modernText": "Zionism is an ideology not an ethnicity or religion. Many Jews are not Zionists, most Zionist are not Jews and some of the most famous Zionists in history were white supremacist antisemites. Btw Israel is about to illegally annexe another country because they feel emboldened.",
+    "modernTextFull": "Zionism is an ideology not an ethnicity or religion. Many Jews are not Zionists, most Zionist are not Jews and some of the most famous Zionists in history were white supremacist antisemites. Btw Israel is about to illegally annexe another country because they feel emboldened.",
+    "tropes": [
+      "ZIONISM_RACISM",
+      "ZIONISM_IMPERIALISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "The Zionist concept of a \"historical homeland\" led to the first Arab-Israeli war",
+      "modernClaim": "Zionism is an ideology not an ethnicity or religion"
+    },
+    "sharedTechniques": [
+      "appeal to fear or prejudice",
+      "casting doubt",
+      "loaded language",
+      "name calling or labeling"
+    ]
+  },
+  {
+    "id": 24,
+    "ensembleScore": 0.5681,
+    "claimSimilarity": 0.7563,
+    "techniqueOverlap": 0.2857,
+    "echo_rating": "STRONG_ECHO",
+    "sovietSource": "Zionism: Instrument of Imperialist Reaction",
+    "sovietYear": 1970,
+    "sovietText": "Modern Zionism is the ideology, the political practice, a whole network of organizations of the big Jewish bourgeoisie which has associated itself with the monopoly circles in the USA and other imperialist powers.",
+    "sovietTextFull": "Modern Zionism is the ideology, the political practice, a whole network of organizations of the big Jewish bourgeoisie which has associated itself with the monopoly circles in the USA and other imperialist powers. A Sinister Consortium The influential Paris newspaper La Nation recently made an interesting observation. “At times one gets the impression’, it says, “that the state of Israel has in all Western countries where there are large Jewish communities unconditional allies ready to bring pressure to bear on the government of their country, to make it support Israeli politics in all cases, and denounce any government not yielding to this pressure.” There is much truth in this observation.",
+    "modernSource": "ISCA ClassData 2022-2023 (Zenodo)",
+    "modernYear": 2023,
+    "modernText": "I put it to you that all governments are Zionist controlled. \"Israel is a Zionist state. Zionism is a political ideology promoting a \"homeland for the Jews at the expense of the indigenous Palestinians and Zionists persecuted Jews to force them to colonise Palestine for them.",
+    "modernTextFull": "I put it to you that all governments are Zionist controlled. \"Israel is a Zionist state. Zionism is a political ideology promoting a \"homeland for the Jews at the expense of the indigenous Palestinians and Zionists persecuted Jews to force them to colonise Palestine for them.",
+    "tropes": [
+      "ZIONISM_IMPERIALISM"
+    ],
+    "claimPair": {
+      "sovietClaim": "Modern Zionism is the ideology, the political practice, a whole network of organizations of the big Jewish bourgeoisie which has associated itself with the monopoly circles in the USA and other imperialist powers.",
+      "modernClaim": "Zionism is a political ideology promoting a homeland for the Jews at the expense of the indigenous Palestinians"
+    },
+    "sharedTechniques": [
+      "appeal to authority",
+      "loaded language"
+    ]
+  }
+]</script>
+<script>
+(function () {
+  "use strict";
+
+  var TROPE_COLORS = {
+    "ZIONISM_RACISM":          "#c0392b",
+    "ZIONISM_NAZISM":          "#8e44ad",
+    "ZIONISM_IMPERIALISM":     "#2980b9",
+    "JEWISH_CONSPIRACY":       "#d35400",
+    "DELEGITIMIZATION":        "#27ae60",
+    "WEAPONIZED_ANTISEMITISM": "#f39c12",
+    "DUAL_LOYALTY":            "#1abc9c",
+    "BLOOD_LIBEL":             "#e74c3c",
+    "ANTI_ZIONISM_PROGRESSIVE":"#3498db"
+  };
+  var TROPE_SHORT = {
+    "ZIONISM_RACISM":          "Zionism = Racism",
+    "ZIONISM_NAZISM":          "Zionism = Nazism",
+    "ZIONISM_IMPERIALISM":     "Zionism = Imperialism",
+    "JEWISH_CONSPIRACY":       "Jewish Conspiracy",
+    "DELEGITIMIZATION":        "Delegitimization",
+    "WEAPONIZED_ANTISEMITISM": "Weaponized Antisemitism",
+    "DUAL_LOYALTY":            "Dual Loyalty",
+    "BLOOD_LIBEL":             "Blood Libel",
+    "ANTI_ZIONISM_PROGRESSIVE":"Progressive Anti-Zionism"
+  };
+  var TROPE_ORDER = Object.keys(TROPE_COLORS);
+
+  var STOP = new Set(("the a an and of to in is are that this it for on with as be was were by from their they have has had " +
+    "will would not but or i we our us you your he she his her its them these those at so if do does did been " +
+    "being who whom which what when where why how all any each few more most other some such no nor only own " +
+    "same than too very can could should may might must also just still even much many into onto about out up " +
+    "down off over under again further then once there here than").split(/\s+/));
+
+  function tokenize(s) {
+    if (!s) return [];
+    var out = [];
+    var re = /[A-Za-z]+/g;
+    var m;
+    while ((m = re.exec(s)) !== null) {
+      var t = m[0].toLowerCase();
+      if (t.length <= 2) continue;
+      if (STOP.has(t)) continue;
+      out.push(t);
+    }
+    return out;
+  }
+
+  function sharedTokens(sovTextFull, modTextFull, sovClaim, modClaim) {
+    var left  = new Set(tokenize(sovTextFull).concat(tokenize(sovClaim)));
+    var right = new Set(tokenize(modTextFull).concat(tokenize(modClaim)));
+    var inter = new Set();
+    left.forEach(function (w) { if (right.has(w)) inter.add(w); });
+    return inter;
+  }
+
+  function escapeHTML(s) {
+    return (s == null ? "" : String(s))
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  // Wrap each word-boundary occurrence of a shared token in <mark>,
+  // preserving original casing and surrounding punctuation.
+  function highlight(text, sharedSet) {
+    if (!text) return "";
+    if (!sharedSet || sharedSet.size === 0) return escapeHTML(text);
+    // We walk the string, identifying [A-Za-z]+ runs and wrapping if lowercase is in sharedSet.
+    var out = "";
+    var re = /[A-Za-z]+/g;
+    var last = 0;
+    var m;
+    while ((m = re.exec(text)) !== null) {
+      var before = text.slice(last, m.index);
+      out += escapeHTML(before);
+      var word = m[0];
+      if (sharedSet.has(word.toLowerCase())) {
+        out += "<mark>" + escapeHTML(word) + "</mark>";
+      } else {
+        out += escapeHTML(word);
+      }
+      last = m.index + word.length;
+    }
+    out += escapeHTML(text.slice(last));
+    return out;
+  }
+
+  function tropeChip(t) {
+    var color = TROPE_COLORS[t] || "#666";
+    var name = TROPE_SHORT[t] || t;
+    return '<span class="trope-chip" style="background:' + color + '">' + escapeHTML(name) + '</span>';
+  }
+
+  function echoBadge(rating) {
+    var cls = rating === "STRONG_ECHO" ? "echo-STRONG" : "echo-WEAK";
+    return '<span class="echo-badge ' + cls + '">' + escapeHTML(rating || "WEAK_ECHO") + '</span>';
+  }
+
+  function fmtScore(s) {
+    if (typeof s !== "number") return "—";
+    return s.toFixed(3);
+  }
+
+  function renderCard(m, n) {
+    var sovietFull = m.sovietTextFull || m.sovietText || "";
+    var modernFull = m.modernTextFull || m.modernText || "";
+    var sovClaim = (m.claimPair && m.claimPair.sovietClaim) || "";
+    var modClaim = (m.claimPair && m.claimPair.modernClaim) || "";
+    var shared = sharedTokens(sovietFull, modernFull, sovClaim, modClaim);
+
+    var tropeChips = (m.tropes || []).map(tropeChip).join(" ");
+    var techChips = (m.sharedTechniques || []).map(function (t) {
+      return '<span class="tech-chip">' + escapeHTML(t) + '</span>';
+    }).join("");
+
+    var card = document.createElement("article");
+    card.className = "card";
+    card.dataset.tropes = (m.tropes || []).join(",");
+
+    card.innerHTML =
+      '<div class="card-top">' +
+        '<span class="match-num">#' + n + '</span>' +
+        '<span class="score">ensemble <b>' + fmtScore(m.ensembleScore) + '</b></span>' +
+        '<span class="score">claim <b>' + fmtScore(m.claimSimilarity) + '</b></span>' +
+        '<span class="score">technique <b>' + fmtScore(m.techniqueOverlap) + '</b></span>' +
+        echoBadge(m.echo_rating) +
+        tropeChips +
+      '</div>' +
+      '<div class="body">' +
+        '<div class="col soviet">' +
+          '<div class="pillar"><span class="pillar-dot"></span><span class="pillar-label">Soviet · Then</span></div>' +
+          '<div class="meta"><span class="src">' + escapeHTML(m.sovietSource || "—") + '</span>' +
+            (m.sovietYear ? ' · <span class="year">' + escapeHTML(String(m.sovietYear)) + '</span>' : '') +
+          '</div>' +
+          '<div class="passage">' + highlight(sovietFull, shared) + '</div>' +
+          (sovClaim ? '<div class="claim"><span class="claim-label">Extracted claim</span>' + escapeHTML(sovClaim) + '</div>' : '') +
+        '</div>' +
+        '<div class="col modern">' +
+          '<div class="pillar"><span class="pillar-dot"></span><span class="pillar-label">Modern · Now</span></div>' +
+          '<div class="meta"><span class="src">' + escapeHTML(m.modernSource || "—") + '</span>' +
+            (m.modernYear ? ' · <span class="year">' + escapeHTML(String(m.modernYear)) + '</span>' : '') +
+          '</div>' +
+          '<div class="passage">' + highlight(modernFull, shared) + '</div>' +
+          (modClaim ? '<div class="claim"><span class="claim-label">Extracted claim</span>' + escapeHTML(modClaim) + '</div>' : '') +
+        '</div>' +
+      '</div>' +
+      (techChips ? ('<div class="footer"><span class="footer-label">Shared techniques</span>' + techChips + '</div>') : '');
+
+    return card;
+  }
+
+  function renderFilters(matches) {
+    var bar = document.getElementById("filters");
+    var present = {};
+    matches.forEach(function (m) { (m.tropes || []).forEach(function (t) { present[t] = true; }); });
+    TROPE_ORDER.forEach(function (t) {
+      if (!present[t]) return;
+      var b = document.createElement("button");
+      b.className = "filter-btn";
+      b.dataset.trope = t;
+      b.textContent = TROPE_SHORT[t];
+      b.style.borderColor = TROPE_COLORS[t];
+      b.style.color = TROPE_COLORS[t];
+      bar.appendChild(b);
+    });
+
+    var activeColor = null;
+    bar.addEventListener("click", function (e) {
+      var btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      var trope = btn.dataset.trope;
+      // reset button styles
+      Array.prototype.forEach.call(bar.querySelectorAll(".filter-btn"), function (b) {
+        b.classList.remove("active");
+        b.style.background = "";
+        b.style.color = b.dataset.trope === "ALL" ? "" : (TROPE_COLORS[b.dataset.trope] || "");
+      });
+      btn.classList.add("active");
+      if (trope !== "ALL") {
+        btn.style.background = TROPE_COLORS[trope];
+        btn.style.color = "#fff";
+      }
+      applyFilter(trope);
+    });
+  }
+
+  function applyFilter(trope) {
+    var cards = document.querySelectorAll(".card");
+    var shown = 0;
+    cards.forEach(function (c) {
+      var tropes = (c.dataset.tropes || "").split(",").filter(Boolean);
+      var show = trope === "ALL" || tropes.indexOf(trope) !== -1;
+      c.classList.toggle("hidden", !show);
+      if (show) shown++;
+    });
+    var container = document.getElementById("cards");
+    var existingEmpty = container.querySelector(".empty");
+    if (existingEmpty) existingEmpty.remove();
+    if (shown === 0) {
+      var e = document.createElement("div");
+      e.className = "empty";
+      e.textContent = "No matches for this trope.";
+      container.appendChild(e);
+    }
+  }
+
+  function init() {
+    var data = JSON.parse(document.getElementById("match-data").textContent);
+    data.sort(function (a, b) { return (b.ensembleScore || 0) - (a.ensembleScore || 0); });
+
+    // Stats
+    var sovSources = new Set();
+    var modSources = new Set();
+    var tropes = new Set();
+    data.forEach(function (m) {
+      if (m.sovietSource) sovSources.add(m.sovietSource);
+      if (m.modernSource) modSources.add(m.modernSource);
+      (m.tropes || []).forEach(function (t) { tropes.add(t); });
+    });
+    document.getElementById("stat-n").textContent = data.length;
+    document.getElementById("stat-tropes").textContent = tropes.size;
+    document.getElementById("stat-sov").textContent = sovSources.size;
+    document.getElementById("stat-mod").textContent = modSources.size;
+
+    var container = document.getElementById("cards");
+    data.forEach(function (m, i) { container.appendChild(renderCard(m, i + 1)); });
+
+    renderFilters(data);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
