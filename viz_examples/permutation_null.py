@@ -73,19 +73,31 @@ def main():
         fontweight="bold", fontname="Georgia",
     )
 
-    # Tick-mark strips for echoes (blue) and legit criticism (green) just above 0.
+    # Tick-mark strips for each group. Every reference group gets both
+    # individual dots (ticks) and a small mean-marker (solid dot + label).
     tick_y_legit = -y_hist_max * 0.055
-    tick_y_echo = -y_hist_max * 0.12
+    tick_y_echo  = -y_hist_max * 0.115
+    tick_y_match = -y_hist_max * 0.175
     ax.plot(legit_scores, np.full_like(legit_scores, tick_y_legit),
             "|", color="#27ae60", markersize=14, markeredgewidth=2.0, zorder=4)
     ax.plot(echo_scores, np.full_like(echo_scores, tick_y_echo),
             "|", color="#3498db", markersize=14, markeredgewidth=2.0, zorder=4)
+    ax.plot(match_scores, np.full_like(match_scores, tick_y_match),
+            "|", color="#c0392b", markersize=14, markeredgewidth=2.0, zorder=4)
 
-    # Labels for the tick strips.
-    ax.text(0.252, tick_y_legit, "legit policy criticism  (n=8)",
-            fontsize=9, color="#27ae60", va="center", ha="left", fontweight="bold")
-    ax.text(0.252, tick_y_echo, "known echoes  (n=10)",
-            fontsize=9, color="#3498db", va="center", ha="left", fontweight="bold")
+    # Mean markers + numeric labels for each reference group.
+    for (scores, y, color, label) in [
+        (legit_scores, tick_y_legit, "#27ae60", "legit policy criticism"),
+        (echo_scores,  tick_y_echo,  "#3498db", "known echoes"),
+        (match_scores, tick_y_match, "#c0392b", "curated matches"),
+    ]:
+        m = float(np.mean(scores))
+        ax.plot(m, y, "o", color=color, markersize=6, zorder=6,
+                markeredgecolor="white", markeredgewidth=1.2)
+        ax.text(m, y - y_hist_max * 0.028, f"μ={m:.2f}",
+                fontsize=8, color=color, ha="center", va="top", fontweight="bold")
+        ax.text(0.252, y, f"{label}  (n={len(scores)})",
+                fontsize=9, color=color, va="center", ha="left", fontweight="bold")
 
     # Annotate null distribution mean with a faint dotted vertical.
     ax.axvline(null_mean, color="#666", linewidth=1.0, linestyle=":", alpha=0.8, zorder=3)
@@ -94,7 +106,7 @@ def main():
 
     # Axes cosmetics.
     ax.set_xlim(0.25, 0.95)
-    ax.set_ylim(-y_hist_max * 0.18, y_hist_max * 1.22)
+    ax.set_ylim(-y_hist_max * 0.25, y_hist_max * 1.22)
     ax.set_xlabel("Cosine similarity (BGE-large-en-v1.5)", fontsize=11)
     ax.set_ylabel("Random pairs per bin  (n = 1,000)", fontsize=11)
 
