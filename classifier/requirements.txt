@@ -1,0 +1,5 @@
+# DSPy antisemitism classifier — additional dependencies
+# (the parent project's requirements.txt covers the embedding pipeline)
+dspy>=3.2
+litellm>=1.70
+anthropic>=0.40

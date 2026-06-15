@@ -1,0 +1,6 @@
+# Generated, deterministically rebuildable from raw sources (seed in config.py):
+#   python -m classifier.data --build
+data/*.jsonl
+
+# Tuned programs produced by `python -m classifier.tune` (require an API key):
+artifacts/
